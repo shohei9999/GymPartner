@@ -1,0 +1,1026 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F9609252BAA8CC50046600D /* MusleMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609242BAA8CC50046600D /* MusleMateApp.swift */; };
+		9F9609272BAA8CC50046600D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609262BAA8CC50046600D /* ContentView.swift */; };
+		9F9609292BAA8CC70046600D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9609282BAA8CC70046600D /* Assets.xcassets */; };
+		9F96092C2BAA8CC70046600D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F96092B2BAA8CC70046600D /* Preview Assets.xcassets */; };
+		9F9609362BAA8CC70046600D /* MusleMateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609352BAA8CC70046600D /* MusleMateTests.swift */; };
+		9F9609402BAA8CC70046600D /* MusleMateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96093F2BAA8CC70046600D /* MusleMateUITests.swift */; };
+		9F9609422BAA8CC70046600D /* MusleMateUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609412BAA8CC70046600D /* MusleMateUITestsLaunchTests.swift */; };
+		9F9609482BAA8CC70046600D /* MusleMate Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9F9609472BAA8CC70046600D /* MusleMate Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9F96094D2BAA8CC70046600D /* MusleMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96094C2BAA8CC70046600D /* MusleMateApp.swift */; };
+		9F96094F2BAA8CC70046600D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96094E2BAA8CC70046600D /* ContentView.swift */; };
+		9F9609512BAA8CC80046600D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9609502BAA8CC80046600D /* Assets.xcassets */; };
+		9F9609542BAA8CC80046600D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9609532BAA8CC80046600D /* Preview Assets.xcassets */; };
+		9F96095E2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */; };
+		9F9609682BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */; };
+		9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9F9609322BAA8CC70046600D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F9609192BAA8CC50046600D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F9609202BAA8CC50046600D;
+			remoteInfo = MusleMate;
+		};
+		9F96093C2BAA8CC70046600D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F9609192BAA8CC50046600D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F9609202BAA8CC50046600D;
+			remoteInfo = MusleMate;
+		};
+		9F9609492BAA8CC70046600D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F9609192BAA8CC50046600D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F9609462BAA8CC70046600D;
+			remoteInfo = "MusleMate Watch App";
+		};
+		9F96095A2BAA8CC80046600D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F9609192BAA8CC50046600D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F9609462BAA8CC70046600D;
+			remoteInfo = "MusleMate Watch App";
+		};
+		9F9609642BAA8CC80046600D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F9609192BAA8CC50046600D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F9609462BAA8CC70046600D;
+			remoteInfo = "MusleMate Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9F9609702BAA8CC80046600D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				9F9609482BAA8CC70046600D /* MusleMate Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9F9609212BAA8CC50046600D /* MusleMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusleMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9609242BAA8CC50046600D /* MusleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateApp.swift; sourceTree = "<group>"; };
+		9F9609262BAA8CC50046600D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9F9609282BAA8CC70046600D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9F96092B2BAA8CC70046600D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9F9609312BAA8CC70046600D /* MusleMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusleMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9609352BAA8CC70046600D /* MusleMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateTests.swift; sourceTree = "<group>"; };
+		9F96093B2BAA8CC70046600D /* MusleMateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusleMateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F96093F2BAA8CC70046600D /* MusleMateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateUITests.swift; sourceTree = "<group>"; };
+		9F9609412BAA8CC70046600D /* MusleMateUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9F9609472BAA8CC70046600D /* MusleMate Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MusleMate Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F96094C2BAA8CC70046600D /* MusleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateApp.swift; sourceTree = "<group>"; };
+		9F96094E2BAA8CC70046600D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9F9609502BAA8CC80046600D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9F9609532BAA8CC80046600D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9F9609592BAA8CC80046600D /* MusleMate Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MusleMate Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppTests.swift; sourceTree = "<group>"; };
+		9F9609632BAA8CC80046600D /* MusleMate Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MusleMate Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F96091E2BAA8CC50046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F96092E2BAA8CC70046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609382BAA8CC70046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609442BAA8CC70046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609562BAA8CC80046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609602BAA8CC80046600D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9F9609182BAA8CC50046600D = {
+			isa = PBXGroup;
+			children = (
+				9F9609232BAA8CC50046600D /* MusleMate */,
+				9F9609342BAA8CC70046600D /* MusleMateTests */,
+				9F96093E2BAA8CC70046600D /* MusleMateUITests */,
+				9F96094B2BAA8CC70046600D /* MusleMate Watch App */,
+				9F96095C2BAA8CC80046600D /* MusleMate Watch AppTests */,
+				9F9609662BAA8CC80046600D /* MusleMate Watch AppUITests */,
+				9F9609222BAA8CC50046600D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9F9609222BAA8CC50046600D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F9609212BAA8CC50046600D /* MusleMate.app */,
+				9F9609312BAA8CC70046600D /* MusleMateTests.xctest */,
+				9F96093B2BAA8CC70046600D /* MusleMateUITests.xctest */,
+				9F9609472BAA8CC70046600D /* MusleMate Watch App.app */,
+				9F9609592BAA8CC80046600D /* MusleMate Watch AppTests.xctest */,
+				9F9609632BAA8CC80046600D /* MusleMate Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F9609232BAA8CC50046600D /* MusleMate */ = {
+			isa = PBXGroup;
+			children = (
+				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
+				9F9609262BAA8CC50046600D /* ContentView.swift */,
+				9F9609282BAA8CC70046600D /* Assets.xcassets */,
+				9F96092A2BAA8CC70046600D /* Preview Content */,
+			);
+			path = MusleMate;
+			sourceTree = "<group>";
+		};
+		9F96092A2BAA8CC70046600D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9F96092B2BAA8CC70046600D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9F9609342BAA8CC70046600D /* MusleMateTests */ = {
+			isa = PBXGroup;
+			children = (
+				9F9609352BAA8CC70046600D /* MusleMateTests.swift */,
+			);
+			path = MusleMateTests;
+			sourceTree = "<group>";
+		};
+		9F96093E2BAA8CC70046600D /* MusleMateUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9F96093F2BAA8CC70046600D /* MusleMateUITests.swift */,
+				9F9609412BAA8CC70046600D /* MusleMateUITestsLaunchTests.swift */,
+			);
+			path = MusleMateUITests;
+			sourceTree = "<group>";
+		};
+		9F96094B2BAA8CC70046600D /* MusleMate Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				9F96094C2BAA8CC70046600D /* MusleMateApp.swift */,
+				9F96094E2BAA8CC70046600D /* ContentView.swift */,
+				9F9609502BAA8CC80046600D /* Assets.xcassets */,
+				9F9609522BAA8CC80046600D /* Preview Content */,
+			);
+			path = "MusleMate Watch App";
+			sourceTree = "<group>";
+		};
+		9F9609522BAA8CC80046600D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9F9609532BAA8CC80046600D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9F96095C2BAA8CC80046600D /* MusleMate Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */,
+			);
+			path = "MusleMate Watch AppTests";
+			sourceTree = "<group>";
+		};
+		9F9609662BAA8CC80046600D /* MusleMate Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */,
+				9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "MusleMate Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F9609202BAA8CC50046600D /* MusleMate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F9609712BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate" */;
+			buildPhases = (
+				9F96091D2BAA8CC50046600D /* Sources */,
+				9F96091E2BAA8CC50046600D /* Frameworks */,
+				9F96091F2BAA8CC50046600D /* Resources */,
+				9F9609702BAA8CC80046600D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F96094A2BAA8CC70046600D /* PBXTargetDependency */,
+			);
+			name = MusleMate;
+			productName = MusleMate;
+			productReference = 9F9609212BAA8CC50046600D /* MusleMate.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9F9609302BAA8CC70046600D /* MusleMateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F9609742BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMateTests" */;
+			buildPhases = (
+				9F96092D2BAA8CC70046600D /* Sources */,
+				9F96092E2BAA8CC70046600D /* Frameworks */,
+				9F96092F2BAA8CC70046600D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F9609332BAA8CC70046600D /* PBXTargetDependency */,
+			);
+			name = MusleMateTests;
+			productName = MusleMateTests;
+			productReference = 9F9609312BAA8CC70046600D /* MusleMateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9F96093A2BAA8CC70046600D /* MusleMateUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F9609772BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMateUITests" */;
+			buildPhases = (
+				9F9609372BAA8CC70046600D /* Sources */,
+				9F9609382BAA8CC70046600D /* Frameworks */,
+				9F9609392BAA8CC70046600D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F96093D2BAA8CC70046600D /* PBXTargetDependency */,
+			);
+			name = MusleMateUITests;
+			productName = MusleMateUITests;
+			productReference = 9F96093B2BAA8CC70046600D /* MusleMateUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		9F9609462BAA8CC70046600D /* MusleMate Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F96096D2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch App" */;
+			buildPhases = (
+				9F9609432BAA8CC70046600D /* Sources */,
+				9F9609442BAA8CC70046600D /* Frameworks */,
+				9F9609452BAA8CC70046600D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MusleMate Watch App";
+			productName = "MusleMate Watch App";
+			productReference = 9F9609472BAA8CC70046600D /* MusleMate Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9F9609582BAA8CC80046600D /* MusleMate Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F96097A2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch AppTests" */;
+			buildPhases = (
+				9F9609552BAA8CC80046600D /* Sources */,
+				9F9609562BAA8CC80046600D /* Frameworks */,
+				9F9609572BAA8CC80046600D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F96095B2BAA8CC80046600D /* PBXTargetDependency */,
+			);
+			name = "MusleMate Watch AppTests";
+			productName = "MusleMate Watch AppTests";
+			productReference = 9F9609592BAA8CC80046600D /* MusleMate Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9F9609622BAA8CC80046600D /* MusleMate Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F96097D2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch AppUITests" */;
+			buildPhases = (
+				9F96095F2BAA8CC80046600D /* Sources */,
+				9F9609602BAA8CC80046600D /* Frameworks */,
+				9F9609612BAA8CC80046600D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F9609652BAA8CC80046600D /* PBXTargetDependency */,
+			);
+			name = "MusleMate Watch AppUITests";
+			productName = "MusleMate Watch AppUITests";
+			productReference = 9F9609632BAA8CC80046600D /* MusleMate Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F9609192BAA8CC50046600D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					9F9609202BAA8CC50046600D = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					9F9609302BAA8CC70046600D = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9F9609202BAA8CC50046600D;
+					};
+					9F96093A2BAA8CC70046600D = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9F9609202BAA8CC50046600D;
+					};
+					9F9609462BAA8CC70046600D = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					9F9609582BAA8CC80046600D = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9F9609462BAA8CC70046600D;
+					};
+					9F9609622BAA8CC80046600D = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 9F9609462BAA8CC70046600D;
+					};
+				};
+			};
+			buildConfigurationList = 9F96091C2BAA8CC50046600D /* Build configuration list for PBXProject "MusleMate" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9F9609182BAA8CC50046600D;
+			productRefGroup = 9F9609222BAA8CC50046600D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9F9609202BAA8CC50046600D /* MusleMate */,
+				9F9609302BAA8CC70046600D /* MusleMateTests */,
+				9F96093A2BAA8CC70046600D /* MusleMateUITests */,
+				9F9609462BAA8CC70046600D /* MusleMate Watch App */,
+				9F9609582BAA8CC80046600D /* MusleMate Watch AppTests */,
+				9F9609622BAA8CC80046600D /* MusleMate Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F96091F2BAA8CC50046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F96092C2BAA8CC70046600D /* Preview Assets.xcassets in Resources */,
+				9F9609292BAA8CC70046600D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F96092F2BAA8CC70046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609392BAA8CC70046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609452BAA8CC70046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9609542BAA8CC80046600D /* Preview Assets.xcassets in Resources */,
+				9F9609512BAA8CC80046600D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609572BAA8CC80046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609612BAA8CC80046600D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9F96091D2BAA8CC50046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9609272BAA8CC50046600D /* ContentView.swift in Sources */,
+				9F9609252BAA8CC50046600D /* MusleMateApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F96092D2BAA8CC70046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9609362BAA8CC70046600D /* MusleMateTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609372BAA8CC70046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9609422BAA8CC70046600D /* MusleMateUITestsLaunchTests.swift in Sources */,
+				9F9609402BAA8CC70046600D /* MusleMateUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609432BAA8CC70046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F96094F2BAA8CC70046600D /* ContentView.swift in Sources */,
+				9F96094D2BAA8CC70046600D /* MusleMateApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F9609552BAA8CC80046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F96095E2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F96095F2BAA8CC80046600D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */,
+				9F9609682BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9F9609332BAA8CC70046600D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F9609202BAA8CC50046600D /* MusleMate */;
+			targetProxy = 9F9609322BAA8CC70046600D /* PBXContainerItemProxy */;
+		};
+		9F96093D2BAA8CC70046600D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F9609202BAA8CC50046600D /* MusleMate */;
+			targetProxy = 9F96093C2BAA8CC70046600D /* PBXContainerItemProxy */;
+		};
+		9F96094A2BAA8CC70046600D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F9609462BAA8CC70046600D /* MusleMate Watch App */;
+			targetProxy = 9F9609492BAA8CC70046600D /* PBXContainerItemProxy */;
+		};
+		9F96095B2BAA8CC80046600D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F9609462BAA8CC70046600D /* MusleMate Watch App */;
+			targetProxy = 9F96095A2BAA8CC80046600D /* PBXContainerItemProxy */;
+		};
+		9F9609652BAA8CC80046600D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F9609462BAA8CC70046600D /* MusleMate Watch App */;
+			targetProxy = 9F9609642BAA8CC80046600D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9F96096B2BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9F96096C2BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		9F96096E2BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MusleMate Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MusleMate;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Shohei.MusleMate;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMate.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Debug;
+		};
+		9F96096F2BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MusleMate Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MusleMate;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Shohei.MusleMate;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMate.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Release;
+		};
+		9F9609722BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MusleMate/Preview Content\"";
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MusleMate;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F9609732BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MusleMate/Preview Content\"";
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MusleMate;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F9609752BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusleMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusleMate";
+			};
+			name = Debug;
+		};
+		9F9609762BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusleMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusleMate";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F9609782BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMateUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MusleMate;
+			};
+			name = Debug;
+		};
+		9F9609792BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Shohei.MusleMateUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MusleMate;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F96097B2BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Shohei.MusleMate-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusleMate Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusleMate Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Debug;
+		};
+		9F96097C2BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Shohei.MusleMate-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MusleMate Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MusleMate Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Release;
+		};
+		9F96097E2BAA8CC80046600D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Shohei.MusleMate-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "MusleMate Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Debug;
+		};
+		9F96097F2BAA8CC80046600D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4PAHR8WZNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Shohei.MusleMate-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "MusleMate Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9F96091C2BAA8CC50046600D /* Build configuration list for PBXProject "MusleMate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F96096B2BAA8CC80046600D /* Debug */,
+				9F96096C2BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F96096D2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F96096E2BAA8CC80046600D /* Debug */,
+				9F96096F2BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F9609712BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F9609722BAA8CC80046600D /* Debug */,
+				9F9609732BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F9609742BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F9609752BAA8CC80046600D /* Debug */,
+				9F9609762BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F9609772BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMateUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F9609782BAA8CC80046600D /* Debug */,
+				9F9609792BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F96097A2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F96097B2BAA8CC80046600D /* Debug */,
+				9F96097C2BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F96097D2BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F96097E2BAA8CC80046600D /* Debug */,
+				9F96097F2BAA8CC80046600D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9F9609192BAA8CC50046600D /* Project object */;
+}
