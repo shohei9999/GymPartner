@@ -16,15 +16,18 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
+    // UserDefaultsキー
+    private let userDefaultsKey = "receivedData"
+    
     // 受信したデータを保持する配列
-    @StateObject private var sessionDelegate = WatchSessionDelegate()
+    @StateObject private var sessionDelegate = WatchSessionDelegate(userDefaultsKey: "receivedData") // WatchSessionDelegateの初期化時にuserDefaultsKeyを渡す
 
     var body: some View {
         VStack {
             // メッセージ送信用のボタン
-            Button("Send Message to iPhone") {
-                sessionDelegate.sendMessageToiPhone()
-            }
+//            Button("Send Message to iPhone") {
+//                sessionDelegate.sendMessageToiPhone()
+//            }
             
             // 受信したデータをリスト表示する
             List(sessionDelegate.receivedData, id: \.self) { data in
@@ -36,6 +39,11 @@ struct ContentView: View {
             print("onAppear")
             // WCSessionを有効化し、受信処理を開始する
             sessionDelegate.activateSession()
+            
+            // UserDefaultsからデータを読み込む
+            if let storedData = UserDefaults.standard.stringArray(forKey: userDefaultsKey) {
+                sessionDelegate.receivedData = storedData
+            }
         }
     }
 }
@@ -59,13 +67,17 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     // 受信したデータを保持するプロパティ
-    @Published var receivedData: [String] = ["test"]
+    @Published var receivedData: [String] = []
+    
+    // UserDefaultsキー
+    private let userDefaultsKey: String // userDefaultsKeyを保持するプロパティを追加
 
     // WCSessionインスタンスを格納するプロパティ
     private let session = WCSession.default
 
-    override init() {
-        print("init")
+    // WatchSessionDelegateの初期化時にuserDefaultsKeyを受け取る
+    init(userDefaultsKey: String) {
+        self.userDefaultsKey = userDefaultsKey
         super.init()
         session.delegate = self
     }
@@ -73,21 +85,18 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     // WCSessionの有効化
     func activateSession() {
         if WCSession.isSupported() {
-            print("セッションアクティベート")
             session.activate()
         }
     }
 
     // メッセージ受信時の処理
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("メッセージ受信時の処理")
-        print(message["data"])
         if let receivedData = message["data"] as? [String] {
             // 受信したデータを更新
             DispatchQueue.main.async {
-                print("receivedData: ")
-                print(receivedData)
                 self.receivedData = receivedData
+                // UserDefaultsにデータを保存
+                UserDefaults.standard.set(receivedData, forKey: self.userDefaultsKey)
             }
         }
     }
@@ -100,6 +109,9 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     }
 }
 
+
+
 #Preview {
     ContentView()
 }
+
