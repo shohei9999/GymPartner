@@ -15,16 +15,13 @@ struct ContentView: View {
     @StateObject private var sessionDelegate = WatchSessionDelegate(userDefaultsKey: "receivedData") // WatchSessionDelegateの初期化時にuserDefaultsKeyを渡す
 
     var body: some View {
-        VStack {
-            // メッセージ送信用のボタン
-//            Button("Send Message to iPhone") {
-//                sessionDelegate.sendMessageToiPhone()
-//            }
-            
-            // 受信したデータをリスト表示する
+        NavigationView {
             List(sessionDelegate.receivedData, id: \.self) { data in
-                Text(data)
+                NavigationLink(destination: WeightsAndTimesView(itemName: data)) { // リストを選択した際にWeightsAndTimesViewに遷移し、選択したリスト名をパラメータとして渡す
+                    Text(data)
+                }
             }
+            .navigationTitle("Workout menu")
         }
         .padding()
         .onAppear {
