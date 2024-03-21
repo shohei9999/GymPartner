@@ -4,14 +4,6 @@
 //
 //  Created by 林翔平 on 2024/03/20.
 //
-
-//
-//  ContentView.swift
-//  MusleMate Watch App
-//
-//  Created by 林翔平 on 2024/03/20.
-//
-
 import SwiftUI
 import WatchConnectivity
 
