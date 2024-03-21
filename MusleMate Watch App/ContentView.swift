@@ -21,11 +21,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            
             // メッセージ送信用のボタン
             Button("Send Message to iPhone") {
                 sessionDelegate.sendMessageToiPhone()

@@ -138,9 +138,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
         guard session.activationState == .activated else { return }
         do {
             let message: [String: Any] = ["data": favoriteItems]
-            try session.sendMessage(message, replyHandler: nil, errorHandler: nil)
-        } catch {
-            print("Error sending favorite items to Apple Watch: \(error.localizedDescription)")
+            session.sendMessage(message, replyHandler: nil, errorHandler: nil)
         }
     }
 
@@ -156,7 +154,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
 }
 
 struct ListItem: Identifiable, Codable {
-    let id = UUID()
+    var id = UUID()
     let name: String
     var isFavorite: Bool
 }
