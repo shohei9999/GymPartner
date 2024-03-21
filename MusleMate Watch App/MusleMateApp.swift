@@ -11,7 +11,7 @@ import SwiftUI
 struct MusleMate_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TopView()
         }
     }
 }

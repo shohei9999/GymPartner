@@ -23,6 +23,7 @@
 		9F96095E2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */; };
 		9F9609682BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */; };
 		9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */; };
+		9FB2BA622BAC298A002246AF /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA612BAC298A002246AF /* TopView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		9F9609632BAA8CC80046600D /* MusleMate Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MusleMate Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9FB2BA612BAC298A002246AF /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				9F96094C2BAA8CC70046600D /* MusleMateApp.swift */,
+				9FB2BA612BAC298A002246AF /* TopView.swift */,
 				9F96094E2BAA8CC70046600D /* ContentView.swift */,
 				9F9609502BAA8CC80046600D /* Assets.xcassets */,
 				9F9609522BAA8CC80046600D /* Preview Content */,
@@ -496,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F96094F2BAA8CC70046600D /* ContentView.swift in Sources */,
+				9FB2BA622BAC298A002246AF /* TopView.swift in Sources */,
 				9F96094D2BAA8CC70046600D /* MusleMateApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
