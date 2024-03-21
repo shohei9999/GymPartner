@@ -9,44 +9,107 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
-    @State private var items = [
-        ListItem(name: "Apple", isFavorite: false),
-        ListItem(name: "Banana", isFavorite: false),
-        ListItem(name: "Orange", isFavorite: false),
-        ListItem(name: "Grapes", isFavorite: false),
-        ListItem(name: "Pineapple", isFavorite: false)
-    ]
-
+    @State private var items = [ListItem]()
+    @State private var newItemName = ""
     @StateObject private var sessionDelegate = WatchSessionDelegate()
+    @State private var isAddingNewItem = false // 入力フィールドを制御するためのフラグ
 
     var body: some View {
         NavigationView {
-            List(items.indices, id: \.self) { index in
-                Button(action: {
-                    self.items[index].isFavorite.toggle()
-                    self.sessionDelegate.sendFavoriteItemsToWatch(favoriteItems: self.favoriteItems)
-                }) {
+            List {
+                ForEach(items) { item in
+                    Button(action: {
+                        toggleFavorite(item: item)
+                    }) {
+                        HStack {
+                            Text(item.name)
+                            Spacer()
+                            Image(systemName: item.isFavorite ? "star.fill" : "star")
+                                .foregroundColor(item.isFavorite ? .yellow : .gray)
+                        }
+                    }
+                }
+                .onDelete(perform: deleteItems)
+            }
+            .navigationTitle("Workout Menu")
+            .navigationBarItems(trailing: Button(action: {
+                isAddingNewItem = true // ボタンがタップされたら入力フィールドを表示する
+            }) {
+                Image(systemName: "plus")
+            })
+            .sheet(isPresented: $isAddingNewItem) { // 入力フィールドをモーダルで表示する
+                VStack {
+                    TextField("Enter new item name", text: $newItemName)
+                        .padding()
                     HStack {
-                        Text(self.items[index].name)
                         Spacer()
-                        Image(systemName: self.items[index].isFavorite ? "star.fill" : "star")
-                            .foregroundColor(self.items[index].isFavorite ? .yellow : .gray)
+                        Button("Cancel") {
+                            isAddingNewItem = false // 入力フィールドを閉じる
+                        }
+                        .padding()
+                        Button("Add Item") {
+                            addItem()
+                            isAddingNewItem = false // 入力フィールドを閉じる
+                        }
+                        .padding()
                     }
                 }
             }
-            .navigationTitle("Workout Menu")
         }
         .onAppear {
-            self.sessionDelegate.activateSession()
+            loadItems()
+            sessionDelegate.activateSession()
         }
     }
 
+    private func toggleFavorite(item: ListItem) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            items[index].isFavorite.toggle()
+            saveItems()
+            sessionDelegate.sendFavoriteItemsToWatch(favoriteItems: favoriteItems)
+        }
+    }
+
+    private func deleteItems(at offsets: IndexSet) {
+        items.remove(atOffsets: offsets)
+        saveItems()
+    }
+
+    private func addItem() {
+        guard !newItemName.isEmpty else { return }
+        let newItem = ListItem(name: newItemName, isFavorite: false)
+        items.append(newItem)
+        saveItems()
+        newItemName = ""
+    }
+
     private var favoriteItems: [String] {
-        return self.items.filter { $0.isFavorite }.map { $0.name }
+        return items.filter { $0.isFavorite }.map { $0.name }
+    }
+
+    private func saveItems() {
+        if let encodedData = try? JSONEncoder().encode(items) {
+            UserDefaults.standard.set(encodedData, forKey: "items")
+        }
+    }
+
+    private func loadItems() {
+        if let savedData = UserDefaults.standard.data(forKey: "items"),
+           let decodedData = try? JSONDecoder().decode([ListItem].self, from: savedData) {
+            items = decodedData
+        }
     }
 }
 
 class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("sessionDidBecomeInactive")
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("sessionDidDeactivate")
+    }
+    
     private let session = WCSession.default
 
     override init() {
@@ -54,59 +117,49 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
         session.delegate = self
     }
 
-    // WCSessionが非アクティブになったときの処理
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("WCSession did become inactive")
-    }
-    
-    // WCSessionが無効になったときの処理
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("WCSession did deactivate")
-    }
-    
-    internal func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        // Apple Watchからのデータを処理する
-        print("session - no1")
-        if applicationContext["favoriteData"] is String {
-            print("session - no2")
-            // データをアプリケーションの状態に反映するなどの処理を行う
-            // 例えば、お気に入りのデータをローカルのリストに追加するなど
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        switch activationState {
+        case .activated:
+            print("WCSession activated successfully")
+        case .inactive:
+            print("WCSession inactive")
+        case .notActivated:
+            print("WCSession not activated")
+        @unknown default:
+            print("Unknown activation state")
         }
-    }
-    
-    func activateSession() {
-        if WCSession.isSupported() {
-            session.activate()
+        
+        if let error = error {
+            print("Activation error: \(error.localizedDescription)")
         }
     }
 
     func sendFavoriteItemsToWatch(favoriteItems: [String]) {
         guard session.activationState == .activated else { return }
         do {
-//            let message: [String: Any] = ["data": [favoriteItems]]
-            let message: [String: Any] = ["data": ["Message from iphone"]]
-            print(message)
-//            try session.updateApplicationContext(message)
+            let message: [String: Any] = ["data": favoriteItems]
             try session.sendMessage(message, replyHandler: nil, errorHandler: nil)
         } catch {
             print("Error sending favorite items to Apple Watch: \(error.localizedDescription)")
         }
     }
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func activateSession() {
+        if WCSession.isSupported() {
+            session.activate()
+        }
+    }
+
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        // Apple Watchからのメッセージを処理する
         print("didReceiveMessage!!!")
     }
 }
 
-struct ListItem: Identifiable {
+struct ListItem: Identifiable, Codable {
     let id = UUID()
     let name: String
     var isFavorite: Bool
 }
-
-
 
 #Preview {
     ContentView()
