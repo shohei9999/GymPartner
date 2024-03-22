@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TopView: View {
     @State private var isShowingContentView = false
+    @State private var isShowingHistoryView = false // 履歴画面表示制御
     
     var body: some View {
         VStack {
@@ -44,6 +45,9 @@ struct TopView: View {
                 Image(systemName: "book.pages.fill")
                     .font(.system(size: 30))
                     .padding()
+                    .onTapGesture {
+                        isShowingHistoryView = true
+                    }
                 
                 Spacer()
             }
@@ -53,8 +57,12 @@ struct TopView: View {
         .fullScreenCover(isPresented: $isShowingContentView, content: {
             ContentView()
         })
+        .fullScreenCover(isPresented: $isShowingHistoryView, content: {
+            HistoryView()
+        })
     }
 }
+
 
 #Preview {
     TopView()
