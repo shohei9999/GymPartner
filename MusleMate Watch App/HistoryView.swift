@@ -31,22 +31,32 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        List(historyItems) { item in
-            VStack(alignment: .leading) {
-                Text(item.time)
-                    .font(.caption)
-                Text(item.menu)
-                    .font(.caption)
-                Text("\(item.weight) \(item.unit), \(item.reps) reps")
-                    .font(.caption)
+        NavigationView {
+            VStack {
+                if historyItems.isEmpty {
+                    Text("Oops! Looks like you haven't logged any workouts today.")
+                        .font(.body)
+                        .padding()
+                } else {
+                    List(historyItems) { item in
+                        VStack(alignment: .leading) {
+                            Text(item.time)
+                                .font(.caption)
+                            Text(item.menu)
+                                .font(.caption)
+                            Text("\(item.weight) \(item.unit), \(item.reps) reps")
+                                .font(.caption)
+                        }
+                        .padding()
+                    }
+                }
             }
-            .padding()
-        }
-        .navigationTitle(dateFormatter.string(from: Date()))
-        .onAppear {
-            loadDataFromUserDefaults()
-            sessionDelegate.activateSession()
-            // 他の画面でデータの受信や保存を行う処理を追加できます
+            .navigationTitle(dateFormatter.string(from: Date()))
+            .onAppear {
+                loadDataFromUserDefaults()
+                sessionDelegate.activateSession()
+                sessionDelegate.sendMessageToiPhone()
+            }
         }
     }
     
@@ -83,7 +93,6 @@ struct HistoryView: View {
         return time
     }
 }
-
 
 #Preview {
     HistoryView()

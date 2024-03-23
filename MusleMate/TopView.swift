@@ -13,6 +13,10 @@ struct TopView: View {
         "Graphs",
         "Settings"
     ]
+    
+    // 受信したデータを保持する配列
+    @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData") // DataTransferManagerの初期化時にuserDefaultsKeyを渡す
+
     var body: some View {
         NavigationView {
             List(items, id: \.self) { item in
@@ -21,7 +25,11 @@ struct TopView: View {
                 }
             }
             .navigationTitle("MasleMate")
+        }.onAppear {
+            // WCSessionを有効化し、受信処理を開始する
+            sessionDelegate.activateSession()
         }
+
     }
     
     // 遷移先のViewを選択肢に応じて切り替える関数
@@ -29,12 +37,13 @@ struct TopView: View {
         switch item {
         case "Workout Menu":
             return AnyView(ContentView())
+        case "Workout Log":
+            return AnyView(HistoryView())
         default:
             return AnyView(Text("Under Construction")) // その他の場合は仮のViewを表示
         }
     }
 }
-
 
 #Preview {
     TopView()

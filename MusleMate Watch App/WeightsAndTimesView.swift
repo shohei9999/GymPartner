@@ -8,9 +8,9 @@ import SwiftUI
 
 struct WeightsAndTimesView: View {
     var itemName: String // itemNameを保持するプロパティ
-    @State private var selectedWeight: Int = 50
+    @State private var selectedWeight: Int = 99
     @State private var selectedUnit: WeightUnit = .kg
-    @State private var selectedRep: Int = 10
+    @State private var selectedRep: Int = 9
     @State private var isShowingPopup = false // ポップアップ表示制御
     
     enum WeightUnit: Int {
@@ -33,8 +33,8 @@ struct WeightsAndTimesView: View {
                     .frame(width: geometry.size.width * 0.40)
                     
                     Picker("Unit", selection: $selectedUnit) {
-                        Text("kg").tag(WeightUnit.kg.rawValue)
                         Text("lb").tag(WeightUnit.lb.rawValue)
+                        Text("kg").tag(WeightUnit.kg.rawValue)
                     }
                     .pickerStyle(WheelPickerStyle())
                     .frame(width: geometry.size.width * 0.25)
@@ -57,6 +57,7 @@ struct WeightsAndTimesView: View {
                 
                 Button("OK") {
                     saveDataToUserDefaults()
+                    sessionDelegate.sendMessageToiPhone()
                     isShowingPopup = true // ポップアップ表示
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         // 1秒後にポップアップを閉じる
@@ -93,6 +94,7 @@ struct WeightsAndTimesView: View {
             "start_time": "",
             "end_time": "",
             "deleted_flg": false,
+            "sendStatus": false,
             "memo": ""
         ]
         

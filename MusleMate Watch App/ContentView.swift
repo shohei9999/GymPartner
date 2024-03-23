@@ -23,7 +23,8 @@ struct ContentView: View {
                     .navigationTitle("Workout menu")
             } else {
                 List(sessionDelegate.receivedData, id: \.self) { data in
-                    NavigationLink(destination: WeightsAndTimesView(itemName: data)) {
+                    NavigationLink(destination: WeightsAndTimesView(itemName: data)
+                                        .environmentObject(sessionDelegate)) { // WatchSessionDelegateを環境オブジェクトとして渡す
                         Text(data)
                     }
                 }
@@ -36,6 +37,7 @@ struct ContentView: View {
             if let storedData = UserDefaults.standard.stringArray(forKey: userDefaultsKey) {
                 sessionDelegate.receivedData = storedData
             }
+            sessionDelegate.sendMessageToiPhone()
         }
     }
 }

@@ -65,8 +65,45 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     
     // iPhoneにメッセージを送信するメソッド
     func sendMessageToiPhone() {
-        let message = ["data": ["Message from Apple Watch"]]
-        print(message)
-        session.sendMessage(message, replyHandler: nil, errorHandler: nil)
+        // UserDefaultsからデータを取得
+        let userDefaults = UserDefaults.standard.dictionaryRepresentation()
+        // ワークアウトのデータを格納する配列
+        var workoutDataArray: [[String: Any]] = []
+        
+        // UserDefaultsから取得したデータをフィルタリング
+        for (key, value) in userDefaults {
+            // キーが"workout_"で始まり、かつsendStatusがfalseのデータを抽出
+            if key.starts(with: "workout_"), let data = value as? [String: Any], let sendStatus = data["sendStatus"] as? Int, sendStatus == 0 {
+                var updatedData: [String: Any] = [:]
+                updatedData["key"] = key // キーをデータに追加
+                updatedData["data"] = data // データを追加
+                workoutDataArray.append(updatedData)
+                print(workoutDataArray)
+                // iPhoneにメッセージを送信
+                session.sendMessage(["workoutDataArray": workoutDataArray], replyHandler: { replyMessage in
+                    // メッセージの送信が成功した場合の処理
+                    print("Message sent successfully")
+                }, errorHandler: { error in
+                    // メッセージの送信が失敗した場合の処理
+                    print("Error sending message: \(error.localizedDescription)")
+                })
+//                session.sendMessage(updatedData, replyHandler: { replyMessage in
+//                    // 送信が成功した場合、該当データのsendStatusをtrueに変更
+//                    if let sentKey = replyMessage["sentKey"] as? String, sentKey == key {
+//                        print("Message sent successfully for key: \(sentKey)")
+//                        DispatchQueue.main.async {
+//                            // 該当データのsendStatusをtrueに更新
+//                            if var updatedValue = UserDefaults.standard.dictionary(forKey: sentKey) {
+//                                updatedValue["sendStatus"] = 1
+//                                UserDefaults.standard.set(updatedValue, forKey: sentKey)
+//                            }
+//                        }
+//                    }
+//                }, errorHandler: { error in
+//                    // 送信が失敗した場合、エラーを出力
+//                    print("Error sending message for key \(key): \(error.localizedDescription)")
+//                })
+            }
+        }
     }
 }
