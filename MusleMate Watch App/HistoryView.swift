@@ -4,84 +4,86 @@
 //
 //  Created by 林翔平 on 2024/03/22.
 //
-
 import SwiftUI
 
 struct HistoryView: View {
     @State private var historyItems: [HistoryItem] = []
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter
+    }()
     
+    // WatchSessionDelegateのインスタンスを共有する
+    @EnvironmentObject var sessionDelegate: WatchSessionDelegate
+
     struct HistoryItem: Identifiable {
         let id = UUID()
-        let date: Date
-        let itemName: String
+        let time: String
+        let menu: String
         let weight: Int
-        let unit: WeightUnit
+        let unit: String
         let reps: Int
         
-        var formattedDate: String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm"
-            return dateFormatter.string(from: date)
-        }
-    }
-    
-    enum WeightUnit: Int {
-        case kg, lb
-        
-        var description: String {
-            switch self {
-            case .kg:
-                return "kg"
-            case .lb:
-                return "lb"
-            }
+        var formattedString: String {
+            "\(time)\n\(menu)\n\(weight) \(unit), \(reps) reps"
         }
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 10) {
-                ForEach(historyItems) { item in
-                    HStack {
-                        Text(item.formattedDate)
-                        Text("\(item.itemName)")
-                        Text("\(item.weight) \(item.unit.description)")
-                        Text("\(item.reps) reps")
-                    }
-                    .padding()
-                }
+        List(historyItems) { item in
+            VStack(alignment: .leading) {
+                Text(item.time)
+                    .font(.caption)
+                Text(item.menu)
+                    .font(.caption)
+                Text("\(item.weight) \(item.unit), \(item.reps) reps")
+                    .font(.caption)
             }
             .padding()
         }
+        .navigationTitle(dateFormatter.string(from: Date()))
         .onAppear {
             loadDataFromUserDefaults()
+            sessionDelegate.activateSession()
+            // 他の画面でデータの受信や保存を行う処理を追加できます
         }
-        .navigationTitle("Workout Log")
     }
     
     private func loadDataFromUserDefaults() {
         let userDefaults = UserDefaults.standard
-        let itemNames = userDefaults.dictionaryRepresentation().keys.filter { $0.contains("_weight") }.map { $0.replacingOccurrences(of: "_weight", with: "") }
-
+        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout") }.sorted()
+        
         var items: [HistoryItem] = []
         
-        for itemName in itemNames {
-            if let weight = userDefaults.object(forKey: "\(itemName)_weight") as? Int,
-               let unitRawValue = userDefaults.object(forKey: "\(itemName)_unit") as? Int,
-               let unit = WeightUnit(rawValue: unitRawValue),
-               let reps = userDefaults.object(forKey: "\(itemName)_reps") as? Int,
-               let date = userDefaults.object(forKey: "\(itemName)_date") as? Date {
+        for key in keys {
+            if let data = userDefaults.object(forKey: key) as? [String: Any],
+               let time = key.components(separatedBy: "_").last,
+               let menu = data["menu"] as? String,
+               let weight = data["weight"] as? Int,
+               let unit = data["unit"] as? Int,
+               let reps = data["reps"] as? Int {
                 
-                items.append(HistoryItem(date: date, itemName: itemName, weight: weight, unit: unit, reps: reps))
-            } else {
-                print("Failed to load data for item: \(itemName)")
+                let unitString = unit == 0 ? "kg" : "lb"
+                let formattedTime = formatTime(time)
+                items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unitString, reps: reps))
             }
         }
         
-        // 日付の昇順でソート
-        historyItems = items.sorted(by: { $0.date < $1.date })
+        historyItems = items
+    }
+    
+    private func formatTime(_ time: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        if let date = formatter.date(from: time) {
+            formatter.dateFormat = "HH:mm:ss"
+            return formatter.string(from: date)
+        }
+        return time
     }
 }
+
 
 #Preview {
     HistoryView()
