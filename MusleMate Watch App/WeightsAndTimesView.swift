@@ -11,6 +11,7 @@ struct WeightsAndTimesView: View {
     @State private var selectedWeight: Int = 50
     @State private var selectedUnit: WeightUnit = .kg
     @State private var selectedRep: Int = 10
+    @State private var isShowingPopup = false // ポップアップ表示制御
     
     enum WeightUnit: Int {
         case kg, lb
@@ -56,12 +57,21 @@ struct WeightsAndTimesView: View {
                 
                 Button("OK") {
                     saveDataToUserDefaults()
-                    presentationMode.wrappedValue.dismiss()
+                    isShowingPopup = true // ポップアップ表示
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        // 1秒後にポップアップを閉じる
+                        isShowingPopup = false
+                        // 1秒後に遷移する処理
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 .padding()
             }
         }
         .navigationTitle(itemName)
+        .alert(isPresented: $isShowingPopup) {
+            Alert(title: Text("Done!"))
+        }
         .onAppear {
             loadDataFromUserDefaults()
         }
@@ -70,9 +80,23 @@ struct WeightsAndTimesView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     private func saveDataToUserDefaults() {
-        UserDefaults.standard.set(selectedWeight, forKey: "\(itemName)_weight")
-        UserDefaults.standard.set(selectedUnit.rawValue, forKey: "\(itemName)_unit")
-        UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let key = "workout_\(dateFormatter.string(from: currentDate))"
+        
+        let value: [String: Any] = [
+            "menu": itemName,
+            "weight": selectedWeight,
+            "unit": selectedUnit.rawValue,
+            "reps": selectedRep,
+            "start_time": "",
+            "end_time": "",
+            "deleted_flg": false,
+            "memo": ""
+        ]
+        
+        UserDefaults.standard.set(value, forKey: key)
     }
     
     private func loadDataFromUserDefaults() {
