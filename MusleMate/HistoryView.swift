@@ -28,49 +28,54 @@ struct HistoryView: View {
             // データを表示するForEach
             ScrollView {
                 VStack(alignment: .leading) {
-                    ForEach(workoutItems.keys.sorted(), id: \.self) { key in
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(key)
-                                .font(.headline)
-                                .padding(.leading, 10)
-                                .padding(.top, 10)
-                            ForEach(workoutItems[key]!, id: \.id) { item in
-                                VStack(alignment: .leading, spacing: 5) {
-                                    HStack {
-                                        Image(systemName: "figure.cross.training")
-                                            .font(.system(size: 30))
-                                            .padding(.trailing, 5)
-                                        VStack(alignment: .leading, spacing: 5) {
-                                            HStack {
-                                                Text(item.menu)
-                                                    .fontWeight(.bold)
-                                                    .lineLimit(1)
-                                                Spacer()
-                                                Text("\(item.date) \(item.time)")  // 日付と時間を結合して表示
-                                                    .foregroundColor(.gray)
+                    if workoutItems.isEmpty {
+                        Text("Oops, it seems there are no training records on record.")
+                            .font(.body) // フォントをbodyに設定
+                            .padding()
+                    } else {
+                        ForEach(workoutItems.keys.sorted(), id: \.self) { key in
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text(key)
+                                    .font(.headline)
+                                    .padding(.leading, 10)
+                                    .padding(.top, 10)
+                                ForEach(workoutItems[key]!, id: \.id) { item in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        HStack {
+                                            Image(systemName: "figure.cross.training")
+                                                .font(.system(size: 30))
+                                                .padding(.trailing, 5)
+                                            VStack(alignment: .leading, spacing: 5) {
+                                                HStack {
+                                                    Text(item.menu)
+                                                        .fontWeight(.bold)
+                                                        .lineLimit(1)
+                                                    Spacer()
+                                                    Text("\(item.date) \(item.time)")  // 日付と時間を結合して表示
+                                                        .foregroundColor(.gray)
+                                                }
+                                                .padding(.vertical, 5)
+                                                HStack {
+                                                    Text(String(format: "%.2f", item.weight) + "\(item.unit)")
+                                                        .foregroundColor(.blue)
+                                                    Text("\(item.reps) reps")
+                                                        .foregroundColor(.blue)
+                                                }
+                                                .padding(.vertical, 5)
                                             }
-                                            .padding(.vertical, 5)
-                                            HStack {
-                                                Text(String(format: "%.2f", item.weight) + "\(item.unit) lb")
-                                                    .foregroundColor(.blue)
-                                                Text("\(item.reps) reps")
-                                                    .foregroundColor(.blue)
-                                            }
-                                            .padding(.vertical, 5)
                                         }
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
                                     }
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 5)
                                 }
                             }
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
                         }
                     }
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
                 }
-
             }
         }
         .onAppear {
@@ -85,7 +90,7 @@ struct HistoryView: View {
         
         // workout_から始まるキーをフィルタリングしてソート
         let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") }.sorted()
-
+        
         var itemsDictionary: [String: [WorkoutItem]] = [:]
 
         for key in keys {

@@ -19,7 +19,6 @@ struct ContentView: View {
             if sessionDelegate.receivedData.isEmpty {
                 Text("Please add a new workout menu on your iPhone.")
                     .font(.body)
-                    .foregroundColor(.gray)
                     .navigationTitle("Workout menu")
             } else {
                 List(sessionDelegate.receivedData, id: \.self) { data in

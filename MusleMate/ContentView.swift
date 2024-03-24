@@ -16,20 +16,27 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    Button(action: {
-                        toggleFavorite(item: item)
-                    }) {
-                        HStack {
-                            Text(item.name)
-                            Spacer()
-                            Image(systemName: item.isFavorite ? "star.fill" : "star")
-                                .foregroundColor(item.isFavorite ? .yellow : .gray)
+            Group {
+                if items.isEmpty { // itemsが空の場合の表示
+                    Text("Please add a new workout menu.")
+                        .font(.body) // フォントをbodyに設定
+                } else {
+                    List {
+                        ForEach(items) { item in
+                            Button(action: {
+                                toggleFavorite(item: item)
+                            }) {
+                                HStack {
+                                    Text(item.name)
+                                    Spacer()
+                                    Image(systemName: item.isFavorite ? "star.fill" : "star")
+                                        .foregroundColor(item.isFavorite ? .yellow : .gray)
+                                }
+                            }
                         }
+                        .onDelete(perform: deleteItems)
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .navigationTitle("Workout Menu")
             .navigationBarItems(trailing: Button(action: {

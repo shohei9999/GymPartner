@@ -80,29 +80,29 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
                 workoutDataArray.append(updatedData)
                 print(workoutDataArray)
                 // iPhoneにメッセージを送信
+                print("iPhoneにメッセージを送信")
+                let session = WCSession.default
+                if session.activationState == .activated {
+                    print("WatchConnectivityセッションがアクティブです。")
+                } else {
+                    print("WatchConnectivityセッションがアクティブではありません。")
+                }
                 session.sendMessage(["workoutDataArray": workoutDataArray], replyHandler: { replyMessage in
-                    // メッセージの送信が成功した場合の処理
-                    print("Message sent successfully")
+                    // 送信が成功した場合、該当データのsendStatusをtrueに変更
+                    if let sentKey = replyMessage["sentKey"] as? String, sentKey == key {
+                        print("Message sent successfully for key: \(sentKey)")
+                        DispatchQueue.main.async {
+                            // 該当データのsendStatusをtrueに更新
+                            if var updatedValue = UserDefaults.standard.dictionary(forKey: sentKey) {
+                                updatedValue["sendStatus"] = 1
+                                UserDefaults.standard.set(updatedValue, forKey: sentKey)
+                            }
+                        }
+                    }
                 }, errorHandler: { error in
                     // メッセージの送信が失敗した場合の処理
                     print("Error sending message: \(error.localizedDescription)")
                 })
-//                session.sendMessage(updatedData, replyHandler: { replyMessage in
-//                    // 送信が成功した場合、該当データのsendStatusをtrueに変更
-//                    if let sentKey = replyMessage["sentKey"] as? String, sentKey == key {
-//                        print("Message sent successfully for key: \(sentKey)")
-//                        DispatchQueue.main.async {
-//                            // 該当データのsendStatusをtrueに更新
-//                            if var updatedValue = UserDefaults.standard.dictionary(forKey: sentKey) {
-//                                updatedValue["sendStatus"] = 1
-//                                UserDefaults.standard.set(updatedValue, forKey: sentKey)
-//                            }
-//                        }
-//                    }
-//                }, errorHandler: { error in
-//                    // 送信が失敗した場合、エラーを出力
-//                    print("Error sending message for key \(key): \(error.localizedDescription)")
-//                })
             }
         }
     }

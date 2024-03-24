@@ -53,11 +53,21 @@ extension DataTransferManager: WCSessionDelegate {
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        if let dataArray = message["workoutDataArray"] as? [[String: Any]], let workoutData = dataArray.first, let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
-            // 受信したデータをUserDefaultsに保存
-            UserDefaults.standard.set(data, forKey: key)
+        if let dataArray = message["workoutDataArray"] as? [[String: Any]] {
+            for workoutData in dataArray {
+                if let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
+                    // 受信したデータをUserDefaultsに保存
+                    UserDefaults.standard.set(data, forKey: key)
+                    
+                    let userDefaults = UserDefaults.standard
+                    
+                    // workout_から始まるキーをフィルタリングしてソート
+                    let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") }.sorted()
+                }
+            }
         }
     }
+
 
 
     // 以下のメソッドは必要に応じて実装

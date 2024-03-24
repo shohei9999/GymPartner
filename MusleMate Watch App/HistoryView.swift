@@ -71,12 +71,11 @@ struct HistoryView: View {
                let time = key.components(separatedBy: "_").last,
                let menu = data["menu"] as? String,
                let weight = data["weight"] as? Int,
-               let unit = data["unit"] as? Int,
+               let unit = data["unit"] as? String,
                let reps = data["reps"] as? Int {
                 
-                let unitString = unit == 0 ? "kg" : "lb"
                 let formattedTime = formatTime(time)
-                items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unitString, reps: reps))
+                items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
             }
         }
         
