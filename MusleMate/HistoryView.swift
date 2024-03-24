@@ -65,15 +65,14 @@ struct HistoryView: View {
                             }
                         }
                     }
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
                 }
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
 
             }
         }
-        .navigationTitle("Workout History")
         .onAppear {
             // UserDefaultsからデータを取得してworkoutItemsに格納
             loadDataFromUserDefaults()
