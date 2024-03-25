@@ -65,6 +65,7 @@ struct HistoryView: View {
         let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout") }.sorted()
         
         var items: [HistoryItem] = []
+        let todayDateString = dateFormatter.string(from: Date())
         
         for key in keys {
             if let data = userDefaults.object(forKey: key) as? [String: Any],
@@ -72,10 +73,15 @@ struct HistoryView: View {
                let menu = data["menu"] as? String,
                let weight = data["weight"] as? Int,
                let unit = data["unit"] as? String,
-               let reps = data["reps"] as? Int {
+               let reps = data["reps"] as? Int,
+               let workoutDate = formatTimeToDate(time) {
                 
-                let formattedTime = formatTime(time)
-                items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
+                let workoutDateString = dateFormatter.string(from: workoutDate)
+                
+                if workoutDateString == todayDateString {
+                    let formattedTime = formatTime(time)
+                    items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
+                }
             }
         }
         
@@ -90,6 +96,12 @@ struct HistoryView: View {
             return formatter.string(from: date)
         }
         return time
+    }
+    
+    private func formatTimeToDate(_ time: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        return formatter.date(from: time)
     }
 }
 
