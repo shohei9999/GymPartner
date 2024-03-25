@@ -31,22 +31,32 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        List(historyItems) { item in
-            VStack(alignment: .leading) {
-                Text(item.time)
-                    .font(.caption)
-                Text(item.menu)
-                    .font(.caption)
-                Text("\(item.weight) \(item.unit), \(item.reps) reps")
-                    .font(.caption)
+        NavigationView {
+            VStack {
+                if historyItems.isEmpty {
+                    Text("Oops! Looks like you haven't logged any workouts today.")
+                        .font(.body)
+                        .padding()
+                } else {
+                    List(historyItems) { item in
+                        VStack(alignment: .leading) {
+                            Text(item.time)
+                                .font(.caption)
+                            Text(item.menu)
+                                .font(.caption)
+                            Text("\(item.weight) \(item.unit), \(item.reps) reps")
+                                .font(.caption)
+                        }
+                        .padding()
+                    }
+                }
             }
-            .padding()
-        }
-        .navigationTitle(dateFormatter.string(from: Date()))
-        .onAppear {
-            loadDataFromUserDefaults()
-            sessionDelegate.activateSession()
-            // 他の画面でデータの受信や保存を行う処理を追加できます
+            .navigationTitle(dateFormatter.string(from: Date()))
+            .onAppear {
+                loadDataFromUserDefaults()
+                sessionDelegate.activateSession()
+                sessionDelegate.sendMessageToiPhone()
+            }
         }
     }
     
@@ -55,18 +65,23 @@ struct HistoryView: View {
         let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout") }.sorted()
         
         var items: [HistoryItem] = []
+        let todayDateString = dateFormatter.string(from: Date())
         
         for key in keys {
             if let data = userDefaults.object(forKey: key) as? [String: Any],
                let time = key.components(separatedBy: "_").last,
                let menu = data["menu"] as? String,
                let weight = data["weight"] as? Int,
-               let unit = data["unit"] as? Int,
-               let reps = data["reps"] as? Int {
+               let unit = data["unit"] as? String,
+               let reps = data["reps"] as? Int,
+               let workoutDate = formatTimeToDate(time) {
                 
-                let unitString = unit == 0 ? "kg" : "lb"
-                let formattedTime = formatTime(time)
-                items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unitString, reps: reps))
+                let workoutDateString = dateFormatter.string(from: workoutDate)
+                
+                if workoutDateString == todayDateString {
+                    let formattedTime = formatTime(time)
+                    items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
+                }
             }
         }
         
@@ -82,8 +97,13 @@ struct HistoryView: View {
         }
         return time
     }
+    
+    private func formatTimeToDate(_ time: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        return formatter.date(from: time)
+    }
 }
-
 
 #Preview {
     HistoryView()

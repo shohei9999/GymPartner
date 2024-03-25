@@ -19,11 +19,11 @@ struct ContentView: View {
             if sessionDelegate.receivedData.isEmpty {
                 Text("Please add a new workout menu on your iPhone.")
                     .font(.body)
-                    .foregroundColor(.gray)
                     .navigationTitle("Workout menu")
             } else {
                 List(sessionDelegate.receivedData, id: \.self) { data in
-                    NavigationLink(destination: WeightsAndTimesView(itemName: data)) {
+                    NavigationLink(destination: WeightsAndTimesView(itemName: data)
+                                        .environmentObject(sessionDelegate)) { // WatchSessionDelegateを環境オブジェクトとして渡す
                         Text(data)
                     }
                 }
@@ -36,6 +36,7 @@ struct ContentView: View {
             if let storedData = UserDefaults.standard.stringArray(forKey: userDefaultsKey) {
                 sessionDelegate.receivedData = storedData
             }
+            sessionDelegate.sendMessageToiPhone()
         }
     }
 }

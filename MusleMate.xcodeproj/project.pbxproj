@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9F4FC90F2BAEA2EB00202BBB /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */; };
+		9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9102BAEE84800202BBB /* HistoryView.swift */; };
+		9F4FC9132BAEF8BC00202BBB /* DataTransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */; };
 		9F7F80432BABE536007A7176 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F80422BABE536007A7176 /* TopView.swift */; };
 		9F9609252BAA8CC50046600D /* MusleMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609242BAA8CC50046600D /* MusleMateApp.swift */; };
 		9F9609272BAA8CC50046600D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609262BAA8CC50046600D /* ContentView.swift */; };
@@ -83,6 +85,8 @@
 
 /* Begin PBXFileReference section */
 		9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
+		9F4FC9102BAEE84800202BBB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferManager.swift; sourceTree = "<group>"; };
 		9F7F80422BABE536007A7176 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		9F9609212BAA8CC50046600D /* MusleMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusleMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9609242BAA8CC50046600D /* MusleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateApp.swift; sourceTree = "<group>"; };
@@ -187,8 +191,10 @@
 				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
 				9F7F80422BABE536007A7176 /* TopView.swift */,
 				9F9609262BAA8CC50046600D /* ContentView.swift */,
+				9F4FC9102BAEE84800202BBB /* HistoryView.swift */,
 				9F9609282BAA8CC70046600D /* Assets.xcassets */,
 				9F96092A2BAA8CC70046600D /* Preview Content */,
+				9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */,
 			);
 			path = MusleMate;
 			sourceTree = "<group>";
@@ -481,8 +487,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9609272BAA8CC50046600D /* ContentView.swift in Sources */,
+				9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */,
 				9F7F80432BABE536007A7176 /* TopView.swift in Sources */,
 				9F9609252BAA8CC50046600D /* MusleMateApp.swift in Sources */,
+				9F4FC9132BAEF8BC00202BBB /* DataTransferManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
