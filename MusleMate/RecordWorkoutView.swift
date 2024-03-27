@@ -10,6 +10,7 @@ import Combine
 struct RecordWorkoutView: View {
     @State private var selectedDate = Date()
     @State private var selectedTime = Date()
+    @State private var isTimePickerModalPresented = false
     @State private var selectedWeight = 100
     @State private var selectedReps = 10
     @State private var items = [ListItem]()
@@ -18,10 +19,16 @@ struct RecordWorkoutView: View {
     @State private var isDatePickerModalPresented = false
     @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
+    @State private var initialTime = Date()
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy年 M月 d日"
+        return formatter
+    }
+    var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
         return formatter
     }
     
@@ -42,8 +49,13 @@ struct RecordWorkoutView: View {
                     selectionRow(title: "Workout", action: { onWorkoutSelection() }, display: items.indices.contains(selectedWorkoutIndex) ? "\(items[selectedWorkoutIndex].name)" : "")
                     
                     selectionRow(title: "Date", action: { isDatePickerModalPresented = true }, display: dateFormatter.string(from: selectedDate))
-                    
-                    Text("Time")
+
+                    selectionRow(title: "Time", action: {
+                        // TimePickerViewを表示する前にinitialTimeをselectedTimeに設定する
+                        initialTime = selectedTime
+                        isTimePickerModalPresented = true
+                    }, display: timeFormatter.string(from: selectedTime))
+
                     Text("Weight")
                     Text("Reps")
                 }
@@ -89,6 +101,12 @@ struct RecordWorkoutView: View {
         .overlay(
             SelectionModalView(isPresented: $isDatePickerModalPresented) {
                 DatePickerView(selectedDate: $selectedDate)
+            }
+        )
+        .overlay(
+            SelectionModalView(isPresented: $isTimePickerModalPresented) {
+                TimePickerView(selectedTime: $selectedTime, isPresented: $isTimePickerModalPresented, initialTime: $initialTime)
+
             }
         )
         .alert(isPresented: $showAlert) {
@@ -152,6 +170,81 @@ struct DatePickerView: View {
                 .cornerRadius(20)
         }
         .frame(maxHeight: 300)
+    }
+}
+
+struct TimePickerView: View {
+    @Binding var selectedTime: Date
+    @Binding var isPresented: Bool
+    @Binding var initialTime: Date
+    
+    var timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+    
+    init(selectedTime: Binding<Date>, isPresented: Binding<Bool>, initialTime: Binding<Date>) {
+        _selectedTime = selectedTime
+        _isPresented = isPresented
+        _initialTime = initialTime
+        print("init")
+    }
+    
+    var body: some View {
+        VStack {
+            DatePicker("", selection: $initialTime, displayedComponents: [.hourAndMinute])
+                .datePickerStyle(WheelDatePickerStyle())
+                .labelsHidden()
+                .padding()
+                .background(Color.white)
+                .cornerRadius(20)
+                .onAppear {
+                    // 初期時間を選択時間に設定
+                    initialTime = selectedTime
+                    print("DatePicker onAppear initialTime:\(initialTime)")
+                    print("DatePicker onAppear selectedTime:\(selectedTime)")
+                }
+            
+            HStack(spacing: 30) {
+                Spacer()
+                
+                Button("Cancel") {
+                    isPresented = false
+                    print("Cancel initialTime:\(initialTime)")
+                    print("Cancel selectedTime:\(selectedTime)")
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+                
+                Button("OK") {
+                    isPresented = false
+                    selectedTime = initialTime
+                    print("OK initialTime:\(initialTime)")
+                    print("OK selectedTime:\(selectedTime)")
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(20)
+        }
+        .frame(maxHeight: 300)
+        .background(Color.black.opacity(0.3).edgesIgnoringSafeArea(.all))
+        .onTapGesture {
+            isPresented = false
+        }
+        .onAppear {
+            // モーダルが表示される際にリストの時間を選択時間に設定
+            initialTime = selectedTime
+            print("Modal onAppear initialTime:\(initialTime)")
+            print("Modal onAppear selectedTime:\(selectedTime)")
+        }
     }
 }
 
