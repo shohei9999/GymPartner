@@ -16,6 +16,7 @@ struct RecordWorkoutView: View {
     @State private var selectedWorkoutIndex = 0
     @State private var isWorkoutModalPresented = false
     @State private var isDatePickerModalPresented = false
+    @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
     
     var dateFormatter: DateFormatter {
@@ -38,7 +39,7 @@ struct RecordWorkoutView: View {
                     .padding(.bottom, 10)
                 
                 List {
-                    selectionRow(title: "Workout", action: { isWorkoutModalPresented = true }, display: items.indices.contains(selectedWorkoutIndex) ? "\(items[selectedWorkoutIndex].name)" : "")
+                    selectionRow(title: "Workout", action: { onWorkoutSelection() }, display: items.indices.contains(selectedWorkoutIndex) ? "\(items[selectedWorkoutIndex].name)" : "")
                     
                     selectionRow(title: "Date", action: { isDatePickerModalPresented = true }, display: dateFormatter.string(from: selectedDate))
                     
@@ -53,6 +54,13 @@ struct RecordWorkoutView: View {
                 
                 HStack {
                     Spacer()
+                    Button("OK") {
+                        if items.isEmpty {
+                            showAlert = true
+                        } else {
+                            // Do something when OK button is tapped and items are not empty
+                        }
+                    }
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(.orange)
@@ -68,11 +76,6 @@ struct RecordWorkoutView: View {
                 if let savedData = UserDefaults.standard.data(forKey: "items"),
                    let decodedData = try? JSONDecoder().decode([ListItem].self, from: savedData) {
                     items = decodedData
-                    print("items１: \(items)")
-                } else {
-                    print("items１: \(items)")
-                    // UserDefaultsにitemsが存在しない場合、itemsを空の配列に設定
-                    items = []
                 }
             }
         }
@@ -88,8 +91,30 @@ struct RecordWorkoutView: View {
                 DatePickerView(selectedDate: $selectedDate)
             }
         )
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Warning"),
+                message: Text("Please first register a Workout Menu."),
+                dismissButton: .default(Text("OK")) {
+                    // OKボタンがタップされたときの処理
+                    presentationMode.wrappedValue.dismiss() // 親Viewへの遷移
+                }
+            )
+        }
     }
-
+    
+    func onWorkoutSelection() {
+        // UserDefaultsからitemsを読み込む
+        if let savedData = UserDefaults.standard.data(forKey: "items"),
+           let decodedData = try? JSONDecoder().decode([ListItem].self, from: savedData) {
+            items = decodedData
+        }
+        if items.isEmpty {
+            showAlert = true
+        } else {
+            isWorkoutModalPresented = true
+        }
+    }
     
     func selectionRow(title: String, action: @escaping () -> Void, display: String) -> some View {
         HStack {
@@ -112,6 +137,7 @@ struct RecordWorkoutView: View {
         .padding(.vertical, 5)
     }
 }
+
 
 struct DatePickerView: View {
     @Binding var selectedDate: Date
