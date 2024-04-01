@@ -20,6 +20,7 @@ struct RecordWorkoutView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var isWeightPickerModalPresented = false
     @State private var selectedUnit = weightUnits[0]
+    @State private var isRepsPickerModalPresented = false
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -54,7 +55,7 @@ struct RecordWorkoutView: View {
                     
                     selectionRow(title: "Weight", action: { isWeightPickerModalPresented = true }, display: "\(selectedWeight) \(selectedUnit)")
 
-                    Text("Reps")
+                    selectionRow(title: "Reps", action: { isRepsPickerModalPresented = true }, display: "\(selectedReps)")
                 }
                 .listStyle(InsetGroupedListStyle())
                 .padding()
@@ -108,6 +109,11 @@ struct RecordWorkoutView: View {
         .overlay(
             SelectionModalView(isPresented: $isWeightPickerModalPresented) {
                 WeightPickerView(selectedWeight: $selectedWeight, isPresented: $isWeightPickerModalPresented, selectedUnit: $selectedUnit)
+            }
+        )
+        .overlay(
+            SelectionModalView(isPresented: $isRepsPickerModalPresented) {
+                RepsPickerView(selectedReps: $selectedReps, isPresented: $isRepsPickerModalPresented)
             }
         )
         .alert(isPresented: $showAlert) {
@@ -173,6 +179,76 @@ struct DatePickerView: View {
     }
 }
 
+struct RepsPickerView: View {
+    @Binding var selectedReps: Int
+    @Binding var isPresented: Bool
+
+    @State private var temporaryReps: Int // temporaryRepsをStateとして定義する
+
+    // 1から99までの値を持つ配列
+    let repsRange = Array(1...99)
+
+    public init(selectedReps: Binding<Int>, isPresented: Binding<Bool>) {
+        self._selectedReps = selectedReps
+        self._isPresented = isPresented
+        _temporaryReps = State(initialValue: selectedReps.wrappedValue) // temporaryRepsを初期化する
+    }
+
+    var body: some View {
+        VStack {
+            Picker(selection: $temporaryReps, label: Text("")) {
+                ForEach(repsRange, id: \.self) { value in
+                    Text("\(value)").tag(value)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .labelsHidden()
+            .padding()
+            .background(Color.white)
+            .cornerRadius(20)
+            
+            HStack(spacing: 30) {
+                Spacer()
+                
+                Button("Cancel") {
+                    isPresented = false
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+                
+                Button("OK") {
+                    isPresented = false
+                    selectedReps = temporaryReps // OKボタンが押されたときに選択されたRepsを反映する
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(20)
+        }
+        .frame(maxHeight: 300)
+        .background(
+            // モーダル外をタップしたときにモーダルを閉じるためのView
+            GeometryReader { geometry in
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        isPresented = false
+                    }
+            }
+        )
+        .onAppear {
+            temporaryReps = selectedReps // モーダルが表示される際に選択されている値を一時的な値に設定する
+        }
+    }
+}
+
+
 public struct TimePickerView: View {
     @Binding var selectedTime: Date
     @Binding var isPresented: Bool
@@ -217,7 +293,7 @@ public struct TimePickerView: View {
             .background(Color.white)
             .cornerRadius(20)
         }
-        .frame(maxHeight: 300)
+        .frame(maxHeight: 340)
         .background(
             // モーダル外をタップしたときにモーダルを閉じるためのView
             Color.clear
@@ -225,7 +301,6 @@ public struct TimePickerView: View {
                     isPresented = false
                 }
         )
-        .background(Color.black.opacity(0.3).edgesIgnoringSafeArea(.all))
         .onAppear {
             // モーダルが表示される際に選択された時間を一時的な時間に設定する
             temporaryTime = selectedTime
@@ -265,8 +340,10 @@ struct WeightPickerView: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: 100)
-                .clipped()
+                .labelsHidden()
+                .padding()
+                .background(Color.white)
+                .cornerRadius(20)
             }
             .padding()
             .background(Color.white)
