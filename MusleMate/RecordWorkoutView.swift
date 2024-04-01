@@ -5,7 +5,6 @@
 //  Created by 林翔平 on 2024/03/25.
 //
 import SwiftUI
-import Combine
 
 struct RecordWorkoutView: View {
     @State private var selectedDate = Date()
@@ -19,7 +18,8 @@ struct RecordWorkoutView: View {
     @State private var isDatePickerModalPresented = false
     @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
-    @State private var initialTime = Date()
+    @State private var isWeightPickerModalPresented = false
+    @State private var selectedUnit = weightUnits[0]
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -49,10 +49,11 @@ struct RecordWorkoutView: View {
                     selectionRow(title: "Workout", action: { onWorkoutSelection() }, display: items.indices.contains(selectedWorkoutIndex) ? "\(items[selectedWorkoutIndex].name)" : "")
                     
                     selectionRow(title: "Date", action: { isDatePickerModalPresented = true }, display: dateFormatter.string(from: selectedDate))
-
+                    
                     selectionRow(title: "Time", action: { isTimePickerModalPresented = true }, display: timeFormatter.string(from: selectedTime))
+                    
+                    selectionRow(title: "Weight", action: { isWeightPickerModalPresented = true }, display: "\(selectedWeight) \(selectedUnit)")
 
-                    Text("Weight")
                     Text("Reps")
                 }
                 .listStyle(InsetGroupedListStyle())
@@ -104,6 +105,11 @@ struct RecordWorkoutView: View {
                 TimePickerView(selectedTime: $selectedTime, isPresented: $isTimePickerModalPresented)
             }
         )
+        .overlay(
+            SelectionModalView(isPresented: $isWeightPickerModalPresented) {
+                WeightPickerView(selectedWeight: $selectedWeight, isPresented: $isWeightPickerModalPresented, selectedUnit: $selectedUnit)
+            }
+        )
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Warning"),
@@ -150,7 +156,6 @@ struct RecordWorkoutView: View {
         .padding(.vertical, 5)
     }
 }
-
 
 struct DatePickerView: View {
     @Binding var selectedDate: Date
@@ -229,6 +234,92 @@ public struct TimePickerView: View {
 }
 
 
+struct WeightPickerView: View {
+    @Binding var selectedWeight: Int
+    @Binding var isPresented: Bool
+    @Binding var selectedUnit: String
+    @State private var temporaryWeight: String // temporaryWeightをString型に変更
+
+    public init(selectedWeight: Binding<Int>, isPresented: Binding<Bool>, selectedUnit: Binding<String>) {
+        self._selectedWeight = selectedWeight
+        self._isPresented = isPresented
+        self._selectedUnit = selectedUnit
+        _temporaryWeight = State(initialValue: "\(selectedWeight.wrappedValue)") // temporaryWeightをString型に初期化
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Picker(selection: $temporaryWeight, label: Text("")) {
+                    ForEach(1..<1000) { index in
+                        Text("\(index)").tag("\(index)")
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+                .frame(width: 100)
+                .clipped()
+                
+                Picker(selection: $selectedUnit, label: Text("")) {
+                    ForEach(weightUnits, id: \.self) { unit in
+                        Text(unit).tag(unit)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+                .frame(width: 100)
+                .clipped()
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(20)
+            
+            HStack(spacing: 30) {
+                Spacer()
+                
+                Button("Cancel") {
+                    isPresented = false
+                    temporaryWeight = "\(selectedWeight)" // キャンセル時に一時的な選択を元に戻す
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+                
+                Button("OK") {
+                    isPresented = false
+                    if let weight = Int(temporaryWeight) {
+                        selectedWeight = weight // OKボタンが押されたときに選択された重さを反映する
+                    }
+                }
+                .padding()
+                .foregroundColor(.orange)
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(20)
+        }
+        .frame(maxHeight: 300)
+        .background(
+            // モーダル外をタップしたときにモーダルを閉じるためのView
+            GeometryReader { geometry in
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        isPresented = false
+                        selectedWeight = Int(temporaryWeight) ?? selectedWeight // モーダル外をタップしたときにピッカーの選択を元に戻す
+                    }
+            }
+        )
+        .onAppear {
+            temporaryWeight = "\(selectedWeight)" // モーダルが表示される際に選択されている値を一時的な値に設定する
+        }
+    }
+}
+
+let weightUnits = ["kg", "lb"]
+var selectedUnit = weightUnits[0]
+
 struct SelectionView: View {
     var items: [ListItem]
     @Binding var selectedIndex: Int
@@ -237,7 +328,7 @@ struct SelectionView: View {
     var body: some View {
         VStack {
             Picker(selection: $selectedIndex, label: Text("Select")) {
-                ForEach(items.indices, id: \.self) { index in
+                ForEach(items.indices, id: \.self) { (index: Int) in // indexの型を明示的に指定
                     Text(items[index].name).tag(index)
                 }
             }
@@ -298,13 +389,6 @@ struct SelectionModalView<T: View>: View {
         }
     }
 }
-
-struct RecordWorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecordWorkoutView()
-    }
-}
-
 
 #Preview {
     RecordWorkoutView()
