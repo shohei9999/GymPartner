@@ -9,6 +9,7 @@ import SwiftUI
 struct TopView: View {
     @State private var items = [
         "Workout Menu",
+        "Record Your Workout",
         "Workout Log",
         "Graphs",
         "Settings"
@@ -37,6 +38,8 @@ struct TopView: View {
         switch item {
         case "Workout Menu":
             return AnyView(ContentView())
+        case "Record Your Workout":
+            return AnyView(RecordWorkoutView())
         case "Workout Log":
             return AnyView(HistoryView())
         default:
