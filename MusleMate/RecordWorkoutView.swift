@@ -17,6 +17,7 @@ struct RecordWorkoutView: View {
     @State private var isWorkoutModalPresented = false
     @State private var isDatePickerModalPresented = false
     @State private var showAlert = false
+    @State private var saveSuccessAlert = false
     @Environment(\.presentationMode) var presentationMode
     @State private var isWeightPickerModalPresented = false
     @State private var selectedUnit = weightUnits[0]
@@ -68,7 +69,9 @@ struct RecordWorkoutView: View {
                         if items.isEmpty {
                             showAlert = true
                         } else {
-                            // Do something when OK button is tapped and items are not empty
+                            let selectedItemName = items[selectedWorkoutIndex].name
+                            saveDataToUserDefaults(itemName: selectedItemName, selectedWeight: selectedWeight, selectedUnit: selectedUnit, selectedRep: selectedReps)
+                            saveSuccessAlert = true // 保存成功ポップアップを表示する
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -124,6 +127,13 @@ struct RecordWorkoutView: View {
                     // OKボタンがタップされたときの処理
                     presentationMode.wrappedValue.dismiss() // 親Viewへの遷移
                 }
+            )
+        }
+        .alert(isPresented: $saveSuccessAlert) {
+            Alert(
+                title: Text("Success"),
+                message: Text("Data saved successfully."),
+                dismissButton: .default(Text("OK"))
             )
         }
     }
@@ -308,6 +318,31 @@ public struct TimePickerView: View {
     }
 }
 
+private func saveDataToUserDefaults(itemName: String, selectedWeight: Int, selectedUnit: String, selectedRep: Int) {
+    let currentDate = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyyMMddHHmmss"
+    let key = "workout_\(dateFormatter.string(from: currentDate))"
+        
+    let value: [String: Any] = [
+        "menu": itemName,
+        "weight": selectedWeight,
+        "unit": selectedUnit,
+        "reps": selectedRep,
+        "start_time": "",
+        "end_time": "",
+        "deleted_flg": false,
+        "sendStatus": false,
+    ]
+    
+    // itemNameに対応するキーでデータを保存
+    UserDefaults.standard.set(value, forKey: key)
+    
+    // itemNameに対応するweight、unit、repsのデータを個別に保存
+    UserDefaults.standard.set(selectedWeight, forKey: "\(itemName)_weight")
+    UserDefaults.standard.set(selectedUnit, forKey: "\(itemName)_unit")
+    UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
+}
 
 struct WeightPickerView: View {
     @Binding var selectedWeight: Int
