@@ -70,7 +70,7 @@ struct RecordWorkoutView: View {
                             showAlert = true
                         } else {
                             let selectedItemName = items[selectedWorkoutIndex].name
-                            saveDataToUserDefaults(itemName: selectedItemName, selectedWeight: selectedWeight, selectedUnit: selectedUnit, selectedRep: selectedReps)
+                            saveDataToUserDefaults(itemName: selectedItemName, selectedWeight: selectedWeight, selectedUnit: selectedUnit, selectedRep: selectedReps, selectedDate: selectedDate) // selectedDateを渡す
                             saveSuccessAlert = true // 保存成功ポップアップを表示する
                         }
                     }
@@ -318,11 +318,11 @@ public struct TimePickerView: View {
     }
 }
 
-private func saveDataToUserDefaults(itemName: String, selectedWeight: Int, selectedUnit: String, selectedRep: Int) {
-    let currentDate = Date()
+private func saveDataToUserDefaults(itemName: String, selectedWeight: Int, selectedUnit: String, selectedRep: Int, selectedDate: Date) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyyMMddHHmmss"
-    let key = "workout_\(dateFormatter.string(from: currentDate))"
+    let dateString = dateFormatter.string(from: selectedDate)
+    let key = "workout_\(dateString)"
         
     let value: [String: Any] = [
         "menu": itemName,
@@ -343,6 +343,7 @@ private func saveDataToUserDefaults(itemName: String, selectedWeight: Int, selec
     UserDefaults.standard.set(selectedUnit, forKey: "\(itemName)_unit")
     UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
 }
+
 
 struct WeightPickerView: View {
     @Binding var selectedWeight: Int

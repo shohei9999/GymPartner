@@ -5,6 +5,7 @@
 //  Created by 林翔平 on 2024/03/21.
 //
 import SwiftUI
+import FSCalendar
 
 struct TopView: View {
     @State private var items = [
@@ -17,20 +18,28 @@ struct TopView: View {
     
     // 受信したデータを保持する配列
     @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData") // DataTransferManagerの初期化時にuserDefaultsKeyを渡す
-
+    
+    @State private var selectedDate = Date() // カレンダーで選択された日付を保持するプロパティ
+    
     var body: some View {
         NavigationView {
-            List(items, id: \.self) { item in
-                NavigationLink(destination: destinationView(for: item)) {
-                    Text(item)
+            VStack {
+                // カレンダーを表示
+                CalendarView(selectedDate: $selectedDate)
+                    .padding(.top, 20)
+                
+                List(items, id: \.self) { item in
+                    NavigationLink(destination: destinationView(for: item)) {
+                        Text(item)
+                    }
                 }
             }
-            .navigationTitle("MasleMate")
-        }.onAppear {
+            .navigationBarHidden(true) // ナビゲーションバーを非表示にする
+        }
+        .onAppear {
             // WCSessionを有効化し、受信処理を開始する
             sessionDelegate.activateSession()
         }
-
     }
     
     // 遷移先のViewを選択肢に応じて切り替える関数
@@ -44,6 +53,69 @@ struct TopView: View {
             return AnyView(HistoryView())
         default:
             return AnyView(Text("Under Construction")) // その他の場合は仮のViewを表示
+        }
+    }
+}
+
+struct CalendarView: UIViewRepresentable {
+    @Binding var selectedDate: Date // 選択された日付を保持するBinding
+
+    func makeUIView(context: Context) -> FSCalendar {
+        let calendar = FSCalendar()
+        calendar.dataSource = context.coordinator
+        calendar.delegate = context.coordinator
+        calendar.appearance.todayColor = UIColor.systemBlue // 今日の日付の背景色を設定
+        
+        // FSCalendarが表示されるときに処理を行う
+        DispatchQueue.main.async {
+            context.coordinator.getWorkoutDatesFromUserDefaults(for: calendar)
+        }
+        
+        return calendar
+    }
+
+    func updateUIView(_ uiView: FSCalendar, context: Context) {
+        // 何もする必要がないので、このメソッドは空にする
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(selectedDate: $selectedDate)
+    }
+
+    class Coordinator: NSObject, FSCalendarDataSource, FSCalendarDelegate {
+        @Binding var selectedDate: Date // 選択された日付を保持するBinding
+        var uniqueDates: Set<String> = [] // 重複をまとめた日付のセット
+        
+        init(selectedDate: Binding<Date>) {
+            _selectedDate = selectedDate
+        }
+
+        // FSCalendarのデータソースメソッド: 日付に対応するイメージを返す
+        func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+            let image = UIImage(systemName: "rosette")
+            
+            // uniqueDatesに含まれる日付にはイメージを表示する
+            if uniqueDates.contains(dateFormatter.string(from: date)) {
+                return image
+            }
+            return nil
+        }
+
+        // ワークアウト日付を取得し、カレンダーにマークを付ける
+        func getWorkoutDatesFromUserDefaults(for calendar: FSCalendar) {
+            // UserDefaultsからワークアウト日付を取得
+            let workoutDates = UserDefaults.standard.dictionaryRepresentation().keys.filter({ $0.hasPrefix("workout_") }).map { String($0) }
+            
+            // ワークアウト日付からyyyyMMddを取り出し、時、分、秒を取り除き、重複をまとめる
+            for workoutDate in workoutDates {
+                let dateString = workoutDate.replacingOccurrences(of: "workout_", with: "").prefix(8)
+                uniqueDates.insert(String(dateString))
+            }
+            
+            // FSCalendarを更新
+            calendar.reloadData()
         }
     }
 }
