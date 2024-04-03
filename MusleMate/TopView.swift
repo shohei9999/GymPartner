@@ -103,12 +103,12 @@ struct CalendarView: UIViewRepresentable {
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMdd"
-            let image = UIImage(systemName: "trophy")
-//            ?.withTintColor(.yellow)
+            let image = UIImage(systemName: "trophy")?.withTintColor(.brown, renderingMode: .alwaysOriginal)
             
             // uniqueDatesに含まれる日付にはイメージを表示する
             if uniqueDates.contains(dateFormatter.string(from: date)) {
-                return image?.resize(to: CGSize(width: 15, height: 15))
+                return image
+//                ?.resize(to: CGSize(width: 15, height: 15)) // シミュレータだと日付と重なるが実機だと重ならない
             }
             return nil
         }
