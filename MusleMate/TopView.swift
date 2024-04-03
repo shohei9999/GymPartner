@@ -57,6 +57,15 @@ struct TopView: View {
     }
 }
 
+extension UIImage {
+    func resize(to size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: size))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
 struct CalendarView: UIViewRepresentable {
     @Binding var selectedDate: Date // 選択された日付を保持するBinding
 
@@ -64,8 +73,8 @@ struct CalendarView: UIViewRepresentable {
         let calendar = FSCalendar()
         calendar.dataSource = context.coordinator
         calendar.delegate = context.coordinator
-        calendar.appearance.todayColor = UIColor.systemBlue // 今日の日付の背景色を設定
-        
+        calendar.appearance.todayColor = UIColor.clear // 今日の日付の背景色を設定
+        calendar.appearance.titleTodayColor = .red // 日付の文字色を青に設定
         // FSCalendarが表示されるときに処理を行う
         DispatchQueue.main.async {
             context.coordinator.getWorkoutDatesFromUserDefaults(for: calendar)
@@ -94,11 +103,12 @@ struct CalendarView: UIViewRepresentable {
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMdd"
-            let image = UIImage(systemName: "rosette")
+            let image = UIImage(systemName: "trophy")
+//            ?.withTintColor(.yellow)
             
             // uniqueDatesに含まれる日付にはイメージを表示する
             if uniqueDates.contains(dateFormatter.string(from: date)) {
-                return image
+                return image?.resize(to: CGSize(width: 15, height: 15))
             }
             return nil
         }
