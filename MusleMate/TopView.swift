@@ -10,23 +10,41 @@ import FSCalendar
 struct TopView: View {
     @State private var items = [
         "Workout Menu",
-        "Record Your Workout",
         "Workout Log",
         "Graphs",
         "Settings"
     ]
     
     // 受信したデータを保持する配列
-    @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData") // DataTransferManagerの初期化時にuserDefaultsKeyを渡す
+    @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData")
     
-    @State private var selectedDate = Date() // カレンダーで選択された日付を保持するプロパティ
+    @State private var selectedDate = Date()
+    
+    @State private var plusIconSelected = false
     
     var body: some View {
         NavigationView {
             VStack {
+                HStack {
+                    Spacer()
+                    Image(systemName: "gearshape")
+                        .padding(.trailing)
+                        .font(.system(size: 24))
+                    Image(systemName: "chart.bar.xaxis")
+                        .padding(.trailing)
+                        .font(.system(size: 24))
+                    Image(systemName: "plus")
+                        .onTapGesture {
+                            print("plus")
+                            plusIconSelected = true
+                        }
+                        .padding(.trailing)
+                        .font(.system(size: 24))
+                }
+                .padding(.top)
                 // カレンダーを表示
                 CalendarView(selectedDate: $selectedDate)
-                    .padding(.top, 20)
+                    .padding(.top, 10)
                 
                 List(items, id: \.self) { item in
                     NavigationLink(destination: destinationView(for: item)) {
@@ -34,7 +52,15 @@ struct TopView: View {
                     }
                 }
             }
-            .navigationBarHidden(true) // ナビゲーションバーを非表示にする
+            .navigationBarHidden(true)
+            .background(
+                NavigationLink(
+                    destination: RecordWorkoutView(),
+                    isActive: $plusIconSelected,
+                    label: { EmptyView() }
+                )
+                .hidden()
+            )
         }
         .onAppear {
             // WCSessionを有効化し、受信処理を開始する
@@ -42,13 +68,10 @@ struct TopView: View {
         }
     }
     
-    // 遷移先のViewを選択肢に応じて切り替える関数
     private func destinationView(for item: String) -> some View {
         switch item {
         case "Workout Menu":
             return AnyView(ContentView())
-        case "Record Your Workout":
-            return AnyView(RecordWorkoutView())
         case "Workout Log":
             return AnyView(HistoryView())
         default:
