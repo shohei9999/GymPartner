@@ -27,6 +27,7 @@
 		9F96095E2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */; };
 		9F9609682BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */; };
 		9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */; };
+		9F9AC8FD2BBC452200190339 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9AC8FC2BBC452200190339 /* FSCalendar */; };
 		9FB2BA622BAC298A002246AF /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA612BAC298A002246AF /* TopView.swift */; };
 		9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */; };
 		9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA652BAD4BD7002246AF /* HistoryView.swift */; };
@@ -120,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F9AC8FD2BBC452200190339 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +287,9 @@
 				9F96094A2BAA8CC70046600D /* PBXTargetDependency */,
 			);
 			name = MusleMate;
+			packageProductDependencies = (
+				9F9AC8FC2BBC452200190339 /* FSCalendar */,
+			);
 			productName = MusleMate;
 			productReference = 9F9609212BAA8CC50046600D /* MusleMate.app */;
 			productType = "com.apple.product-type.application";
@@ -421,6 +426,9 @@
 				Base,
 			);
 			mainGroup = 9F9609182BAA8CC50046600D;
+			packageReferences = (
+				9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = 9F9609222BAA8CC50046600D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1055,6 +1063,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9F9AC8FC2BBC452200190339 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9F9609192BAA8CC50046600D /* Project object */;
 }
