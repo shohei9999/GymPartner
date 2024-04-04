@@ -47,6 +47,7 @@ struct TopView: View {
                 // カレンダーを表示
                 CalendarView(selectedDate: $selectedDate)
                     .padding(.top, 10)
+                    .padding(.horizontal, 10) // 左右に余白を追加
                 
                 HistoryView()
                     .padding(.top, 10)
