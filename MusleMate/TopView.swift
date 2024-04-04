@@ -8,35 +8,37 @@ import SwiftUI
 import FSCalendar
 
 struct TopView: View {
-    @State private var items = [
-        "Workout Menu",
-        "Workout Log",
-        "Graphs",
-        "Settings"
-    ]
-    
     // 受信したデータを保持する配列
     @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData")
     
     @State private var selectedDate = Date()
     
     @State private var plusIconSelected = false
+    @State private var gearIconSelected = false // gearアイコンが選択されたかどうかを管理する状態変数を追加
+    
+    @State private var isPresented = false // NavigationStackで使用する表示状態の状態変数を追加
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 HStack {
                     Spacer()
                     Image(systemName: "gearshape")
                         .padding(.trailing)
                         .font(.system(size: 24))
+                        .onTapGesture {
+                            gearIconSelected = true // gearアイコンが選択されたときに状態変数をtrueに設定する
+                            plusIconSelected = false // gearアイコンが選択された時にplusIconSelectedをリセットする
+                            isPresented = true // 遷移を開始する
+                        }
                     Image(systemName: "chart.bar.xaxis")
                         .padding(.trailing)
                         .font(.system(size: 24))
                     Image(systemName: "plus")
                         .onTapGesture {
-                            print("plus")
                             plusIconSelected = true
+                            gearIconSelected = false // plusアイコンが選択された時にgearIconSelectedをリセットする
+                            isPresented = true // plusアイコンが選択されたときに表示状態をtrueに設定する
                         }
                         .padding(.trailing)
                         .font(.system(size: 24))
@@ -46,36 +48,24 @@ struct TopView: View {
                 CalendarView(selectedDate: $selectedDate)
                     .padding(.top, 10)
                 
-                List(items, id: \.self) { item in
-                    NavigationLink(destination: destinationView(for: item)) {
-                        Text(item)
-                    }
-                }
+                HistoryView()
+                    .padding(.top, 10)
             }
             .navigationBarHidden(true)
-            .background(
-                NavigationLink(
-                    destination: RecordWorkoutView(),
-                    isActive: $plusIconSelected,
-                    label: { EmptyView() }
-                )
-                .hidden()
-            )
+            .navigationDestination(isPresented: $isPresented) {
+                if plusIconSelected {
+                    RecordWorkoutView() // plusアイコンが選択された場合はレコードワークアウトビューに遷移する
+                } else if gearIconSelected {
+                    ContentView() // gearアイコンが選択された場合はコンテンツビューに遷移する
+                } else {
+                    EmptyView() // どちらのアイコンも選択されていない場合は何も表示しない
+                }
+            }
+            .navigationTitle("Top")
         }
         .onAppear {
             // WCSessionを有効化し、受信処理を開始する
             sessionDelegate.activateSession()
-        }
-    }
-    
-    private func destinationView(for item: String) -> some View {
-        switch item {
-        case "Workout Menu":
-            return AnyView(ContentView())
-        case "Workout Log":
-            return AnyView(HistoryView())
-        default:
-            return AnyView(Text("Under Construction")) // その他の場合は仮のViewを表示
         }
     }
 }
