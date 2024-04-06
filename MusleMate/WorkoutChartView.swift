@@ -10,95 +10,161 @@ import Charts
 // データモデル
 struct LineData: Identifiable {
     var id = UUID()
-    var Date: String
+    var date: String
     var totalWeightReps: Int
 }
 
+struct WorkoutData: Identifiable {
+    var id = UUID()
+    var date: String
+    var totalWeight: Int
+}
+
 struct WorkoutChartView: View {
-    // UserDefaultsから取得したワークアウト日付を使用
-    let workoutDates: [String] = getWorkoutDatesFromUserDefaults()
+    // 選択された期間を保持するenum
+    enum SelectedPeriod {
+        case week, month, year
+    }
+    
+    // UserDefaultsから取得したワークアウト情報を使用
+    let workoutData: [(date: String, totalWeight: Int)] = getWorkoutDataFromUserDefaults()
+    
+    // 選択された期間を保持するState
+    @State private var selectedPeriod: SelectedPeriod? = .week
     
     // ワークアウト日付と合計重量 x レップ数を元にLineDataを生成
     var lineData: [LineData] {
         var data: [LineData] = []
-        for date in workoutDates {
-            let totalWeightReps = getTotalWeightRepsForDate(date)
-            data.append(LineData(Date: formatDate(date), totalWeightReps: totalWeightReps))
+        for workout in workoutData {
+            let totalWeightReps = workout.totalWeight
+            data.append(LineData(date: formatDate(workout.date), totalWeightReps: totalWeightReps))
         }
         return data
     }
     
-    // 日付を "M/d" 形式にフォーマットする関数
-    private func formatDate(_ date: String) -> String {
-        let components = date.components(separatedBy: "/")
-        if components.count >= 3 {
-            var month = components[1]
-            if month.hasPrefix("0") {
-                month.removeFirst()
-            }
-            var day = components[2]
-            if day.hasPrefix("0") {
-                day.removeFirst()
-            }
-            return month + "/" + day
-        }
-        return date
-    }
-
-    
     var body: some View {
-        if lineData.isEmpty {
-            Text("No data available")
-        } else {
-            Chart(lineData) { dataRow in
-                LineMark (
-                    x: .value("workoutDate", dataRow.Date), // ワークアウト日付を横軸に設定
-                    y: .value("Total Weight x Reps", dataRow.totalWeightReps)
-                )
+        VStack {
+            // 選択項目を表示
+            HStack(spacing: 20) {
+                Text("週")
+                    .padding(10)
+                    .background(selectedPeriod == .week ? Color.blue.opacity(0.3) : Color.clear)
+                    .cornerRadius(10)
+                    .onTapGesture {
+                        withAnimation {
+                            selectedPeriod = .week
+                        }
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(selectedPeriod == .week ? Color.blue : Color.clear, lineWidth: 2)
+                    )
+                
+                Text("月")
+                    .padding(10)
+                    .background(selectedPeriod == .month ? Color.blue.opacity(0.3) : Color.clear)
+                    .cornerRadius(10)
+                    .onTapGesture {
+                        withAnimation {
+                            selectedPeriod = .month
+                        }
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(selectedPeriod == .month ? Color.blue : Color.clear, lineWidth: 2)
+                    )
+                
+                Text("年")
+                    .padding(10)
+                    .background(selectedPeriod == .year ? Color.blue.opacity(0.3) : Color.clear)
+                    .cornerRadius(10)
+                    .onTapGesture {
+                        withAnimation {
+                            selectedPeriod = .year
+                        }
+                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(selectedPeriod == .year ? Color.blue : Color.clear, lineWidth: 2)
+                    )
             }
-            .frame(height: 300)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.blue, lineWidth: 2)
+            )
+            
+            // チャート表示
+            if lineData.isEmpty {
+                Text("No data available")
+            } else {
+                Chart(lineData) { dataRow in
+                    LineMark (
+                        x: .value("workoutDate", formatDate(dataRow.date)), // ワークアウト日付をM/d形式にフォーマットして設定
+                        y: .value("Total Weight x Reps", dataRow.totalWeightReps)
+                    )
+                }
+                .frame(height: 300)
+            }
         }
     }
 }
 
-// UserDefaultsからワークアウト情報を取得して、weightとrepsを乗算し、合計値を返す関数
-func getTotalWeightRepsForDate(_ date: String) -> Int {
-    // UserDefaultsからデータを取得し、weightとrepsを乗算して合計値を計算
-    let keys = UserDefaults.standard.dictionaryRepresentation().keys.filter({ $0.hasPrefix("workout_\(date)") })
-    var totalWeightReps = 0
-    for key in keys {
-        if let workoutData = UserDefaults.standard.object(forKey: key) as? [String: Int] {
-            if let weight = workoutData["weight"], let reps = workoutData["reps"] {
-                totalWeightReps += weight * reps
-            }
-        }
-    }
-    return totalWeightReps
-}
 
-func getWorkoutDatesFromUserDefaults() -> [String] {
-    // UserDefaultsからデータを取得し、ワークアウト日付を抽出
-    let workoutDates = UserDefaults.standard.dictionaryRepresentation().keys.filter({ $0.hasPrefix("workout_") }).map { String($0) }
+func getWorkoutDataFromUserDefaults() -> [(date: String, totalWeight: Int)] {
+    var workoutData: [(date: String, totalWeight: Int)] = []
     
-    var formattedDates: Set<String> = Set()
-    
-    // ワークアウト日付からyyyyMMddを取り出す
+    // UserDefaultsからデータを取得し、日付と関連するweightとrepsを取得
+    let keys = UserDefaults.standard.dictionaryRepresentation().keys
+        .filter({ $0.hasPrefix("workout_") })
+        .sorted() // キーを昇順で並べ替える
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyyMMddHHmmss"
     
-    for workoutDate in workoutDates {
-        if let date = dateFormatter.date(from: workoutDate.replacingOccurrences(of: "workout_", with: "")) {
-            let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .none)
-            formattedDates.insert(formattedDate)
+    for key in keys {
+        guard let workoutDictionary = UserDefaults.standard.dictionary(forKey: key) else {
+            print("Failed to get workout data for key:", key)
+            continue
+        }
+        
+        // keyからyyyyMMdd部分を抽出して日付とする
+        guard let dateRange = key.range(of: "\\d{8}", options: .regularExpression),
+              let datePart = Int(key[dateRange]) else {
+            print("Failed to extract date from key:", key)
+            continue
+        }
+        let formattedDate = String(datePart)
+        // weightとrepsを合計する
+        var totalWeight = 0
+        if let weight = workoutDictionary["weight"] as? Int,
+           let reps = workoutDictionary["reps"] as? Int {
+            totalWeight = weight * reps
+        } else {
+            print("Weight or reps not found for key:", key)
+            continue
+        }
+        
+        // 既存の日付があれば合計にweight * repsを追加し、なければ新しいエントリを作成する
+        if let index = workoutData.firstIndex(where: { $0.date == formattedDate }) {
+            workoutData[index].totalWeight += totalWeight
+        } else {
+            workoutData.append((date: formattedDate, totalWeight: totalWeight))
         }
     }
+    print("workoutData \(workoutData)")
     
-    // Setを配列に変換して、日付の小さい順にソート
-    var sortedDates = Array(formattedDates)
-    sortedDates.sort()
-    print("formattedDates: \(sortedDates)")
+    return workoutData
+}
 
-    return sortedDates
+// 日付を "M/d" 形式にフォーマットする関数
+private func formatDate(_ date: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyyMMdd"
+    if let formattedDate = dateFormatter.date(from: date) {
+        dateFormatter.dateFormat = "M/d"
+        return dateFormatter.string(from: formattedDate)
+    }
+    return date
 }
 
 #Preview {
