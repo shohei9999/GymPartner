@@ -29,6 +29,8 @@
 		9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */; };
 		9F9AC8FD2BBC452200190339 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9AC8FC2BBC452200190339 /* FSCalendar */; };
 		9F9AC8FF2BBE9E9800190339 /* WorkoutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC8FE2BBE9E9800190339 /* WorkoutChartView.swift */; };
+		9F9AC9012BBF757600190339 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9002BBF757600190339 /* SettingsView.swift */; };
+		9F9AC9032BBFDC5B00190339 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9022BBFDC5B00190339 /* SplashView.swift */; };
 		9FB2BA622BAC298A002246AF /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA612BAC298A002246AF /* TopView.swift */; };
 		9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */; };
 		9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA652BAD4BD7002246AF /* HistoryView.swift */; };
@@ -113,6 +115,8 @@
 		9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMate_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9F9AC8FE2BBE9E9800190339 /* WorkoutChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutChartView.swift; sourceTree = "<group>"; };
+		9F9AC9002BBF757600190339 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9F9AC9022BBFDC5B00190339 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		9FB2BA612BAC298A002246AF /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsAndTimesView.swift; sourceTree = "<group>"; };
 		9FB2BA652BAD4BD7002246AF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -194,12 +198,14 @@
 		9F9609232BAA8CC50046600D /* MusleMate */ = {
 			isa = PBXGroup;
 			children = (
+				9F9AC9022BBFDC5B00190339 /* SplashView.swift */,
 				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
 				9F7F80422BABE536007A7176 /* TopView.swift */,
 				9F9609262BAA8CC50046600D /* ContentView.swift */,
 				9F4FC9102BAEE84800202BBB /* HistoryView.swift */,
 				9F4FC9142BB18FC600202BBB /* RecordWorkoutView.swift */,
 				9F9AC8FE2BBE9E9800190339 /* WorkoutChartView.swift */,
+				9F9AC9002BBF757600190339 /* SettingsView.swift */,
 				9F9609282BAA8CC70046600D /* Assets.xcassets */,
 				9F96092A2BAA8CC70046600D /* Preview Content */,
 				9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */,
@@ -501,12 +507,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9609272BAA8CC50046600D /* ContentView.swift in Sources */,
+				9F9AC9012BBF757600190339 /* SettingsView.swift in Sources */,
 				9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */,
 				9F9AC8FF2BBE9E9800190339 /* WorkoutChartView.swift in Sources */,
 				9F7F80432BABE536007A7176 /* TopView.swift in Sources */,
 				9F4FC9152BB18FC600202BBB /* RecordWorkoutView.swift in Sources */,
 				9F9609252BAA8CC50046600D /* MusleMateApp.swift in Sources */,
 				9F4FC9132BAEF8BC00202BBB /* DataTransferManager.swift in Sources */,
+				9F9AC9032BBFDC5B00190339 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

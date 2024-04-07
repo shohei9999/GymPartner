@@ -14,8 +14,9 @@ struct TopView: View {
     @State private var selectedDate = Date()
     
     @State private var plusIconSelected = false
-    @State private var gearIconSelected = false // gearアイコンが選択されたかどうかを管理する状態変数を追加
-    
+    @State private var gearIconSelected = false
+    @State private var chartIconSelected = false
+
     @State private var isPresented = false // NavigationStackで使用する表示状態の状態変数を追加
     
     var body: some View {
@@ -29,15 +30,23 @@ struct TopView: View {
                         .onTapGesture {
                             gearIconSelected = true // gearアイコンが選択されたときに状態変数をtrueに設定する
                             plusIconSelected = false // gearアイコンが選択された時にplusIconSelectedをリセットする
+                            chartIconSelected = false
                             isPresented = true // 遷移を開始する
                         }
                     Image(systemName: "chart.bar.xaxis")
                         .padding(.trailing)
                         .font(.system(size: 24))
+                        .onTapGesture {
+                            gearIconSelected = false
+                            plusIconSelected = false
+                            chartIconSelected = true
+                            isPresented = true // 遷移を開始する
+                        }
                     Image(systemName: "plus")
                         .onTapGesture {
                             plusIconSelected = true
                             gearIconSelected = false // plusアイコンが選択された時にgearIconSelectedをリセットする
+                            chartIconSelected = false
                             isPresented = true // plusアイコンが選択されたときに表示状態をtrueに設定する
                         }
                         .padding(.trailing)
@@ -55,9 +64,11 @@ struct TopView: View {
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $isPresented) {
                 if plusIconSelected {
-                    RecordWorkoutView() // plusアイコンが選択された場合はレコードワークアウトビューに遷移する
+                    RecordWorkoutView()
                 } else if gearIconSelected {
-                    ContentView() // gearアイコンが選択された場合はコンテンツビューに遷移する
+                    SettingsView()
+                } else if chartIconSelected {
+                    WorkoutChartView()
                 } else {
                     EmptyView() // どちらのアイコンも選択されていない場合は何も表示しない
                 }
