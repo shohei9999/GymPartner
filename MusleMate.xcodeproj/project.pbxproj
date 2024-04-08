@@ -27,13 +27,13 @@
 		9F96095E2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F96095D2BAA8CC80046600D /* MusleMate_Watch_AppTests.swift */; };
 		9F9609682BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609672BAA8CC80046600D /* MusleMate_Watch_AppUITests.swift */; };
 		9F96096A2BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9609692BAA8CC80046600D /* MusleMate_Watch_AppUITestsLaunchTests.swift */; };
-		9F9AC8FD2BBC452200190339 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9AC8FC2BBC452200190339 /* FSCalendar */; };
 		9F9AC8FF2BBE9E9800190339 /* WorkoutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC8FE2BBE9E9800190339 /* WorkoutChartView.swift */; };
 		9F9AC9012BBF757600190339 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9002BBF757600190339 /* SettingsView.swift */; };
 		9F9AC9032BBFDC5B00190339 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9022BBFDC5B00190339 /* SplashView.swift */; };
 		9FB2BA622BAC298A002246AF /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA612BAC298A002246AF /* TopView.swift */; };
 		9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */; };
 		9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA652BAD4BD7002246AF /* HistoryView.swift */; };
+		9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC307B82BC243CE00668536 /* FSCalendar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +120,7 @@
 		9FB2BA612BAC298A002246AF /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsAndTimesView.swift; sourceTree = "<group>"; };
 		9FB2BA652BAD4BD7002246AF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		9FC307B72BC243C000668536 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F9AC8FD2BBC452200190339 /* FSCalendar in Frameworks */,
+				9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +180,7 @@
 				9F96095C2BAA8CC80046600D /* MusleMate Watch AppTests */,
 				9F9609662BAA8CC80046600D /* MusleMate Watch AppUITests */,
 				9F9609222BAA8CC50046600D /* Products */,
+				9FC307B42BC243AC00668536 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,6 +200,7 @@
 		9F9609232BAA8CC50046600D /* MusleMate */ = {
 			isa = PBXGroup;
 			children = (
+				9FC307B72BC243C000668536 /* Info.plist */,
 				9F9AC9022BBFDC5B00190339 /* SplashView.swift */,
 				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
 				9F7F80422BABE536007A7176 /* TopView.swift */,
@@ -278,6 +281,13 @@
 			path = "MusleMate Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		9FC307B42BC243AC00668536 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -297,7 +307,7 @@
 			);
 			name = MusleMate;
 			packageProductDependencies = (
-				9F9AC8FC2BBC452200190339 /* FSCalendar */,
+				9FC307B82BC243CE00668536 /* FSCalendar */,
 			);
 			productName = MusleMate;
 			productReference = 9F9609212BAA8CC50046600D /* MusleMate.app */;
@@ -352,6 +362,8 @@
 			dependencies = (
 			);
 			name = "MusleMate Watch App";
+			packageProductDependencies = (
+			);
 			productName = "MusleMate Watch App";
 			productReference = 9F9609472BAA8CC70046600D /* MusleMate Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -785,7 +797,9 @@
 				DEVELOPMENT_TEAM = 4PAHR8WZNU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusleMate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gym Partner";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -818,7 +832,9 @@
 				DEVELOPMENT_TEAM = 4PAHR8WZNU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusleMate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gym Partner";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1088,7 +1104,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9F9AC8FC2BBC452200190339 /* FSCalendar */ = {
+		9FC307B82BC243CE00668536 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;

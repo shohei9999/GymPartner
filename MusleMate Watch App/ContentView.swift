@@ -23,7 +23,7 @@ struct ContentView: View {
             } else {
                 List(sessionDelegate.receivedData, id: \.self) { data in
                     NavigationLink(destination: WeightsAndTimesView(itemName: data)
-                                        .environmentObject(sessionDelegate)) { // WatchSessionDelegateを環境オブジェクトとして渡す
+                                        .environmentObject(sessionDelegate)) {
                         Text(data)
                     }
                 }
