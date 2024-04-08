@@ -33,15 +33,15 @@ struct TopView: View {
                             chartIconSelected = false
                             isPresented = true // 遷移を開始する
                         }
-                    Image(systemName: "chart.bar.xaxis")
-                        .padding(.trailing)
-                        .font(.system(size: 24))
-                        .onTapGesture {
-                            gearIconSelected = false
-                            plusIconSelected = false
-                            chartIconSelected = true
-                            isPresented = true // 遷移を開始する
-                        }
+//                    Image(systemName: "chart.bar.xaxis")
+//                        .padding(.trailing)
+//                        .font(.system(size: 24))
+//                        .onTapGesture {
+//                            gearIconSelected = false
+//                            plusIconSelected = false
+//                            chartIconSelected = true
+//                            isPresented = true // 遷移を開始する
+//                        }
                     Image(systemName: "plus")
                         .onTapGesture {
                             plusIconSelected = true
