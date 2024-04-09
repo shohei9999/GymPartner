@@ -55,26 +55,22 @@ extension DataTransferManager: WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         var response: [String: Any] = [:]
 
-        if let dataArray = message["workoutDataArray"] as? [[String: Any]] {
-            print("dataArray: \(dataArray)")
-            var keysArray: [String] = [] // キーの配列を初期化
-            for workoutData in dataArray {
+        if let workoutDataArray = message["workoutDataArray"] as? [[String: Any]] {
+            for workoutData in workoutDataArray {
                 if let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
                     // 受信したデータをUserDefaultsに保存
                     UserDefaults.standard.set(data, forKey: key)
-                    
-                    // 応答用のキー配列にキーを追加
-                    keysArray.append(key)
                 }
             }
-            // 応答にキー配列を追加
-            response["keys"] = keysArray
         }
 
+        // 応答を生成
+        response["status"] = "Success"
+        
         // 結果をreplyHandlerを使用して送信
-        print("reply \(response)")
         replyHandler(response)
     }
+
 
     // 以下のメソッドは必要に応じて実装
     func session(_ session: WCSession, didReceiveMessageData messageData: Data) {}
