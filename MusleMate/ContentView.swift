@@ -151,11 +151,14 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
 
     func sendFavoriteItemsToWatch(favoriteItems: [String]) {
         guard session.activationState == .activated else { return }
-        do {
-            let message: [String: Any] = ["data": favoriteItems]
-            session.sendMessage(message, replyHandler: nil, errorHandler: nil)
-        }
+        
+        // ユーザー情報としてお気に入りアイテムを転送します
+        let userInfo: [String: Any] = ["data": favoriteItems]
+        
+        // ユーザー情報を転送します
+        session.transferUserInfo(userInfo)
     }
+
 
     func activateSession() {
         if WCSession.isSupported() {

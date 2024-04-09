@@ -8,7 +8,7 @@
 import Foundation
 import WatchConnectivity
 
-class DataTransferManager: NSObject, ObservableObject {
+class DataTransferManager: NSObject, ObservableObject, WCSessionDelegate {
     // 受信したデータを保持するプロパティ
     @Published var receivedData: [String] = []
     
@@ -18,27 +18,25 @@ class DataTransferManager: NSObject, ObservableObject {
     // WCSessionインスタンスを格納するプロパティ
     private let session = WCSession.default
 
-    // DataTransferManagerの初期化時にuserDefaultsKeyを受け取る
+    // WatchSessionDelegateの初期化時にuserDefaultsKeyを受け取る
     init(userDefaultsKey: String) {
         self.userDefaultsKey = userDefaultsKey
         super.init()
         session.delegate = self
     }
-
+    
     // WCSessionの有効化
     func activateSession() {
         if WCSession.isSupported() {
             session.activate()
         }
     }
-}
-
-// MARK: - WCSessionDelegate methods
-extension DataTransferManager: WCSessionDelegate {
+    
+    // MARK: - WCSessionDelegate methods
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            print("WCSession activated successfully iphone")
+            print("iphone WCSession activated successfully iphone")
         case .inactive:
             print("WCSession inactive")
         case .notActivated:
@@ -51,41 +49,54 @@ extension DataTransferManager: WCSessionDelegate {
             print("Activation error: \(error.localizedDescription)")
         }
     }
-
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        var response: [String: Any] = [:]
-
-        if let dataArray = message["workoutDataArray"] as? [[String: Any]] {
-            print("dataArray: \(dataArray)")
-            var keysArray: [String] = [] // キーの配列を初期化
-            for workoutData in dataArray {
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        print("iphone received userInfo")
+        
+        if let workoutDataArray = userInfo["workoutDataArray"] as? [[String: Any]] {
+            for workoutData in workoutDataArray {
                 if let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
                     // 受信したデータをUserDefaultsに保存
+                    print("UserDefaults key \(key)")
+                    print("UserDefaults data \(data)")
                     UserDefaults.standard.set(data, forKey: key)
-                    
-                    // 応答用のキー配列にキーを追加
-                    keysArray.append(key)
                 }
             }
-            // 応答にキー配列を追加
-            response["keys"] = keysArray
         }
-
-        // 結果をreplyHandlerを使用して送信
-        print("reply \(response)")
-        replyHandler(response)
+    }
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        // Implement your code here
     }
 
-    // 以下のメソッドは必要に応じて実装
-    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {}
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {}
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {}
-    func session(_ session: WCSession, didReceive file: WCSessionFile) {}
-    func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {}
-    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {}
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        // Implement your code here
+    }
 
-    func sessionReachabilityDidChange(_ session: WCSession) {}
-    func sessionDidBecomeInactive(_ session: WCSession) {}
-    func sessionDidDeactivate(_ session: WCSession) {}
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        // Implement your code here
+    }
+
+    func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        // Implement your code here
+    }
+
+    func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
+        // Implement your code here
+    }
+
+    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+        // Implement your code here
+    }
+
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        // Implement your code here
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        // Implement your code here
+    }
+
+    func sessionDidDeactivate(_ session: WCSession) {
+        // Implement your code here
+    }
 }
-

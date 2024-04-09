@@ -36,7 +36,7 @@ struct ContentView: View {
             if let storedData = UserDefaults.standard.stringArray(forKey: userDefaultsKey) {
                 sessionDelegate.receivedData = storedData
             }
-            sessionDelegate.sendMessageToiPhone()
+//            sessionDelegate.sendMessageToiPhone()
         }
     }
 }

@@ -37,7 +37,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            print("WCSession activated successfully")
+            print("appleWatch WCSession activated successfully")
         case .inactive:
             print("WCSession inactive")
         case .notActivated:
@@ -50,13 +50,13 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
             print("Activation error: \(error.localizedDescription)")
         }
     }
-
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        if let receivedData = message["data"] as? [String] {
+    
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        if let receivedData = userInfo["data"] as? [String] {
             // 受信したデータを更新
             DispatchQueue.main.async {
                 self.receivedData = receivedData
-                
+                print("received data from iPhone")
                 // UserDefaultsにデータを保存
                 UserDefaults.standard.set(receivedData, forKey: self.userDefaultsKey)
             }
@@ -65,19 +65,16 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     
     // iPhoneにメッセージを送信するメソッド
     func sendMessageToiPhone() {
-        // ワークアウトのデータを格納する配列
-        var workoutDataArray: [[String: Any]] = []
-
-        // UserDefaultsからデータを取得し、フィルタリングしてソート
-        let userDefaults = UserDefaults.standard
-        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") }.sorted()
-
-        // キーに対応するデータを取得して配列に保存
-        for key in keys {
-            if let data = userDefaults.dictionary(forKey: key), let sendStatus = data["sendStatus"] as? Bool, !sendStatus {
-                workoutDataArray.append(["key": key, "data": data])
+        // UserDefaultsからデータを取得し、フィルタリングして降順でソート
+        let workoutDataArray = UserDefaults.standard.dictionaryRepresentation()
+            .filter { $0.key.starts(with: "workout_") } // workout_で始まるキーに絞り込み
+            .sorted { $0.key > $1.key } // キーで降順にソート
+            .compactMap { (key, value) -> [String: Any]? in // 戻り値の型を明示的に指定
+                guard let data = value as? [String: Any], let sendStatus = data["sendStatus"] as? Bool, !sendStatus else {
+                    return nil // sendStatusがfalseでない場合はnilを返す
+                }
+                return ["key": key, "data": data] // データを返す
             }
-        }
         
         // workoutDataArrayが空の場合は送信処理を行わない
         guard !workoutDataArray.isEmpty else {
@@ -85,23 +82,12 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
             return
         }
         
-        print("iPhoneにデータ送信： \(workoutDataArray)")
+        // 一番目のデータを取得
+        let firstData = workoutDataArray[0]
+        print("iPhoneにデータ送信： \(firstData)")
 
         // iPhoneにメッセージを送信
-        session.sendMessage(["workoutDataArray": workoutDataArray], replyHandler: { replyMessage in
-            if let keysArray = replyMessage["keys"] as? [String] {
-                for key in keysArray {
-                    print("Key: \(key)")
-                    if var data = UserDefaults.standard.dictionary(forKey: key) {
-                        data["sendStatus"] = true
-                        UserDefaults.standard.set(data, forKey: key)
-                    }
-                }
-            }
-        }, errorHandler: { error in
-            // メッセージの送信が失敗した場合の処理
-            print("Error sending message: \(error.localizedDescription)")
-        })
+        session.transferUserInfo(["workoutDataArray": [firstData]])
     }
 
 }
