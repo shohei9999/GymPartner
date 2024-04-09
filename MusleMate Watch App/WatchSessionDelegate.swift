@@ -50,18 +50,6 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
             print("Activation error: \(error.localizedDescription)")
         }
     }
-
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        if let receivedData = message["data"] as? [String] {
-            // 受信したデータを更新
-            DispatchQueue.main.async {
-                self.receivedData = receivedData
-                print("received data from iphone")
-                // UserDefaultsにデータを保存
-                UserDefaults.standard.set(receivedData, forKey: self.userDefaultsKey)
-            }
-        }
-    }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         if let receivedData = userInfo["data"] as? [String] {
