@@ -55,7 +55,7 @@ struct TopView: View {
             sessionDelegate.activateSession()
             
             // iPhoneにメッセージを送信する
-            sessionDelegate.sendMessageToiPhone()
+//            sessionDelegate.sendMessageToiPhone()
         }
     }
 }

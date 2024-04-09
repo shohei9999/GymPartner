@@ -55,7 +55,7 @@ struct HistoryView: View {
             .onAppear {
                 loadDataFromUserDefaults()
                 sessionDelegate.activateSession()
-                sessionDelegate.sendMessageToiPhone()
+//                sessionDelegate.sendMessageToiPhone()
             }
         }
     }

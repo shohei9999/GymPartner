@@ -52,30 +52,24 @@ extension DataTransferManager: WCSessionDelegate {
         }
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        var response: [String: Any] = [:]
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        print("iphone received userInfo")
 
-        if let workoutDataArray = message["workoutDataArray"] as? [[String: Any]] {
+        if let workoutDataArray = userInfo["workoutDataArray"] as? [[String: Any]] {
             for workoutData in workoutDataArray {
                 if let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
                     // 受信したデータをUserDefaultsに保存
+                    print("UserDefaults key \(key)")
+                    print("UserDefaults data \(data)")
                     UserDefaults.standard.set(data, forKey: key)
                 }
             }
         }
-
-        // 応答を生成
-        response["status"] = "Success"
-        
-        // 結果をreplyHandlerを使用して送信
-        replyHandler(response)
     }
-
 
     // 以下のメソッドは必要に応じて実装
     func session(_ session: WCSession, didReceiveMessageData messageData: Data) {}
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {}
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {}
     func session(_ session: WCSession, didReceive file: WCSessionFile) {}
     func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {}
     func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {}
