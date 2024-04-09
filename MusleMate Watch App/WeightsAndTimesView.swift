@@ -14,7 +14,7 @@ struct WeightsAndTimesView: View {
     @State private var selectedUnit: String = "kg"
     @State private var selectedRep: Int = 10
     @State private var isShowingPopup = false
-    @State private var remainingTime = 10
+    @State private var remainingTime = 10 // 初期値10を追加
     @State private var timer: Timer? // 追加
     
     // WatchSessionDelegateを環境オブジェクトとして宣言
@@ -178,6 +178,7 @@ struct DigitalTimerView: View {
                     // "OK" ボタンが選択されたときの処理
                     // isShowingPopupの状態をfalseに設定してシートを閉じる
                     self.isShowingPopup = false
+                    self.remainingTime = 10 // 初期値にリセット
                 })
             }
     }
