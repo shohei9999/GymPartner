@@ -37,7 +37,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         switch activationState {
         case .activated:
-            print("WCSession activated successfully")
+            print("appleWatch WCSession activated successfully")
         case .inactive:
             print("WCSession inactive")
         case .notActivated:
