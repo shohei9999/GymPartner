@@ -16,56 +16,64 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            Group {
-                if items.isEmpty { // itemsが空の場合の表示
-                    Text("Please add a new workout menu.")
-                        .font(.body) // フォントをbodyに設定
-                } else {
-                    List {
-                        ForEach(items) { item in
-                            Button(action: {
-                                toggleFavorite(item: item)
-                            }) {
-                                HStack {
-                                    Text(item.name)
-                                    Spacer()
-                                    Image(systemName: item.isFavorite ? "star.fill" : "star")
-                                        .foregroundColor(item.isFavorite ? .yellow : .gray)
+            ZStack {
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
+                VStack {
+                    if items.isEmpty { // itemsが空の場合の表示
+                        Text("Please add a new workout menu.")
+                            .font(.body) // フォントをbodyに設定
+                    } else {
+                        Text("Only items with a star enabled will be displayed in the Apple Watch Workout menu.")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal)
+                        List {
+                            ForEach(items) { item in
+                                Button(action: {
+                                    toggleFavorite(item: item)
+                                }) {
+                                    HStack {
+                                        Text(item.name)
+                                        Spacer()
+                                        Image(systemName: item.isFavorite ? "star.fill" : "star")
+                                            .foregroundColor(item.isFavorite ? .yellow : .gray)
+                                    }
                                 }
                             }
+                            .onDelete(perform: deleteItems)
                         }
-                        .onDelete(perform: deleteItems)
+                    }
+                }
+                .navigationTitle("Workout Menu")
+                .navigationBarItems(trailing: Button(action: {
+                    isAddingNewItem = true // ボタンがタップされたら入力フィールドを表示する
+                }) {
+                    Image(systemName: "plus")
+                })
+                .sheet(isPresented: $isAddingNewItem) { // 入力フィールドをモーダルで表示する
+                    VStack {
+                        TextField("Enter new item name", text: $newItemName)
+                            .padding()
+                        HStack {
+                            Spacer()
+                            Button("Cancel") {
+                                isAddingNewItem = false // 入力フィールドを閉じる
+                            }
+                            .padding()
+                            Button("Add Item") {
+                                addItem()
+                                isAddingNewItem = false // 入力フィールドを閉じる
+                            }
+                            .padding()
+                        }
                     }
                 }
             }
-            .navigationTitle("Workout Menu")
-            .navigationBarItems(trailing: Button(action: {
-                isAddingNewItem = true // ボタンがタップされたら入力フィールドを表示する
-            }) {
-                Image(systemName: "plus")
-            })
-            .sheet(isPresented: $isAddingNewItem) { // 入力フィールドをモーダルで表示する
-                VStack {
-                    TextField("Enter new item name", text: $newItemName)
-                        .padding()
-                    HStack {
-                        Spacer()
-                        Button("Cancel") {
-                            isAddingNewItem = false // 入力フィールドを閉じる
-                        }
-                        .padding()
-                        Button("Add Item") {
-                            addItem()
-                            isAddingNewItem = false // 入力フィールドを閉じる
-                        }
-                        .padding()
-                    }
-                }
+            .onAppear {
+                loadItems()
+                sessionDelegate.activateSession()
             }
-        }
-        .onAppear {
-            loadItems()
-            sessionDelegate.activateSession()
         }
     }
 
