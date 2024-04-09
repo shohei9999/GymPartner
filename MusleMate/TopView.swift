@@ -8,17 +8,13 @@ import SwiftUI
 import FSCalendar
 
 struct TopView: View {
-    // 受信したデータを保持する配列
     @StateObject private var sessionDelegate = DataTransferManager(userDefaultsKey: "receivedData")
-    
     @State private var selectedDate = Date()
-    
     @State private var plusIconSelected = false
     @State private var gearIconSelected = false
     @State private var chartIconSelected = false
+    @State private var isPresented = false
 
-    @State private var isPresented = false // NavigationStackで使用する表示状態の状態変数を追加
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -28,38 +24,31 @@ struct TopView: View {
                         .padding(.trailing)
                         .font(.system(size: 24))
                         .onTapGesture {
-                            gearIconSelected = true // gearアイコンが選択されたときに状態変数をtrueに設定する
-                            plusIconSelected = false // gearアイコンが選択された時にplusIconSelectedをリセットする
+                            gearIconSelected = true
+                            plusIconSelected = false
                             chartIconSelected = false
-                            isPresented = true // 遷移を開始する
+                            isPresented = true
                         }
-//                    Image(systemName: "chart.bar.xaxis")
-//                        .padding(.trailing)
-//                        .font(.system(size: 24))
-//                        .onTapGesture {
-//                            gearIconSelected = false
-//                            plusIconSelected = false
-//                            chartIconSelected = true
-//                            isPresented = true // 遷移を開始する
-//                        }
                     Image(systemName: "plus")
                         .onTapGesture {
                             plusIconSelected = true
-                            gearIconSelected = false // plusアイコンが選択された時にgearIconSelectedをリセットする
+                            gearIconSelected = false
                             chartIconSelected = false
-                            isPresented = true // plusアイコンが選択されたときに表示状態をtrueに設定する
+                            isPresented = true
                         }
                         .padding(.trailing)
                         .font(.system(size: 24))
                 }
                 .padding(.top)
-                // カレンダーを表示
+                
+                // カレンダーと履歴ビューを再描画
                 CalendarView(selectedDate: $selectedDate)
                     .padding(.top, 10)
-                    .padding(.horizontal, 10) // 左右に余白を追加
-                
+                    .padding(.horizontal, 10)
+                    .id(UUID()) // データが変更されるたびに再描画をトリガー
                 HistoryView()
                     .padding(.top, 10)
+                    .id(UUID()) // データが変更されるたびに再描画をトリガー
             }
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $isPresented) {
@@ -67,17 +56,18 @@ struct TopView: View {
                     RecordWorkoutView()
                 } else if gearIconSelected {
                     SettingsView()
-                } else if chartIconSelected {
-                    WorkoutChartView()
                 } else {
-                    EmptyView() // どちらのアイコンも選択されていない場合は何も表示しない
+                    EmptyView()
                 }
             }
             .navigationTitle("Top")
         }
         .onAppear {
-            // WCSessionを有効化し、受信処理を開始する
             sessionDelegate.activateSession()
+        }
+        .onReceive(sessionDelegate.$receivedData) { _ in
+            // データが変更されたときに再描画をトリガー
+            selectedDate = Date() // カレンダーの再描画をトリガー
         }
     }
 }
