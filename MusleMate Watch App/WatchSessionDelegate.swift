@@ -56,7 +56,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
             // 受信したデータを更新
             DispatchQueue.main.async {
                 self.receivedData = receivedData
-                
+                print("received data from iphone")
                 // UserDefaultsにデータを保存
                 UserDefaults.standard.set(receivedData, forKey: self.userDefaultsKey)
             }
@@ -88,20 +88,6 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
         print("iPhoneにデータ送信： \(workoutDataArray)")
 
         // iPhoneにメッセージを送信
-        session.sendMessage(["workoutDataArray": workoutDataArray], replyHandler: { replyMessage in
-            if let keysArray = replyMessage["keys"] as? [String] {
-                for key in keysArray {
-                    print("Key: \(key)")
-                    if var data = UserDefaults.standard.dictionary(forKey: key) {
-                        data["sendStatus"] = true
-                        UserDefaults.standard.set(data, forKey: key)
-                    }
-                }
-            }
-        }, errorHandler: { error in
-            // メッセージの送信が失敗した場合の処理
-            print("Error sending message: \(error.localizedDescription)")
-        })
+        session.transferUserInfo(["workoutDataArray": workoutDataArray])
     }
-
 }
