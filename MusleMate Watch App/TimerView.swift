@@ -75,9 +75,11 @@ struct TimerModalView: View {
     var body: some View {
         VStack {
             Text(timeFormatted(timerManager.remainingTime))
-                .font(.system(size: 70))
+                .font(.system(size: 70, weight: .medium)) // テキストサイズを指定
                 .foregroundColor(.yellow)
                 .padding()
+                .minimumScaleFactor(0.5) // テキストが収まらない場合に自動的に縮小するよう設定
+                .lineLimit(1) // テキストがはみ出さないように1行に制限
         }
     }
     

@@ -255,12 +255,12 @@
 				9F96094E2BAA8CC70046600D /* ContentView.swift */,
 				9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */,
 				9FB2BA652BAD4BD7002246AF /* HistoryView.swift */,
+				9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */,
 				9F9609502BAA8CC80046600D /* Assets.xcassets */,
 				9F9609522BAA8CC80046600D /* Preview Content */,
 				9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */,
 				9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */,
 				9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */,
-				9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */,
 			);
 			path = "MusleMate Watch App";
 			sourceTree = "<group>";
