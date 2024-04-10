@@ -111,7 +111,7 @@ struct WeightsAndTimesView: View {
         UserDefaults.standard.set(selectedUnit, forKey: "\(itemName)_unit")
         UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
         
-        return value
+        return ["key": key, "data": value] 
     }
 
     

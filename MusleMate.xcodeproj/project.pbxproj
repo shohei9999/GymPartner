@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */; };
+		9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */; };
+		9F1F1ADD2BC6CA1600ED9C94 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */; };
 		9F4FC90F2BAEA2EB00202BBB /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */; };
 		9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9102BAEE84800202BBB /* HistoryView.swift */; };
 		9F4FC9132BAEF8BC00202BBB /* DataTransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */; };
@@ -89,6 +92,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedRuntimeSession.swift; sourceTree = "<group>"; };
+		9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
 		9F4FC9102BAEE84800202BBB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferManager.swift; sourceTree = "<group>"; };
@@ -252,6 +258,9 @@
 				9F9609502BAA8CC80046600D /* Assets.xcassets */,
 				9F9609522BAA8CC80046600D /* Preview Content */,
 				9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */,
+				9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */,
+				9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */,
+				9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */,
 			);
 			path = "MusleMate Watch App";
 			sourceTree = "<group>";
@@ -551,11 +560,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */,
 				9F96094F2BAA8CC70046600D /* ContentView.swift in Sources */,
 				9F4FC90F2BAEA2EB00202BBB /* WatchSessionDelegate.swift in Sources */,
 				9FB2BA622BAC298A002246AF /* TopView.swift in Sources */,
 				9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */,
 				9F96094D2BAA8CC70046600D /* MusleMateApp.swift in Sources */,
+				9F1F1ADD2BC6CA1600ED9C94 /* TimerView.swift in Sources */,
+				9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */,
 				9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
