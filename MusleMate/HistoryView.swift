@@ -90,12 +90,13 @@ struct HistoryView: View {
         
         // workout_から始まるキーをフィルタリングしてソート
         let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") }.sorted()
-        
+
         var itemsDictionary: [String: [WorkoutItem]] = [:]
 
         for key in keys {
             // キーが"workout_"で始まり、かつ対応するデータが存在する場合にのみ処理を行う
             if let data = userDefaults.dictionary(forKey: key) {
+
                 // 各値を取得し、nilの場合はデフォルト値を設定する
                 let menu = data["menu"] as? String ?? ""
                 let weight = data["weight"] as? Double ?? 0

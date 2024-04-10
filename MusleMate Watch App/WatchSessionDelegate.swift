@@ -65,6 +65,7 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
     
     // iPhoneにメッセージを送信するメソッド
     func sendMessageToiPhone(with data: [String: Any]) {
+        print("iphoneへデータ送信： \(data)")
         session.transferUserInfo(["workoutDataArray": [data]])
     }
 
