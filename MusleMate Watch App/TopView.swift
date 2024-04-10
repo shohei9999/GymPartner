@@ -5,10 +5,13 @@
 //  Created by 林翔平 on 2024/03/21.
 //
 import SwiftUI
+import Foundation
 
 struct TopView: View {
     @State private var isShowingContentView = false
-    @State private var isShowingHistoryView = false // 履歴画面表示制御
+    @State private var isShowingHistoryView = false
+    @ObservedObject var timerManager = TimerManager()
+    @State private var showAlert = false
     // 受信したデータを保持する配列
     @StateObject private var sessionDelegate = WatchSessionDelegate(userDefaultsKey: "receivedData") // WatchSessionDelegateの初期化時にuserDefaultsKeyを渡す
 
@@ -28,7 +31,7 @@ struct TopView: View {
                     }
                 
                 Spacer()
-                
+
                 // アイコン2
                 Image(systemName: "book.pages.fill")
                     .font(.system(size: 30))
@@ -37,6 +40,15 @@ struct TopView: View {
                         isShowingHistoryView = true
                     }
                 
+                Spacer()
+
+                Button("timer") {
+                    timerManager.startTimer()
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Timer Finished"), message: Text("1 minute timer has finished."), dismissButton: .default(Text("OK")))
+                }
+
                 Spacer()
             }
             
