@@ -11,11 +11,25 @@ import SwiftUI
 import Combine
 import WatchKit
 
-class TimerManager: ObservableObject {
+class TimerManager: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     let extendedRuntimeSession = ExtendedRuntimeSession()
     
     // タイマーの状態を監視するプロパティ
     @Published var timerFinished = false
+    
+    // 通知の許可が得られたかどうかを示すプロパティ
+    @Published var notificationPermissionGranted = false
+
+    override init() {
+        super.init()
+        // 通知の許可をリクエスト
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
+            if granted {
+                self?.notificationPermissionGranted = true
+                UNUserNotificationCenter.current().delegate = self
+            }
+        }
+    }
 
     func startTimer() {
         print("start timer")
@@ -38,6 +52,17 @@ class TimerManager: ObservableObject {
         // ハプティックフィードバックを再生
         playHapticFeedback()
         
+        // 通知の許可が得られている場合のみ通知を送信
+        if notificationPermissionGranted {
+            sendNotification()
+        }
+    }
+    
+    func playHapticFeedback() {
+        WKInterfaceDevice.current().play(.notification)
+    }
+    
+    func sendNotification() {
         // 通知の作成
         let content = UNMutableNotificationContent()
         content.title = "タイマー終了"
@@ -52,9 +77,5 @@ class TimerManager: ObservableObject {
                 print("通知の登録に失敗しました：\(error)")
             }
         }
-    }
-    
-    func playHapticFeedback() {
-        WKInterfaceDevice.current().play(.notification)
     }
 }
