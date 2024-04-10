@@ -64,8 +64,8 @@ struct WeightsAndTimesView: View {
                 Spacer()
                 
                 Button("OK") {
-                    saveDataToUserDefaults()
-                    sessionDelegate.sendMessageToiPhone()
+                    let data = prepareDataForWatch()
+                    sessionDelegate.sendMessageToiPhone(with: data)
                     isShowingPopup = true // ポップアップ表示
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         // 1秒後にポップアップを閉じる
@@ -89,7 +89,7 @@ struct WeightsAndTimesView: View {
         
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
         
-    private func saveDataToUserDefaults() {
+    private func prepareDataForWatch() -> [String: Any] {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -110,6 +110,8 @@ struct WeightsAndTimesView: View {
         UserDefaults.standard.set(selectedWeight, forKey: "\(itemName)_weight")
         UserDefaults.standard.set(selectedUnit, forKey: "\(itemName)_unit")
         UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
+        
+        return value
     }
 
     
