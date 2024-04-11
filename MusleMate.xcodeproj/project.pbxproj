@@ -207,6 +207,7 @@
 		9F9609232BAA8CC50046600D /* MusleMate */ = {
 			isa = PBXGroup;
 			children = (
+				9FC854A12BC7B3C7009BF176 /* PrivacyInfo.xcprivacy */,
 				9F9AC9022BBFDC5B00190339 /* SplashView.swift */,
 				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
 				9F7F80422BABE536007A7176 /* TopView.swift */,
@@ -479,6 +480,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FC854A22BC7B3C7009BF176 /* PrivacyInfo.xcprivacy in Resources */,
 				9F96092C2BAA8CC70046600D /* Preview Assets.xcassets in Resources */,
 				9F9609292BAA8CC70046600D /* Assets.xcassets in Resources */,
 			);
