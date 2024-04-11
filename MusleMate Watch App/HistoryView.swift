@@ -10,7 +10,7 @@ struct HistoryView: View {
     @State private var historyItems: [HistoryItem] = []
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.dateFormat = "yyyyMMdd"
         return formatter
     }()
     
@@ -18,7 +18,7 @@ struct HistoryView: View {
     @EnvironmentObject var sessionDelegate: WatchSessionDelegate
 
     struct HistoryItem: Identifiable {
-        let id = UUID()
+        let id: String // キーをidに使用する
         let time: String
         let menu: String
         let weight: Int
@@ -38,16 +38,27 @@ struct HistoryView: View {
                         .font(.body)
                         .padding()
                 } else {
-                    List(historyItems) { item in
-                        VStack(alignment: .leading) {
-                            Text(item.time)
-                                .font(.caption)
-                            Text(item.menu)
-                                .font(.caption)
-                            Text("\(item.weight) \(item.unit), \(item.reps) reps")
-                                .font(.caption)
+                    List {
+                        ForEach(historyItems) { item in
+                            VStack(alignment: .leading) {
+                                Text(item.time)
+                                    .font(.caption)
+                                Text(item.menu)
+                                    .font(.caption)
+                                Text("\(item.weight) \(item.unit), \(item.reps) reps")
+                                    .font(.caption)
+                            }
+                            .padding()
+                            .id(item.id) // 各項目にキーを割り当てる
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    print("item id : \(item.id)")
+                                    deleteItem(with: item.id)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
-                        .padding()
                     }
                 }
             }
@@ -55,17 +66,17 @@ struct HistoryView: View {
             .onAppear {
                 loadDataFromUserDefaults()
                 sessionDelegate.activateSession()
-//                sessionDelegate.sendMessageToiPhone()
             }
         }
     }
     
     private func loadDataFromUserDefaults() {
         let userDefaults = UserDefaults.standard
-        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout") }.sorted()
-        
-        var items: [HistoryItem] = []
         let todayDateString = dateFormatter.string(from: Date())
+        print("todayDateString: \(todayDateString)")
+        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout_\(todayDateString)") }.sorted()
+        print("Keys: \(keys)")
+        var items: [HistoryItem] = []
         
         for key in keys {
             if let data = userDefaults.object(forKey: key) as? [String: Any],
@@ -73,15 +84,10 @@ struct HistoryView: View {
                let menu = data["menu"] as? String,
                let weight = data["weight"] as? Int,
                let unit = data["unit"] as? String,
-               let reps = data["reps"] as? Int,
-               let workoutDate = formatTimeToDate(time) {
+               let reps = data["reps"] as? Int {
                 
-                let workoutDateString = dateFormatter.string(from: workoutDate)
-                
-                if workoutDateString == todayDateString {
-                    let formattedTime = formatTime(time)
-                    items.append(HistoryItem(time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
-                }
+                let formattedTime = formatTime(time)
+                items.append(HistoryItem(id: key, time: formattedTime, menu: menu, weight: weight, unit: unit, reps: reps))
             }
         }
         
@@ -98,12 +104,18 @@ struct HistoryView: View {
         return time
     }
     
-    private func formatTimeToDate(_ time: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMddHHmmss"
-        return formatter.date(from: time)
+    private func deleteItem(with id: String) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: id)
+        // UserDefaultsの変更を即時に反映する
+        userDefaults.synchronize()
+        // 削除したアイテムをリストからも削除する
+        historyItems.removeAll { $0.id == id }
     }
 }
+
+
+
 
 #Preview {
     HistoryView()
