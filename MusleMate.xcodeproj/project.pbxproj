@@ -37,10 +37,8 @@
 		9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */; };
 		9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA652BAD4BD7002246AF /* HistoryView.swift */; };
 		9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC307B82BC243CE00668536 /* FSCalendar */; };
-		9FC8548F2BC798E6009BF176 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FC8548E2BC798E6009BF176 /* Info.plist */; };
-		9FC854932BC79A68009BF176 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854922BC79A68009BF176 /* PrivacyInfo.xcprivacy */; };
-		9FC854942BC79A68009BF176 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854922BC79A68009BF176 /* PrivacyInfo.xcprivacy */; };
-		9FC854962BC79B50009BF176 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854952BC79B50009BF176 /* PrivacyInfo.xcprivacy */; };
+		9FC854982BC79DC2009BF176 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854972BC79DC2009BF176 /* PrivacyInfo.xcprivacy */; };
+		9FC8549A2BC79DDC009BF176 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854992BC79DDC009BF176 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,10 +128,8 @@
 		9FB2BA612BAC298A002246AF /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsAndTimesView.swift; sourceTree = "<group>"; };
 		9FB2BA652BAD4BD7002246AF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		9FC307B72BC243C000668536 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		9FC8548E2BC798E6009BF176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FC854922BC79A68009BF176 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		9FC854952BC79B50009BF176 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9FC854972BC79DC2009BF176 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9FC854992BC79DDC009BF176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +209,6 @@
 		9F9609232BAA8CC50046600D /* MusleMate */ = {
 			isa = PBXGroup;
 			children = (
-				9FC307B72BC243C000668536 /* Info.plist */,
 				9FC854922BC79A68009BF176 /* PrivacyInfo.xcprivacy */,
 				9F9AC9022BBFDC5B00190339 /* SplashView.swift */,
 				9F9609242BAA8CC50046600D /* MusleMateApp.swift */,
@@ -258,8 +253,8 @@
 		9F96094B2BAA8CC70046600D /* MusleMate Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				9FC8548E2BC798E6009BF176 /* Info.plist */,
-				9FC854952BC79B50009BF176 /* PrivacyInfo.xcprivacy */,
+				9FC854992BC79DDC009BF176 /* Info.plist */,
+				9FC854972BC79DC2009BF176 /* PrivacyInfo.xcprivacy */,
 				9F96094C2BAA8CC70046600D /* MusleMateApp.swift */,
 				9FB2BA612BAC298A002246AF /* TopView.swift */,
 				9F96094E2BAA8CC70046600D /* ContentView.swift */,
@@ -512,11 +507,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FC8549A2BC79DDC009BF176 /* Info.plist in Resources */,
+				9FC854982BC79DC2009BF176 /* PrivacyInfo.xcprivacy in Resources */,
 				9F9609542BAA8CC80046600D /* Preview Assets.xcassets in Resources */,
 				9F9609512BAA8CC80046600D /* Assets.xcassets in Resources */,
-				9FC854942BC79A68009BF176 /* PrivacyInfo.xcprivacy in Resources */,
-				9FC854962BC79B50009BF176 /* PrivacyInfo.xcprivacy in Resources */,
-				9FC8548F2BC798E6009BF176 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
