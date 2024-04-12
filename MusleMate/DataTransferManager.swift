@@ -56,10 +56,12 @@ class DataTransferManager: NSObject, ObservableObject, WCSessionDelegate {
         if let workoutDataArray = userInfo["workoutDataArray"] as? [[String: Any]] {
             for workoutData in workoutDataArray {
                 if let key = workoutData["key"] as? String, let data = workoutData["data"] as? [String: Any] {
-                    // 受信したデータをUserDefaultsに保存
-                    print("UserDefaults key \(key)")
-                    print("UserDefaults data \(data)")
-                    UserDefaults.standard.set(data, forKey: key)
+                    if let deleted = data["deleted"] as? Bool, deleted {
+                        UserDefaults.standard.removeObject(forKey: key)
+                    } else {
+                        // 受信したデータをUserDefaultsに保存
+                        UserDefaults.standard.set(data, forKey: key)
+                    }
                 }
             }
         }

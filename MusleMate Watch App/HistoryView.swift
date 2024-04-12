@@ -105,6 +105,13 @@ struct HistoryView: View {
     }
     
     private func deleteItem(with id: String) {
+        // 削除したことをiphoneに伝える
+        let value: [String: Any] = [
+            "deleted": true as Any
+        ]
+        let sendData = ["key": id, "data": value] as [String : Any]
+        sessionDelegate.sendMessageToiPhone(with: sendData )
+        
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: id)
         // UserDefaultsの変更を即時に反映する
