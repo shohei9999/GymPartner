@@ -46,7 +46,7 @@ struct TopView: View {
                     .padding(.top, 10)
                     .padding(.horizontal, 10)
                     .id(UUID()) // データが変更されるたびに再描画をトリガー
-                HistoryView()
+                HistoryView(selectedDate: selectedDate)
                     .padding(.top, 10)
                     .id(UUID()) // データが変更されるたびに再描画をトリガー
             }
@@ -114,7 +114,6 @@ struct CalendarView: UIViewRepresentable {
             _selectedDate = selectedDate
         }
 
-        // FSCalendarのデータソースメソッド: 日付に対応するイメージを返す
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMdd"
@@ -123,9 +122,14 @@ struct CalendarView: UIViewRepresentable {
             // uniqueDatesに含まれる日付にはイメージを表示する
             if uniqueDates.contains(dateFormatter.string(from: date)) {
                 return image
-//                ?.resize(to: CGSize(width: 15, height: 15)) // シミュレータだと日付と重なるが実機だと重ならない
             }
             return nil
+        }
+
+        // FSCalendarのデータソースメソッド: 日付が選択されたときに実行される
+        func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+            // 日付が選択されたときに選択された日付を通知
+            selectedDate = date
         }
 
         // ワークアウト日付を取得し、カレンダーにマークを付ける

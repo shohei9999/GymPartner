@@ -20,8 +20,8 @@ struct WorkoutItem: Identifiable {
 struct HistoryView: View {
     // WorkoutItem型の配列を格納するプロパティ
     @State private var workoutItems: [String: [WorkoutItem]] = [:] // 日付ごとのワークアウトアイテムを格納する辞書
-    @State private var selectedDate = Date() // 選択された日付
-
+    var selectedDate: Date // 選択された日付を受け取る
+    
     // ボディ部分
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct HistoryView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     if workoutItems.isEmpty {
-                        Text("Oops, it seems there are no training records on record.")
+                        Text("Selected date does not have any training records.")
                             .font(.body) // フォントをbodyに設定
                             .padding()
                     } else {
@@ -83,20 +83,23 @@ struct HistoryView: View {
             loadDataFromUserDefaults()
         }
     }
-
+    
     // UserDefaultsからデータを取得してworkoutItemsに格納するメソッド
     private func loadDataFromUserDefaults() {
         let userDefaults = UserDefaults.standard
-        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        print("selectedDate: \(formattedDate)")
         // workout_から始まるキーをフィルタリングしてソート
-        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") }.sorted()
-
+        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") && $0.contains(formattedDate) }.sorted()
+        print("keys: \(keys)")
         var itemsDictionary: [String: [WorkoutItem]] = [:]
-
+        
         for key in keys {
             // キーが"workout_"で始まり、かつ対応するデータが存在する場合にのみ処理を行う
             if let data = userDefaults.dictionary(forKey: key) {
-
+                
                 // 各値を取得し、nilの場合はデフォルト値を設定する
                 let menu = data["menu"] as? String ?? ""
                 let weight = data["weight"] as? Double ?? 0
@@ -104,7 +107,6 @@ struct HistoryView: View {
                 let reps = data["reps"] as? Int ?? 0
                 
                 // 日付の取得
-                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyyMMddHHmmss"
                 if let date = dateFormatter.date(from: String(key.suffix(14))) {
                     dateFormatter.dateFormat = "yyyy/MM/dd"
@@ -123,12 +125,12 @@ struct HistoryView: View {
                 }
             }
         }
-
+        
         workoutItems = itemsDictionary
     }
 }
 
 
 #Preview {
-    HistoryView()
+    HistoryView(selectedDate: Date())
 }
