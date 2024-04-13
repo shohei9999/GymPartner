@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if sessionDelegate.receivedData.isEmpty {
-                Text("Please add a new workout menu on your iPhone.")
+                Text("Please add a workout menu from your iPhone. Only menus enabled with a star will appear on the Apple Watch.")
                     .font(.body)
                     .navigationTitle("Workout menu")
             } else {
