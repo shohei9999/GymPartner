@@ -92,10 +92,8 @@ struct HistoryView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
         let formattedDate = dateFormatter.string(from: selectedDate)
-        print("selectedDate: \(formattedDate)")
         // workout_から始まるキーをフィルタリングしてソート
         let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.starts(with: "workout_") && $0.contains(formattedDate) }.sorted()
-        print("keys: \(keys)")
         var items: [WorkoutItem] = []
         
         for key in keys {

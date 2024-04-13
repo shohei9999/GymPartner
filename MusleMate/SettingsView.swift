@@ -9,21 +9,23 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-//        NavigationView {
-            VStack(alignment: .leading) { // Align content to the top
-                List {
-                    NavigationLink(destination: ContentView()) {
-                        Text("Workout Menu")
-                    }
-                    Text("Others")
+        VStack(alignment: .leading) { // Align content to the top
+            List {
+                NavigationLink(destination: ContentView()) {
+                    Text("Workout Menu")
                 }
-//            }
-//            .navigationTitle("Settings")
+                Button(action: {
+                    // "Update"がタップされたときに処理を実行
+                    DataSynchronization.printUserDefaultsItems()
+                }) {
+                    Text("Update")
+                }
+                Text("Others")
+            }
         }
         .navigationBarTitle("Settings")
     }
 }
-
 
 #Preview {
     SettingsView()

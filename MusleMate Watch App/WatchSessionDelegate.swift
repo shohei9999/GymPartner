@@ -51,6 +51,19 @@ class WatchSessionDelegate: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        // iPhoneからのsendMessageで送信されたメッセージを受信したときの処理
+        if let receivedData = message["data"] as? [String] {
+            DispatchQueue.main.async {
+                self.receivedData = receivedData
+                print("key: \(self.userDefaultsKey)")
+                print("receivedData: \(receivedData)")
+                // 受信したデータをUserDefaultsに保存
+                UserDefaults.standard.set(receivedData, forKey: self.userDefaultsKey)
+            }
+        }
+    }
+    
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         if let receivedData = userInfo["data"] as? [String] {
             // 受信したデータを更新

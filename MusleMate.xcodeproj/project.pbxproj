@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F0D80482BCA3347003F9D7A /* DataSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */; };
 		9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */; };
 		9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */; };
 		9F1F1ADD2BC6CA1600ED9C94 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */; };
@@ -94,6 +95,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSynchronization.swift; sourceTree = "<group>"; };
 		9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedRuntimeSession.swift; sourceTree = "<group>"; };
 		9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				9F9609282BAA8CC70046600D /* Assets.xcassets */,
 				9F96092A2BAA8CC70046600D /* Preview Content */,
 				9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */,
+				9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */,
 			);
 			path = MusleMate;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				9F9609272BAA8CC50046600D /* ContentView.swift in Sources */,
 				9F9AC9012BBF757600190339 /* SettingsView.swift in Sources */,
 				9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */,
+				9F0D80482BCA3347003F9D7A /* DataSynchronization.swift in Sources */,
 				9F9AC8FF2BBE9E9800190339 /* WorkoutChartView.swift in Sources */,
 				9F7F80432BABE536007A7176 /* TopView.swift in Sources */,
 				9F4FC9152BB18FC600202BBB /* RecordWorkoutView.swift in Sources */,
