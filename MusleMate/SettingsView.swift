@@ -14,12 +14,12 @@ struct SettingsView: View {
                 NavigationLink(destination: ContentView()) {
                     Text("Workout Menu")
                 }
-                Button(action: {
-                    // "Update"がタップされたときに処理を実行
-                    DataSynchronization.printUserDefaultsItems()
-                }) {
-                    Text("Update")
-                }
+//                Button(action: {
+//                    // "Update"がタップされたときに処理を実行
+//                    DataSynchronization.printUserDefaultsItems()
+//                }) {
+//                    Text("Update")
+//                }
                 Text("Others")
             }
         }
