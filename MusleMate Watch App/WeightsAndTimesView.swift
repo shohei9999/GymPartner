@@ -10,10 +10,16 @@ import WatchKit
 
 struct WeightsAndTimesView: View {
     var itemName: String
+    @ObservedObject var timerManager = TimerManager()
+    @State private var isTimerStarted = false // タイマーが開始されたかどうかを示すプロパティ
+
     @State private var selectedWeight: Int = 100
     @State private var selectedUnit: String = "kg"
     @State private var selectedRep: Int = 10
-    @State private var isShowingPopup = false
+    @State private var isShowingModal = false // モーダルを表示するかどうかを制御するフラグ
+    
+    // PresentationModeを取得
+    @Environment(\.presentationMode) var presentationMode
     
     // WatchSessionDelegateを環境オブジェクトとして宣言
     @EnvironmentObject var sessionDelegate: WatchSessionDelegate
@@ -66,28 +72,91 @@ struct WeightsAndTimesView: View {
                 Button("OK") {
                     let data = prepareDataForWatch()
                     sessionDelegate.sendMessageToiPhone(with: data)
-                    isShowingPopup = true // ポップアップ表示
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        // 1秒後にポップアップを閉じる
-                        isShowingPopup = false
-                        // 1秒後に遷移する処理
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    isShowingModal = true // モーダル表示
                 }
                 .padding()
                 
             }
         }
         .navigationTitle(itemName)
-        .alert(isPresented: $isShowingPopup) {
-            Alert(title: Text("Done!"))
+        .sheet(isPresented: $isShowingModal) {
+            // モーダル内部
+            VStack {
+                // 1段目: Next Set
+                Text("More Workout?")
+                    .font(.system(size: 20)) // フォントサイズを20に変更
+                    .fontWeight(.bold) // フォントを太字に設定
+                    .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20)) // 上下左右のパディングを調整
+                
+                // 2段目: タイマー
+                HStack {
+                     Spacer()
+                     Image(systemName: "goforward.30")
+                         .font(.system(size: 40))
+                         .onTapGesture {
+                             timerManager.startTimer(duration: 30)
+                             isTimerStarted = true
+                         }
+                     Spacer()
+                     Image(systemName: "goforward.60")
+                         .font(.system(size: 40))
+                         .onTapGesture {
+                             timerManager.startTimer(duration: 60)
+                             isTimerStarted = true
+                         }
+                     Spacer()
+                     Image(systemName: "goforward.90")
+                         .font(.system(size: 40))
+                         .onTapGesture {
+                             timerManager.startTimer(duration: 90)
+                             isTimerStarted = true
+                         }
+                     Spacer()
+                 }
+                 .padding()
+                
+                // 3段目: Endボタン
+                Button("End") {
+                    // モーダルを閉じる
+                    isShowingModal = false
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+                .font(.title)
+                .padding()
+            }
+            .sheet(isPresented: $isTimerStarted) {
+                VStack {
+                    Spacer()
+                    if timerManager.remainingTime == 0 {
+                        Text("Next!")
+                            .font(.title)
+                            .padding()
+                        Button("OK") {
+                            isShowingModal = false // モーダルを閉じる
+                            self.presentationMode.wrappedValue.dismiss() // 表示しているすべてのモーダルを閉じる
+                        }
+                        .font(.title)
+                        .padding()
+                    } else {
+                        TimerModalView(timerManager: timerManager)
+                            .onDisappear {
+                                timerManager.stopTimer()
+                            }
+                    }
+                    Spacer()
+                }
+            }
+            .onReceive(timerManager.$remainingTime) { remainingTime in
+                if isTimerStarted && remainingTime == 0 {
+                    // タイマーが終了したら振動を行う
+                    WKInterfaceDevice.current().play(.notification)
+                }
+            }
         }
         .onAppear {
             loadDataFromUserDefaults()
         }
     }
-        
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
         
     private func prepareDataForWatch() -> [String: Any] {
         let currentDate = Date()
@@ -111,7 +180,7 @@ struct WeightsAndTimesView: View {
         UserDefaults.standard.set(selectedUnit, forKey: "\(itemName)_unit")
         UserDefaults.standard.set(selectedRep, forKey: "\(itemName)_reps")
         
-        return ["key": key, "data": value] 
+        return ["key": key, "data": value]
     }
 
     
@@ -127,6 +196,7 @@ struct WeightsAndTimesView: View {
         }
     }
 }
+
 
 #Preview {
     WeightsAndTimesView()
