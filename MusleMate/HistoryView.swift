@@ -80,6 +80,10 @@ struct HistoryView: View {
             // UserDefaultsからデータを取得してworkoutItemsに格納
             loadDataFromUserDefaults()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
+            // UserDefaultsの変更があった場合にデータを再読み込みする
+            loadDataFromUserDefaults()
+        }
     }
     
     // UserDefaultsからデータを取得してworkoutItemsに格納するメソッド
