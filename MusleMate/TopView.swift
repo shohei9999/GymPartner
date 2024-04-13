@@ -65,7 +65,7 @@ struct TopView: View {
         .onAppear {
             sessionDelegate.activateSession()
         }
-        .onReceive(sessionDelegate.$receivedData) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
             // データが変更されたときに再描画をトリガー
             selectedDate = Date() // カレンダーの再描画をトリガー
         }
