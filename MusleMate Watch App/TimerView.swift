@@ -12,59 +12,63 @@ struct TimerView: View {
     @State private var isTimerStarted = false // タイマーが開始されたかどうかを示すプロパティ
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            HStack {
+        NavigationView {
+            VStack {
                 Spacer()
                 
-                // 上段左
-                Image(systemName: "goforward.30")
-                    .font(.system(size: 50))
-                    .padding()
-                    .onTapGesture {
-                        timerManager.startTimer(duration: 30)
-                        isTimerStarted = true
-                    }
-                
-                Spacer()
+                HStack {
+                    Spacer()
+                    
+                    // 上段左
+                    Image(systemName: "goforward.30")
+                        .font(.system(size: 50))
+                        .padding()
+                        .onTapGesture {
+                            timerManager.startTimer(duration: 30)
+                            isTimerStarted = true
+                        }
+                    
+                    Spacer()
 
-                // 上段右
-                Image(systemName: "goforward.60")
-                    .font(.system(size: 50))
-                    .padding()
-                    .onTapGesture {
-                        timerManager.startTimer(duration: 60)
-                        isTimerStarted = true
-                    }
-                
-                Spacer()
-            }
-            
-            Spacer()
-            
-            HStack {
-                Spacer()
-                
-                // 下段中央
-                Image(systemName: "goforward.90")
-                    .font(.system(size: 50))
-                    .padding()
-                    .onTapGesture {
-                        timerManager.startTimer(duration: 90)
-                        isTimerStarted = true
-                    }
-                
-                Spacer()
-            }
-            
-            Spacer()
-        }
-        .sheet(isPresented: $isTimerStarted) {
-            TimerModalView(timerManager: timerManager)
-                .onDisappear {
-                    timerManager.stopTimer()
+                    // 上段右
+                    Image(systemName: "goforward.60")
+                        .font(.system(size: 50))
+                        .padding()
+                        .onTapGesture {
+                            timerManager.startTimer(duration: 60)
+                            isTimerStarted = true
+                        }
+                    
+                    Spacer()
                 }
+                
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    
+                    // 下段中央
+                    Image(systemName: "goforward.90")
+                        .font(.system(size: 50))
+                        .padding()
+                        .onTapGesture {
+                            timerManager.startTimer(duration: 90)
+                            isTimerStarted = true
+                        }
+                    
+                    Spacer()
+                }
+                
+                Spacer()
+            }
+            .navigationBarTitle("Timer") // タイトルを変更
+            .navigationBarHidden(true) // ナビゲーションバーを非表示にする
+            .sheet(isPresented: $isTimerStarted) {
+                TimerModalView(timerManager: timerManager)
+                    .onDisappear {
+                        timerManager.stopTimer()
+                    }
+            }
         }
     }
 }

@@ -62,7 +62,8 @@ struct HistoryView: View {
                     }
                 }
             }
-            .navigationTitle(dateFormatter.string(from: Date()))
+            .navigationBarTitle("History") // タイトルを変更
+            .navigationBarHidden(true) // ナビゲーションバーを非表示にする
             .onAppear {
                 loadDataFromUserDefaults()
                 sessionDelegate.activateSession()
