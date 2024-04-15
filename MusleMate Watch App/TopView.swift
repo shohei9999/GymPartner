@@ -19,11 +19,11 @@ struct TopView: View {
             VStack {
                 // TabViewをNavigationViewの外に配置
                 TabView(selection: $selectedTab) {
-                    HistoryView()
-                        .environmentObject(sessionDelegate) // WatchSessionDelegateをHistoryViewに渡す
+                    TimerView()
+                        .environmentObject(sessionDelegate)
                         .tabItem {
-                            Image(systemName: "book.pages.fill")
-                            Text("History")
+                            Image(systemName: "timer")
+                            Text("Timer")
                         }
                         .tag(0)
                     ContentView()
@@ -33,11 +33,11 @@ struct TopView: View {
                             Text("Workout")
                         }
                         .tag(1)
-                    TimerView()
-                        .environmentObject(sessionDelegate)
+                    HistoryView()
+                        .environmentObject(sessionDelegate) // WatchSessionDelegateをHistoryViewに渡す
                         .tabItem {
-                            Image(systemName: "timer")
-                            Text("Timer")
+                            Image(systemName: "book.pages.fill")
+                            Text("History")
                         }
                         .tag(2)
                 }

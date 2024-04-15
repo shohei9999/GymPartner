@@ -19,8 +19,6 @@ struct ContentView: View {
             if sessionDelegate.receivedData.isEmpty {
                 Text("Please add a workout menu from your iPhone. Only menus enabled with a star will appear on the Apple Watch.")
                     .font(.body)
-                    .navigationBarTitle("Workout menu")
-                    .navigationBarHidden(true) // ナビゲーションバーを非表示にする
             } else {
                 List(sessionDelegate.receivedData, id: \.self) { data in
                     NavigationLink(destination: WeightsAndTimesView(itemName: data)
@@ -28,8 +26,6 @@ struct ContentView: View {
                         Text(data)
                     }
                 }
-                .navigationBarTitle("Workout menu")
-                .navigationBarHidden(true) // ナビゲーションバーを非表示にする
             }
         }
         .onAppear {

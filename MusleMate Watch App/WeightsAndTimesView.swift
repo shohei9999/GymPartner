@@ -78,7 +78,7 @@ struct WeightsAndTimesView: View {
                 
             }
         }
-        .navigationTitle(itemName)
+        .navigationBarTitle(itemName) // タイトルを設定
         .sheet(isPresented: $isShowingModal) {
             // モーダル内部
             VStack {
@@ -196,7 +196,6 @@ struct WeightsAndTimesView: View {
         }
     }
 }
-
 
 #Preview {
     WeightsAndTimesView()
