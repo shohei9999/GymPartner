@@ -41,6 +41,7 @@ struct WorkoutChartView: View {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
         
         return "\(dateFormatter.string(from: monday))-\(dateFormatter.string(from: sunday))"
     }
@@ -91,6 +92,7 @@ struct WorkoutChartView: View {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
         
         let calendar = Calendar.current
         let weekday = calendar.component(.weekday, from: selectedWeek)
@@ -136,6 +138,7 @@ class DateValueFormatter: AxisValueFormatter {
 
     init() {
         dateFormatter.dateFormat = "MM/dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
     }
 
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
@@ -180,6 +183,7 @@ struct LineChart: UIViewRepresentable {
         // X軸のラベルを月曜日から日曜日までの曜日に設定
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
         uiView.xAxis.valueFormatter = IndexAxisValueFormatter(values: (0...6).map { (value) -> String in
             let date = calendar.date(byAdding: .day, value: value, to: monday)!
             return dateFormatter.string(from: date)
