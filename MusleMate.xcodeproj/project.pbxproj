@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F08F5982BCF120F007BC65D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5972BCF120F007BC65D /* DGCharts */; };
 		9F08F59A2BCF120F007BC65D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5992BCF120F007BC65D /* DGChartsDynamic */; };
+		9F0987572BD011CC00F69EE6 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5992BCF120F007BC65D /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9F0D80482BCA3347003F9D7A /* DataSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */; };
 		9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */; };
 		9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */; };
@@ -83,6 +84,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		9F0987582BD011CC00F69EE6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F0987572BD011CC00F69EE6 /* DGChartsDynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F9609702BAA8CC80046600D /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +331,7 @@
 				9F96091E2BAA8CC50046600D /* Frameworks */,
 				9F96091F2BAA8CC50046600D /* Resources */,
 				9F9609702BAA8CC80046600D /* Embed Watch Content */,
+				9F0987582BD011CC00F69EE6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
