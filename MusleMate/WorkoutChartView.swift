@@ -8,11 +8,41 @@ import SwiftUI
 import DGCharts
 
 struct WorkoutChartView: View {
+    @State private var selectedWeek: Date = Date()
+    
     var body: some View {
         VStack {
+            HStack {
+                Button(action: {
+                    self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek)!
+                }) {
+                    Image(systemName: "chevron.left")
+                }
+                Text(getDateRange())
+                    .font(.title)
+                    .padding()
+                Button(action: {
+                    self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek)!
+                }) {
+                    Image(systemName: "chevron.right")
+                }
+            }
             LineChart(dataPoints: generateDataPoints())
                 .frame(height: 300)
         }
+    }
+    
+    func getDateRange() -> String {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: selectedWeek)
+        let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
+        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
+        let sunday = calendar.date(byAdding: .day, value: 6, to: monday)!
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        
+        return "\(dateFormatter.string(from: monday))-\(dateFormatter.string(from: sunday))"
     }
     
     func generateDataPoints() -> [DataPoint] {
@@ -63,27 +93,18 @@ struct WorkoutChartView: View {
         dateFormatter.dateFormat = "yyyyMMdd"
         
         let calendar = Calendar.current
-        let now = Date()
-        let weekday = calendar.component(.weekday, from: now)
+        let weekday = calendar.component(.weekday, from: selectedWeek)
         let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
-        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: now)!
+        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
         let mondayWithoutTime = calendar.startOfDay(for: monday) // 追加
-
-        print("今日の日付: \(now)")
-        print("今日の曜日: \(weekday)")
-        print("今日から月曜日までの日数: \(daysToMonday)")
-        print("最も近い過去の月曜日: \(mondayWithoutTime)") // 修正
 
         // ダミーデータからデータを抽出
         var data: [String: [ChartDataEntry]] = [:]
         for (date, menu, totalWeight) in dummyData {
             let dateValue = calendar.startOfDay(for: dateFormatter.date(from: date)!)
             let daysFromMonday = calendar.dateComponents([.day], from: mondayWithoutTime, to: dateValue).day! // 修正
-            print("データの日付: \(dateValue)")
-            print("データの日付から最も近い過去の月曜日までの日数: \(daysFromMonday)")
             if daysFromMonday >= 0 && daysFromMonday <= 6 {
                 let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: Double(totalWeight))
-                print("データエントリー: \(dataEntry)")
                 if var existingData = data[menu] {
                     // すでに存在するメニューの場合は追加
                     existingData.append(dataEntry)
@@ -147,11 +168,10 @@ struct LineChart: UIViewRepresentable {
         }
         
         let calendar = Calendar.current
-        let now = Date()
-        let weekday = calendar.component(.weekday, from: now)
+        let selectedWeek = Date() // 追加
+        let weekday = calendar.component(.weekday, from: selectedWeek)
         let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
-        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: now)!
-        let mondayWithoutTime = calendar.startOfDay(for: monday)
+        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
 
         // 月曜日から日曜日までの表示に設定
         uiView.xAxis.axisMinimum = 0
