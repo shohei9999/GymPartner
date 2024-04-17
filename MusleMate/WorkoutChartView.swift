@@ -9,12 +9,14 @@ import DGCharts
 
 struct WorkoutChartView: View {
     @State private var selectedWeek: Date = Date()
+    @State private var dataPoints: [DataPoint] = [] // 追加
     
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
                     self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek)!
+                    self.dataPoints = self.generateDataPoints() // データを更新
                 }) {
                     Image(systemName: "chevron.left")
                 }
@@ -23,12 +25,16 @@ struct WorkoutChartView: View {
                     .padding()
                 Button(action: {
                     self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek)!
+                    self.dataPoints = self.generateDataPoints() // データを更新
                 }) {
                     Image(systemName: "chevron.right")
                 }
             }
-            LineChart(dataPoints: generateDataPoints())
+            LineChart(dataPoints: dataPoints) // 修正
                 .frame(height: 300)
+        }
+        .onAppear {
+            self.dataPoints = self.generateDataPoints() // 初期表示時にデータを読み込む
         }
     }
     
@@ -47,46 +53,9 @@ struct WorkoutChartView: View {
     }
     
     func generateDataPoints() -> [DataPoint] {
-        let dummyData: [(String, String, Int)] = [
-            ("20240413", "squat", 200), // 土
-            ("20240414", "squat", 300), // 日
-            ("20240415", "squat", 350), // 月
-            ("20240416", "squat", 450), // 火
-            ("20240417", "squat", 500), // 水
-            ("20240418", "squat", 350), // 木
-            ("20240419", "squat", 500), // 金
-            ("20240420", "squat", 600), // 土
-            ("20240421", "squat", 700),
-            ("20240422", "squat", 800),
-            ("20240423", "squat", 900),
-            ("20240424", "squat", 1000),
-            ("20240425", "squat", 1100),
-            ("20240426", "squat", 1200),
-            ("20240427", "squat", 1300),
-            ("20240428", "squat", 1400),
-            ("20241019", "squat", 1500),
-            ("20240413", "chestPress", 100),
-            ("20240414", "chestPress", 110),
-            ("20240415", "chestPress", 120),
-            ("20240416", "chestPress", 130),
-            ("20240417", "chestPress", 140),
-            ("20240418", "chestPress", 150),
-            ("20240419", "chestPress", 160),
-            ("20240420", "chestPress", 170),
-            ("20240421", "chestPress", 100),
-            ("20240422", "chestPress", 110),
-            ("20240423", "chestPress", 120),
-            ("20240424", "chestPress", 130),
-            ("20240425", "chestPress", 140),
-            ("20240426", "chestPress", 150),
-            ("20240427", "chestPress", 160),
-            ("20240428", "chestPress", 170),
-            ("20240515", "chestPress", 600),
-            ("20240615", "chestPress", 700),
-            ("20240815", "chestPress", 800),
-            ("20240915", "chestPress", 900),
-            ("20241015", "chestPress", 1000)
-        ]
+        // UserDefaultからデータを取得
+        let userDefaults = UserDefaults.standard
+        let keys = userDefaults.dictionaryRepresentation().keys.filter { $0.hasPrefix("workout_") }
         
         var dataPoints: [DataPoint] = []
         
@@ -100,21 +69,33 @@ struct WorkoutChartView: View {
         let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
         let mondayWithoutTime = calendar.startOfDay(for: monday) // 追加
 
-        // ダミーデータからデータを抽出
+        // データを抽出
         var data: [String: [ChartDataEntry]] = [:]
-        for (date, menu, totalWeight) in dummyData {
-            let dateValue = calendar.startOfDay(for: dateFormatter.date(from: date)!)
-            let daysFromMonday = calendar.dateComponents([.day], from: mondayWithoutTime, to: dateValue).day! // 修正
-            if daysFromMonday >= 0 && daysFromMonday <= 6 {
-                let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: Double(totalWeight))
-                if var existingData = data[menu] {
-                    // すでに存在するメニューの場合は追加
-                    existingData.append(dataEntry)
-                    data[menu] = existingData
-                } else {
-                    // 新しいメニューの場合は新規作成
-                    data[menu] = [dataEntry]
+        for key in keys {
+            let dateStr = String(key.dropFirst(8)).prefix(8) // 最初の8文字だけを取り出す
+            if let date = dateFormatter.date(from: String(dateStr)) {
+                let dateValue = calendar.startOfDay(for: date)
+                let daysFromMonday = calendar.dateComponents([.day], from: mondayWithoutTime, to: dateValue).day! // 修正
+                if daysFromMonday >= 0 && daysFromMonday <= 6 {
+                    let workoutData = userDefaults.dictionary(forKey: key)!
+                    let menu = workoutData["menu"] as! String
+                    var weight = workoutData["weight"] as! Double
+                    let unit = workoutData["unit"] as! String
+                    if unit == "kg" {
+                        weight *= 2.20462 // kgをポンドに変換
+                    }
+                    let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight)
+                    if var existingData = data[menu] {
+                        // すでに存在するメニューの場合は追加
+                        existingData.append(dataEntry)
+                        data[menu] = existingData
+                    } else {
+                        // 新しいメニューの場合は新規作成
+                        data[menu] = [dataEntry]
+                    }
                 }
+            } else {
+                print("Invalid date format: \(dateStr)")
             }
         }
 
