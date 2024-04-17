@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F08F5982BCF120F007BC65D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5972BCF120F007BC65D /* DGCharts */; };
+		9F08F59A2BCF120F007BC65D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5992BCF120F007BC65D /* DGChartsDynamic */; };
 		9F0D80482BCA3347003F9D7A /* DataSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */; };
 		9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */; };
 		9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */; };
@@ -139,6 +141,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F08F5982BCF120F007BC65D /* DGCharts in Frameworks */,
+				9F08F59A2BCF120F007BC65D /* DGChartsDynamic in Frameworks */,
 				9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,6 +328,8 @@
 			name = MusleMate;
 			packageProductDependencies = (
 				9FC307B82BC243CE00668536 /* FSCalendar */,
+				9F08F5972BCF120F007BC65D /* DGCharts */,
+				9F08F5992BCF120F007BC65D /* DGChartsDynamic */,
 			);
 			productName = MusleMate;
 			productReference = 9F9609212BAA8CC50046600D /* MusleMate.app */;
@@ -465,6 +471,7 @@
 			mainGroup = 9F9609182BAA8CC50046600D;
 			packageReferences = (
 				9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 9F9609222BAA8CC50046600D /* Products */;
 			projectDirPath = "";
@@ -1125,6 +1132,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
@@ -1136,6 +1151,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9F08F5972BCF120F007BC65D /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		9F08F5992BCF120F007BC65D /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
 		9FC307B82BC243CE00668536 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */;

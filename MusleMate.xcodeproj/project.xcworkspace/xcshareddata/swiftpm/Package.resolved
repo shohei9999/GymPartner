@@ -1,6 +1,15 @@
 {
-  "originHash" : "a8e3bdc8a575dc2e877d6db93487d01a5d367d09f87aa622f054d800bcea3b60",
+  "originHash" : "f801c8b940a20aad92bc4c4071f21d716172238467c123a0ba9d21eac820803c",
   "pins" : [
+    {
+      "identity" : "charts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielgindi/Charts.git",
+      "state" : {
+        "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
+        "version" : "5.1.0"
+      }
+    },
     {
       "identity" : "fscalendar",
       "kind" : "remoteSourceControl",

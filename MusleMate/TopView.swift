@@ -29,6 +29,15 @@ struct TopView: View {
                             chartIconSelected = false
                             isPresented = true
                         }
+                    Image(systemName: "chart.bar.xaxis")
+                        .onTapGesture {
+                            plusIconSelected = false
+                            gearIconSelected = false
+                            chartIconSelected = true
+                            isPresented = true
+                        }
+                        .padding(.trailing)
+                        .font(.system(size: 24))
                     Image(systemName: "plus")
                         .onTapGesture {
                             plusIconSelected = true
@@ -56,6 +65,8 @@ struct TopView: View {
                     RecordWorkoutView()
                 } else if gearIconSelected {
                     SettingsView()
+                } else if chartIconSelected {
+                    WorkoutChartView()
                 } else {
                     EmptyView()
                 }
