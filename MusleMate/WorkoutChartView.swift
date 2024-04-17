@@ -7,16 +7,74 @@
 import SwiftUI
 import DGCharts
 
+enum Period: String, CaseIterable { // 追加
+    case day, week, month, year
+}
+
 struct WorkoutChartView: View {
     @State private var selectedWeek: Date = Date()
-    @State private var dataPoints: [DataPoint] = [] // 追加
-    
+    @State private var dataPoints: [DataPoint] = []
+    @State private var selectedMenu: String = "all"
+    @State private var chartId = UUID()
+    @State private var isKg: Bool = true {
+        didSet {
+            self.dataPoints = self.generateDataPoints()
+            self.chartId = UUID()
+        }
+    }
+    @State private var selectedPeriod: Period = .week // 追加
+
     var body: some View {
         VStack {
             HStack {
+                ForEach(Period.allCases, id: \.self) { period in // 追加
+                    if period == .week {
+                        Button(action: {
+                            withAnimation {
+                                self.selectedPeriod = period
+                            }
+                        }) {
+                            Text(period.rawValue.capitalized)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.clear)
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(self.selectedPeriod == period ? Color.blue : Color.clear, lineWidth: 2)
+                                        )
+                                )
+                        }
+                    } else {
+                        Text(period.rawValue.capitalized)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .background(
+                                Capsule()
+                                    .fill(Color.clear)
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(Color.gray, lineWidth: 2)
+                                    )
+                            )
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            Toggle(isOn: $isKg) {
+                Text("Unit: \(isKg ? "Kg" : "Lb")")
+            }
+            .padding()
+            .onChange(of: isKg) { _ in
+                self.dataPoints = self.generateDataPoints()
+                self.chartId = UUID()
+            }
+            HStack {
                 Button(action: {
                     self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek)!
-                    self.dataPoints = self.generateDataPoints() // データを更新
+                    self.dataPoints = self.generateDataPoints()
+                    self.chartId = UUID()
                 }) {
                     Image(systemName: "chevron.left")
                 }
@@ -25,16 +83,30 @@ struct WorkoutChartView: View {
                     .padding()
                 Button(action: {
                     self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek)!
-                    self.dataPoints = self.generateDataPoints() // データを更新
+                    self.dataPoints = self.generateDataPoints()
+                    self.chartId = UUID()
                 }) {
                     Image(systemName: "chevron.right")
                 }
             }
-            LineChart(dataPoints: dataPoints) // 修正
+            HStack {
+                Text("Max: \(Int(getMaxValue()))")
+                Text("Avg: \(Int(getAvgValue()))")
+                Text("Min: \(Int(getMinValue()))")
+            }
+            .padding()
+            LineChart(dataPoints: selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }, isKg: isKg) // 修正
                 .frame(height: 300)
+                .id(chartId)
+            Picker("Menu", selection: $selectedMenu) {
+                ForEach(getMenus(), id: \.self) { menu in
+                    Text(menu).tag(menu)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
         }
         .onAppear {
-            self.dataPoints = self.generateDataPoints() // 初期表示時にデータを読み込む
+            self.dataPoints = self.generateDataPoints()
         }
     }
     
@@ -83,11 +155,13 @@ struct WorkoutChartView: View {
                     let reps = workoutData["reps"] as! Double // 追加: repsを取得
                     weight *= reps // 追加: weightにrepsを乗算
                     let unit = workoutData["unit"] as! String
-                    if unit == "kg" {
+                    if unit == "kg" && !isKg {
                         weight *= 2.20462 // kgをポンドに変換
+                    } else if unit == "lb" && isKg {
+                        weight /= 2.20462 // ポンドをkgに変換
                     }
                     weight = round(weight)
-                    let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight)
+                    let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight) // 修正
                     if var existingData = data[menu] {
                         // すでに存在するメニューの場合は追加
                         if let index = existingData.firstIndex(where: { $0.x == dataEntry.x }) {
@@ -117,6 +191,31 @@ struct WorkoutChartView: View {
         
         return dataPoints
     }
+    
+    func getMenus() -> [String] { // 追加
+        var menus: [String] = ["all"]
+        menus.append(contentsOf: dataPoints.map { $0.menu })
+        return menus
+    }
+    
+    func getMaxValue() -> Double {
+        let filteredDataPoints = selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }
+        let maxValue = filteredDataPoints.flatMap { $0.dataEntries }.map { $0.y }.max() ?? 0
+        return floor(maxValue)
+    }
+
+    func getAvgValue() -> Double {
+        let filteredDataPoints = selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }
+        let dataEntries = filteredDataPoints.flatMap { $0.dataEntries }
+        let avgValue = dataEntries.count > 0 ? dataEntries.map { $0.y }.reduce(0, +) / Double(dataEntries.count) : 0
+        return floor(avgValue)
+    }
+
+    func getMinValue() -> Double {
+        let filteredDataPoints = selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }
+        let minValue = filteredDataPoints.flatMap { $0.dataEntries }.map { $0.y }.min() ?? 0
+        return floor(minValue)
+    }
 }
 
 struct DataPoint {
@@ -140,6 +239,7 @@ class DateValueFormatter: AxisValueFormatter {
 
 struct LineChart: UIViewRepresentable {
     var dataPoints: [DataPoint]
+    var isKg: Bool // 追加
     
     func makeUIView(context: Context) -> LineChartView {
         let chartView = LineChartView()
