@@ -80,14 +80,24 @@ struct WorkoutChartView: View {
                     let workoutData = userDefaults.dictionary(forKey: key)!
                     let menu = workoutData["menu"] as! String
                     var weight = workoutData["weight"] as! Double
+                    let reps = workoutData["reps"] as! Double // 追加: repsを取得
+                    weight *= reps // 追加: weightにrepsを乗算
                     let unit = workoutData["unit"] as! String
                     if unit == "kg" {
                         weight *= 2.20462 // kgをポンドに変換
                     }
+                    weight = round(weight)
                     let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight)
                     if var existingData = data[menu] {
                         // すでに存在するメニューの場合は追加
-                        existingData.append(dataEntry)
+                        if let index = existingData.firstIndex(where: { $0.x == dataEntry.x }) {
+                            // 同じ日のデータが存在する場合はweightを加算
+                            existingData[index].y += dataEntry.y
+                        } else {
+                            // 同じ日のデータが存在しない場合は新規追加
+                            existingData.append(dataEntry)
+                        }
+                        existingData.sort { $0.x < $1.x } // xの値（日付）でソート
                         data[menu] = existingData
                     } else {
                         // 新しいメニューの場合は新規作成
