@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F08F5982BCF120F007BC65D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5972BCF120F007BC65D /* DGCharts */; };
-		9F08F59A2BCF120F007BC65D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5992BCF120F007BC65D /* DGChartsDynamic */; };
-		9F0987572BD011CC00F69EE6 /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9F08F5992BCF120F007BC65D /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		717961E10FB0A954A29D25B4 /* Pods_MusleMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 023DE87A0C7109D3647A5370 /* Pods_MusleMate.framework */; };
 		9F0D80482BCA3347003F9D7A /* DataSynchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */; };
 		9F1F1AD92BC690BA00ED9C94 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */; };
 		9F1F1ADB2BC6911500ED9C94 /* ExtendedRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */; };
 		9F1F1ADD2BC6CA1600ED9C94 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1ADC2BC6CA1600ED9C94 /* TimerView.swift */; };
+		9F2BE2972BD183B700CE3DA6 /* DGCharts-DGCharts in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 9FFE6AD52BD17A9E003EF6AE /* DGCharts-DGCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2BE2992BD183C500CE3DA6 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFE6AD32BD17A9E003EF6AE /* DGCharts */; };
 		9F4FC90F2BAEA2EB00202BBB /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC90E2BAEA2EB00202BBB /* WatchSessionDelegate.swift */; };
 		9F4FC9112BAEE84800202BBB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9102BAEE84800202BBB /* HistoryView.swift */; };
 		9F4FC9132BAEF8BC00202BBB /* DataTransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */; };
@@ -37,12 +37,14 @@
 		9F9AC8FF2BBE9E9800190339 /* WorkoutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC8FE2BBE9E9800190339 /* WorkoutChartView.swift */; };
 		9F9AC9012BBF757600190339 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9002BBF757600190339 /* SettingsView.swift */; };
 		9F9AC9032BBFDC5B00190339 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9AC9022BBFDC5B00190339 /* SplashView.swift */; };
+		9FAF8D302BD1842800AC9D3A /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9FAF8D2F2BD1842800AC9D3A /* DGChartsDynamic */; };
 		9FB234AC2BC8DB6C002A9D47 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FB234AB2BC8DB6C002A9D47 /* PrivacyInfo.xcprivacy */; };
 		9FB2BA622BAC298A002246AF /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA612BAC298A002246AF /* TopView.swift */; };
 		9FB2BA642BAC305D002246AF /* WeightsAndTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */; };
 		9FB2BA662BAD4BD7002246AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BA652BAD4BD7002246AF /* HistoryView.swift */; };
 		9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9FC307B82BC243CE00668536 /* FSCalendar */; };
 		9FC854982BC79DC2009BF176 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9FC854972BC79DC2009BF176 /* PrivacyInfo.xcprivacy */; };
+		9FFE6ADF2BD17ADE003EF6AE /* DGChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9FFE6ADC2BD17ADE003EF6AE /* DGChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,18 +83,39 @@
 			remoteGlobalIDString = 9F9609462BAA8CC70046600D;
 			remoteInfo = "MusleMate Watch App";
 		};
+		9FFE6AD22BD17A9E003EF6AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F7A13A92BD1783700C34683 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A3D30211B199757A7A2F0AC792234325;
+			remoteInfo = DGCharts;
+		};
+		9FFE6AD42BD17A9E003EF6AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F7A13A92BD1783700C34683 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B09B3C05ADDB6FD455CE9C0A26AF482B;
+			remoteInfo = "DGCharts-DGCharts";
+		};
+		9FFE6AD62BD17A9E003EF6AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F7A13A92BD1783700C34683 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5318FC816C22556DA744E9573ADA6684;
+			remoteInfo = "Pods-MusleMate";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9F0987582BD011CC00F69EE6 /* Embed Frameworks */ = {
+		9F2BE2982BD183B700CE3DA6 /* Embed PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 13;
 			files = (
-				9F0987572BD011CC00F69EE6 /* DGChartsDynamic in Embed Frameworks */,
+				9F2BE2972BD183B700CE3DA6 /* DGCharts-DGCharts in Embed PlugIns */,
 			);
-			name = "Embed Frameworks";
+			name = "Embed PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9F9609702BAA8CC80046600D /* Embed Watch Content */ = {
@@ -106,9 +129,22 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9FFE6ADE2BD17ADE003EF6AE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9FFE6ADF2BD17ADE003EF6AE /* DGChartsDynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		023DE87A0C7109D3647A5370 /* Pods_MusleMate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusleMate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AED4F1E37010185A5EED353 /* Pods-MusleMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusleMate.release.xcconfig"; path = "Target Support Files/Pods-MusleMate/Pods-MusleMate.release.xcconfig"; sourceTree = "<group>"; };
 		9F0D80472BCA3347003F9D7A /* DataSynchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSynchronization.swift; sourceTree = "<group>"; };
 		9F1F1AD82BC690BA00ED9C94 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		9F1F1ADA2BC6911500ED9C94 /* ExtendedRuntimeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedRuntimeSession.swift; sourceTree = "<group>"; };
@@ -117,6 +153,7 @@
 		9F4FC9102BAEE84800202BBB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		9F4FC9122BAEF8BC00202BBB /* DataTransferManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferManager.swift; sourceTree = "<group>"; };
 		9F4FC9142BB18FC600202BBB /* RecordWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordWorkoutView.swift; sourceTree = "<group>"; };
+		9F7A13A92BD1783700C34683 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Pods.xcodeproj; sourceTree = "<group>"; };
 		9F7F80422BABE536007A7176 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		9F9609212BAA8CC50046600D /* MusleMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusleMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9609242BAA8CC50046600D /* MusleMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusleMateApp.swift; sourceTree = "<group>"; };
@@ -146,6 +183,7 @@
 		9FB2BA632BAC305D002246AF /* WeightsAndTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsAndTimesView.swift; sourceTree = "<group>"; };
 		9FB2BA652BAD4BD7002246AF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		9FC854972BC79DC2009BF176 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E4594E5A85689457E287BAE4 /* Pods-MusleMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusleMate.debug.xcconfig"; path = "Target Support Files/Pods-MusleMate/Pods-MusleMate.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,9 +191,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F08F5982BCF120F007BC65D /* DGCharts in Frameworks */,
-				9F08F59A2BCF120F007BC65D /* DGChartsDynamic in Frameworks */,
+				9FAF8D302BD1842800AC9D3A /* DGChartsDynamic in Frameworks */,
+				9F2BE2992BD183C500CE3DA6 /* DGCharts in Frameworks */,
 				9FC307B92BC243CE00668536 /* FSCalendar in Frameworks */,
+				717961E10FB0A954A29D25B4 /* Pods_MusleMate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,9 +236,230 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		130908C466D7DA9D5B513F4D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				023DE87A0C7109D3647A5370 /* Pods_MusleMate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F7A13912BD1783700C34683 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		9F7A13922BD1783700C34683 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		9F7A13932BD1783700C34683 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9F7A13942BD1783700C34683 /* Standard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Standard;
+			sourceTree = "<group>";
+		};
+		9F7A13952BD1783700C34683 /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13942BD1783700C34683 /* Standard */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		9F7A13962BD1783700C34683 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		9F7A13972BD1783700C34683 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13952BD1783700C34683 /* Implementations */,
+				9F7A13962BD1783700C34683 /* Interfaces */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9F7A13982BD1783700C34683 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		9F7A13992BD1783700C34683 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Formatters;
+			sourceTree = "<group>";
+		};
+		9F7A139A2BD1783700C34683 /* Highlight */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Highlight;
+			sourceTree = "<group>";
+		};
+		9F7A139B2BD1783700C34683 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		9F7A139C2BD1783700C34683 /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Jobs;
+			sourceTree = "<group>";
+		};
+		9F7A139D2BD1783700C34683 /* Scatter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scatter;
+			sourceTree = "<group>";
+		};
+		9F7A139E2BD1783700C34683 /* Renderers */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A139D2BD1783700C34683 /* Scatter */,
+			);
+			path = Renderers;
+			sourceTree = "<group>";
+		};
+		9F7A139F2BD1783700C34683 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		9F7A13A02BD1783700C34683 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13912BD1783700C34683 /* Animation */,
+				9F7A13922BD1783700C34683 /* Charts */,
+				9F7A13932BD1783700C34683 /* Components */,
+				9F7A13972BD1783700C34683 /* Data */,
+				9F7A13982BD1783700C34683 /* Filters */,
+				9F7A13992BD1783700C34683 /* Formatters */,
+				9F7A139A2BD1783700C34683 /* Highlight */,
+				9F7A139B2BD1783700C34683 /* Interfaces */,
+				9F7A139C2BD1783700C34683 /* Jobs */,
+				9F7A139E2BD1783700C34683 /* Renderers */,
+				9F7A139F2BD1783700C34683 /* Utils */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		9F7A13A12BD1783700C34683 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13A02BD1783700C34683 /* Charts */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		9F7A13A22BD1783700C34683 /* DGCharts */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13A12BD1783700C34683 /* Source */,
+			);
+			path = DGCharts;
+			sourceTree = "<group>";
+		};
+		9F7A13A32BD1783700C34683 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		9F7A13A42BD1783700C34683 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13A32BD1783700C34683 /* Public */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		9F7A13A52BD1783700C34683 /* Local Podspecs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Local Podspecs";
+			sourceTree = "<group>";
+		};
+		9F7A13A62BD1783700C34683 /* DGCharts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DGCharts;
+			sourceTree = "<group>";
+		};
+		9F7A13A72BD1783700C34683 /* Pods-MusleMate */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Pods-MusleMate";
+			sourceTree = "<group>";
+		};
+		9F7A13A82BD1783700C34683 /* Target Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13A62BD1783700C34683 /* DGCharts */,
+				9F7A13A72BD1783700C34683 /* Pods-MusleMate */,
+			);
+			path = "Target Support Files";
+			sourceTree = "<group>";
+		};
+		9F7A13AA2BD1783700C34683 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A13A22BD1783700C34683 /* DGCharts */,
+				9F7A13A42BD1783700C34683 /* Headers */,
+				9F7A13A52BD1783700C34683 /* Local Podspecs */,
+				9F7A13A82BD1783700C34683 /* Target Support Files */,
+				9F7A13A92BD1783700C34683 /* Pods.xcodeproj */,
+				E4594E5A85689457E287BAE4 /* Pods-MusleMate.debug.xcconfig */,
+				9AED4F1E37010185A5EED353 /* Pods-MusleMate.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9F7A13AB2BD1783700C34683 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9FFE6AD32BD17A9E003EF6AE /* DGCharts */,
+				9FFE6AD52BD17A9E003EF6AE /* DGCharts-DGCharts */,
+				9FFE6AD72BD17A9E003EF6AE /* Pods-MusleMate */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9F9609182BAA8CC50046600D = {
 			isa = PBXGroup;
 			children = (
+				9F7A13AA2BD1783700C34683 /* Pods */,
 				9FB234AB2BC8DB6C002A9D47 /* PrivacyInfo.xcprivacy */,
 				9F9609232BAA8CC50046600D /* MusleMate */,
 				9F9609342BAA8CC70046600D /* MusleMateTests */,
@@ -208,7 +468,7 @@
 				9F96095C2BAA8CC80046600D /* MusleMate Watch AppTests */,
 				9F9609662BAA8CC80046600D /* MusleMate Watch AppUITests */,
 				9F9609222BAA8CC50046600D /* Products */,
-				9FC307B42BC243AC00668536 /* Frameworks */,
+				130908C466D7DA9D5B513F4D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -313,13 +573,6 @@
 			path = "MusleMate Watch AppUITests";
 			sourceTree = "<group>";
 		};
-		9FC307B42BC243AC00668536 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -327,11 +580,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F9609712BAA8CC80046600D /* Build configuration list for PBXNativeTarget "MusleMate" */;
 			buildPhases = (
+				EAF9FFA807EFBC745786F715 /* [CP] Check Pods Manifest.lock */,
 				9F96091D2BAA8CC50046600D /* Sources */,
 				9F96091E2BAA8CC50046600D /* Frameworks */,
 				9F96091F2BAA8CC50046600D /* Resources */,
 				9F9609702BAA8CC80046600D /* Embed Watch Content */,
-				9F0987582BD011CC00F69EE6 /* Embed Frameworks */,
+				9FFE6ADE2BD17ADE003EF6AE /* Embed Frameworks */,
+				9F2BE2982BD183B700CE3DA6 /* Embed PlugIns */,
+				E4B5190CF863A8A8C3CFDDEB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -341,8 +597,7 @@
 			name = MusleMate;
 			packageProductDependencies = (
 				9FC307B82BC243CE00668536 /* FSCalendar */,
-				9F08F5972BCF120F007BC65D /* DGCharts */,
-				9F08F5992BCF120F007BC65D /* DGChartsDynamic */,
+				9FAF8D2F2BD1842800AC9D3A /* DGChartsDynamic */,
 			);
 			productName = MusleMate;
 			productReference = 9F9609212BAA8CC50046600D /* MusleMate.app */;
@@ -397,8 +652,6 @@
 			dependencies = (
 			);
 			name = "MusleMate Watch App";
-			packageProductDependencies = (
-			);
 			productName = "MusleMate Watch App";
 			productReference = 9F9609472BAA8CC70046600D /* MusleMate Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -484,10 +737,16 @@
 			mainGroup = 9F9609182BAA8CC50046600D;
 			packageReferences = (
 				9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */,
+				9FAF8D2C2BD1842800AC9D3A /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 9F9609222BAA8CC50046600D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9F7A13AB2BD1783700C34683 /* Products */;
+					ProjectRef = 9F7A13A92BD1783700C34683 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9F9609202BAA8CC50046600D /* MusleMate */,
@@ -499,6 +758,33 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9FFE6AD32BD17A9E003EF6AE /* DGCharts */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = DGCharts;
+			path = DGCharts.framework;
+			remoteRef = 9FFE6AD22BD17A9E003EF6AE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9FFE6AD52BD17A9E003EF6AE /* DGCharts-DGCharts */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			name = "DGCharts-DGCharts";
+			path = DGCharts.bundle;
+			remoteRef = 9FFE6AD42BD17A9E003EF6AE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9FFE6AD72BD17A9E003EF6AE /* Pods-MusleMate */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = "Pods-MusleMate";
+			path = Pods_MusleMate.framework;
+			remoteRef = 9FFE6AD62BD17A9E003EF6AE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9F96091F2BAA8CC50046600D /* Resources */ = {
@@ -550,6 +836,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4B5190CF863A8A8C3CFDDEB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MusleMate/Pods-MusleMate-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MusleMate/Pods-MusleMate-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MusleMate/Pods-MusleMate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAF9FFA807EFBC745786F715 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MusleMate-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9F96091D2BAA8CC50046600D /* Sources */ = {
@@ -829,8 +1157,9 @@
 		};
 		9F9609722BAA8CC80046600D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4594E5A85689457E287BAE4 /* Pods-MusleMate.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -838,6 +1167,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MusleMate/Preview Content\"";
 				DEVELOPMENT_TEAM = 4PAHR8WZNU;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusleMate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gym Partner";
@@ -869,8 +1199,9 @@
 		};
 		9F9609732BAA8CC80046600D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9AED4F1E37010185A5EED353 /* Pods-MusleMate.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -878,6 +1209,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MusleMate/Preview Content\"";
 				DEVELOPMENT_TEAM = 4PAHR8WZNU;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusleMate/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Gym Partner";
@@ -1161,23 +1493,31 @@
 				minimumVersion = 2.8.4;
 			};
 		};
+		9FAF8D2C2BD1842800AC9D3A /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9F08F5972BCF120F007BC65D /* DGCharts */ = {
+		9FAF8D2F2BD1842800AC9D3A /* DGChartsDynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
-		9F08F5992BCF120F007BC65D /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 9FAF8D2C2BD1842800AC9D3A /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGChartsDynamic;
 		};
 		9FC307B82BC243CE00668536 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9F9AC8FB2BBC452200190339 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		9FFE6ADC2BD17ADE003EF6AE /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F08F5962BCF11A3007BC65D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
