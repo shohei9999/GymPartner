@@ -22,31 +22,35 @@ struct WorkoutChartView: View {
             self.chartId = UUID()
         }
     }
-    @State private var selectedPeriod: Period = .week // 追加
-
+    @State private var selectedPeriod: Period = .week
+    
     var body: some View {
         VStack {
             HStack {
-                ForEach(Period.allCases, id: \.self) { period in // 追加
-                    if period == .week {
-                        Button(action: {
-                            withAnimation {
-                                self.selectedPeriod = period
+                ForEach(Period.allCases, id: \.self) { period in
+                    Button(action: {
+                        withAnimation {
+                            self.selectedPeriod = period
+                            if period == .month {
+                                // 月を選択した場合、今月の1日から月末までの期間に設定する
+                                let calendar = Calendar.current
+                                let components = calendar.dateComponents([.year, .month], from: Date())
+                                let startOfMonth = calendar.date(from: components)!
+                                let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
+                                self.selectedWeek = startOfMonth
+                            } else if period == .week {
+                                // 週を選択した場合、今日を含む1週間の期間に設定する
+                                let calendar = Calendar.current
+                                let today = calendar.startOfDay(for: Date())
+                                let weekday = calendar.component(.weekday, from: today)
+                                let daysToMonday = (weekday == 1 ? 6 : weekday - 2)
+                                let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: today)!
+                                self.selectedWeek = monday
                             }
-                        }) {
-                            Text(period.rawValue.capitalized)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(
-                                    Capsule()
-                                        .fill(Color.clear)
-                                        .overlay(
-                                            Capsule()
-                                                .stroke(self.selectedPeriod == period ? Color.blue : Color.clear, lineWidth: 2)
-                                        )
-                                )
+                            self.dataPoints = self.generateDataPoints()
+                            self.chartId = UUID()
                         }
-                    } else {
+                    }) {
                         Text(period.rawValue.capitalized)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 10)
@@ -55,10 +59,9 @@ struct WorkoutChartView: View {
                                     .fill(Color.clear)
                                     .overlay(
                                         Capsule()
-                                            .stroke(Color.gray, lineWidth: 2)
+                                            .stroke(self.selectedPeriod == period ? Color.blue : Color.clear, lineWidth: 2)
                                     )
                             )
-                            .foregroundColor(.gray)
                     }
                 }
             }
@@ -70,23 +73,49 @@ struct WorkoutChartView: View {
                 self.dataPoints = self.generateDataPoints()
                 self.chartId = UUID()
             }
-            HStack {
-                Button(action: {
-                    self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek)!
-                    self.dataPoints = self.generateDataPoints()
-                    self.chartId = UUID()
-                }) {
-                    Image(systemName: "chevron.left")
+            if selectedPeriod != .month {
+                HStack {
+                    Button(action: {
+                        self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self.selectedWeek)!
+                        self.dataPoints = self.generateDataPoints()
+                        self.chartId = UUID()
+                    }) {
+                        Image(systemName: "chevron.left")
+                    }
+                    Text(getDateRange())
+                        .font(.title)
+                        .padding()
+                    Button(action: {
+                        self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek)!
+                        self.dataPoints = self.generateDataPoints()
+                        self.chartId = UUID()
+                    }) {
+                        Image(systemName: "chevron.right")
+                    }
                 }
-                Text(getDateRange())
-                    .font(.title)
-                    .padding()
-                Button(action: {
-                    self.selectedWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self.selectedWeek)!
-                    self.dataPoints = self.generateDataPoints()
-                    self.chartId = UUID()
-                }) {
-                    Image(systemName: "chevron.right")
+            }
+            else {
+                let year = Calendar.current.component(.year, from: selectedWeek)
+                let formattedYear = String(year)
+                let month = Calendar.current.component(.month, from: selectedWeek)
+                HStack {
+                    Button(action: {
+                        self.selectedWeek = Calendar.current.date(byAdding: .month, value: -1, to: self.selectedWeek)!
+                        self.dataPoints = self.generateDataPoints()
+                        self.chartId = UUID()
+                    }) {
+                        Image(systemName: "chevron.left")
+                    }
+                    Text("\(formattedYear)/\(month)")
+                        .font(.title)
+                        .padding()
+                    Button(action: {
+                        self.selectedWeek = Calendar.current.date(byAdding: .month, value: 1, to: self.selectedWeek)!
+                        self.dataPoints = self.generateDataPoints()
+                        self.chartId = UUID()
+                    }) {
+                        Image(systemName: "chevron.right")
+                    }
                 }
             }
             HStack {
@@ -95,7 +124,7 @@ struct WorkoutChartView: View {
                 Text("Min: \(Int(getMinValue()))")
             }
             .padding()
-            LineChart(dataPoints: selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }, isKg: isKg) // 修正
+            LineChart(dataPoints: selectedMenu == "all" ? dataPoints : dataPoints.filter { $0.menu == selectedMenu }, isKg: isKg, selectedPeriod: selectedPeriod, selectedWeek: selectedWeek)
                 .frame(height: 300)
                 .id(chartId)
             Picker("Menu", selection: $selectedMenu) {
@@ -111,18 +140,30 @@ struct WorkoutChartView: View {
     }
     
     func getDateRange() -> String {
-        let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: selectedWeek)
-        let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
-        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
-        let sunday = calendar.date(byAdding: .day, value: 6, to: monday)!
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
-        
-        return "\(dateFormatter.string(from: monday))-\(dateFormatter.string(from: sunday))"
+        if selectedPeriod == .month {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month], from: selectedWeek)
+            let startOfMonth = calendar.date(from: components)!
+            let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            return "\(dateFormatter.string(from: startOfMonth))-\(dateFormatter.string(from: endOfMonth))"
+        } else {
+            let calendar = Calendar.current
+            let weekday = calendar.component(.weekday, from: selectedWeek)
+            let daysToMonday = (weekday == 1 ? 6 : weekday - 2)
+            let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
+            let sunday = calendar.date(byAdding: .day, value: 6, to: monday)!
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            return "\(dateFormatter.string(from: monday))-\(dateFormatter.string(from: sunday))"
+        }
     }
+
     
     func generateDataPoints() -> [DataPoint] {
         // UserDefaultからデータを取得
@@ -135,54 +176,97 @@ struct WorkoutChartView: View {
         dateFormatter.dateFormat = "yyyyMMdd"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
         
-        let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: selectedWeek)
-        let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
-        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
-        let mondayWithoutTime = calendar.startOfDay(for: monday) // 追加
-
-        // データを抽出
         var data: [String: [ChartDataEntry]] = [:]
-        for key in keys {
-            let dateStr = String(key.dropFirst(8)).prefix(8) // 最初の8文字だけを取り出す
-            if let date = dateFormatter.date(from: String(dateStr)) {
-                let dateValue = calendar.startOfDay(for: date)
-                let daysFromMonday = calendar.dateComponents([.day], from: mondayWithoutTime, to: dateValue).day! // 修正
-                if daysFromMonday >= 0 && daysFromMonday <= 6 {
-                    let workoutData = userDefaults.dictionary(forKey: key)!
-                    let menu = workoutData["menu"] as! String
-                    var weight = workoutData["weight"] as! Double
-                    let reps = workoutData["reps"] as! Double // 追加: repsを取得
-                    weight *= reps // 追加: weightにrepsを乗算
-                    let unit = workoutData["unit"] as! String
-                    if unit == "kg" && !isKg {
-                        weight *= 2.20462 // kgをポンドに変換
-                    } else if unit == "lb" && isKg {
-                        weight /= 2.20462 // ポンドをkgに変換
-                    }
-                    weight = round(weight)
-                    let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight) // 修正
-                    if var existingData = data[menu] {
-                        // すでに存在するメニューの場合は追加
-                        if let index = existingData.firstIndex(where: { $0.x == dataEntry.x }) {
-                            // 同じ日のデータが存在する場合はweightを加算
-                            existingData[index].y += dataEntry.y
-                        } else {
-                            // 同じ日のデータが存在しない場合は新規追加
-                            existingData.append(dataEntry)
+        
+        if selectedPeriod == .month {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month], from: selectedWeek)
+            let startOfMonth = calendar.date(from: components)!
+            let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1, hour: 23, minute: 59, second: 59), to: startOfMonth)!
+
+            print("Start of Month: \(startOfMonth)")
+            print("End of Month: \(endOfMonth)")
+            
+            for key in keys {
+                let dateStr = String(key.dropFirst(8)).prefix(8)
+                if let date = dateFormatter.date(from: String(dateStr)) {
+                    if date >= startOfMonth && date <= endOfMonth {
+                        print("date: \(date)")
+                        let workoutData = userDefaults.dictionary(forKey: key)!
+                        let menu = workoutData["menu"] as! String
+                        var weight = workoutData["weight"] as! Double
+                        let reps = workoutData["reps"] as! Double
+                        weight *= reps
+                        let unit = workoutData["unit"] as! String
+                        if unit == "kg" && !isKg {
+                            weight *= 2.20462
+                        } else if unit == "lb" && isKg {
+                            weight /= 2.20462
                         }
-                        existingData.sort { $0.x < $1.x } // xの値（日付）でソート
-                        data[menu] = existingData
-                    } else {
-                        // 新しいメニューの場合は新規作成
-                        data[menu] = [dataEntry]
+                        weight = round(weight)
+                        let secondsPerDay = 24.0 * 60.0 * 60.0
+                        let dataEntry = ChartDataEntry(x: date.timeIntervalSince(startOfMonth) / secondsPerDay, y: weight)
+                        print("Data entry created with x = \(dataEntry.x) and y = \(dataEntry.y)")
+                        if var existingData = data[menu] {
+                            if let index = existingData.firstIndex(where: { $0.x == dataEntry.x }) {
+                                existingData[index].y += dataEntry.y
+                            } else {
+                                existingData.append(dataEntry)
+                            }
+                            existingData.sort { $0.x < $1.x }
+                            data[menu] = existingData
+                        } else {
+                            data[menu] = [dataEntry]
+                        }
                     }
+                } else {
+                    print("Invalid date format: \(dateStr)")
                 }
-            } else {
-                print("Invalid date format: \(dateStr)")
+            }
+        } else {
+            let calendar = Calendar.current
+            let weekday = calendar.component(.weekday, from: selectedWeek)
+            let daysToMonday = (weekday == 1 ? 6 : weekday - 2)
+            let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
+            let mondayWithoutTime = calendar.startOfDay(for: monday)
+            
+            for key in keys {
+                let dateStr = String(key.dropFirst(8)).prefix(8)
+                if let date = dateFormatter.date(from: String(dateStr)) {
+                    let dateValue = calendar.startOfDay(for: date)
+                    let daysFromMonday = calendar.dateComponents([.day], from: mondayWithoutTime, to: dateValue).day!
+                    if daysFromMonday >= 0 && daysFromMonday <= 6 {
+                        let workoutData = userDefaults.dictionary(forKey: key)!
+                        let menu = workoutData["menu"] as! String
+                        var weight = workoutData["weight"] as! Double
+                        let reps = workoutData["reps"] as! Double
+                        weight *= reps
+                        let unit = workoutData["unit"] as! String
+                        if unit == "kg" && !isKg {
+                            weight *= 2.20462
+                        } else if unit == "lb" && isKg {
+                            weight /= 2.20462
+                        }
+                        weight = round(weight)
+                        let dataEntry = ChartDataEntry(x: Double(daysFromMonday), y: weight)
+                        if var existingData = data[menu] {
+                            if let index = existingData.firstIndex(where: { $0.x == dataEntry.x }) {
+                                existingData[index].y += dataEntry.y
+                            } else {
+                                existingData.append(dataEntry)
+                            }
+                            existingData.sort { $0.x < $1.x }
+                            data[menu] = existingData
+                        } else {
+                            data[menu] = [dataEntry]
+                        }
+                    }
+                } else {
+                    print("Invalid date format: \(dateStr)")
+                }
             }
         }
-
+        
         // データをDataPoint形式に変換
         for (menu, dataEntries) in data {
             let dataPoint = DataPoint(menu: menu, dataEntries: dataEntries)
@@ -191,6 +275,8 @@ struct WorkoutChartView: View {
         
         return dataPoints
     }
+
+
     
     func getMenus() -> [String] { // 追加
         var menus: [String] = ["all"]
@@ -239,60 +325,79 @@ class DateValueFormatter: AxisValueFormatter {
 
 struct LineChart: UIViewRepresentable {
     var dataPoints: [DataPoint]
-    var isKg: Bool // 追加
-    
+    var isKg: Bool
+    var selectedPeriod: Period
+    var selectedWeek: Date?
+
     func makeUIView(context: Context) -> LineChartView {
         let chartView = LineChartView()
         chartView.rightAxis.enabled = false
         chartView.legend.enabled = true
-        chartView.leftAxis.axisMinimum = 0 // Y軸の最小値を0に設定
-        chartView.xAxis.axisMinimum = 0 // Y軸の最小値を0に設定
-        chartView.xAxis.valueFormatter = DateValueFormatter() // 日付をフォーマットする
+        chartView.leftAxis.axisMinimum = 0
+        chartView.xAxis.axisMinimum = 0
+        chartView.xAxis.valueFormatter = DateValueFormatter()
         return chartView
     }
-    
+
     func updateUIView(_ uiView: LineChartView, context: Context) {
         var dataSets: [LineChartDataSet] = []
-        
+
         for dataPoint in dataPoints {
+            print("DataPoint: \(dataPoint.menu), Number of entries: \(dataPoint.dataEntries.count)")
             let dataSet = LineChartDataSet(entries: dataPoint.dataEntries, label: dataPoint.menu)
             dataSet.colors = [UIColor.random()]
             dataSet.circleColors = [UIColor.random()]
             dataSets.append(dataSet)
         }
-        
-        let calendar = Calendar.current
-        let selectedWeek = Date() // 追加
-        let weekday = calendar.component(.weekday, from: selectedWeek)
-        let daysToMonday = (weekday == 1 ? 6 : weekday - 2) // 今日から月曜日までの日数
-        let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
 
-        // 月曜日から日曜日までの表示に設定
-        uiView.xAxis.axisMinimum = 0
-        uiView.xAxis.axisMaximum = 6
+        if selectedPeriod == .week {
+           let calendar = Calendar.current
+           let selectedWeek = self.selectedWeek ?? Date()
+           let weekday = calendar.component(.weekday, from: selectedWeek)
+           let daysToMonday = (weekday == 1 ? 6 : weekday - 2)
+           let monday = calendar.date(byAdding: .day, value: -daysToMonday, to: selectedWeek)!
 
-        // X軸のラベルを月曜日から日曜日までの曜日に設定
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // 追加
-        uiView.xAxis.valueFormatter = IndexAxisValueFormatter(values: (0...6).map { (value) -> String in
-            let date = calendar.date(byAdding: .day, value: value, to: monday)!
-            return dateFormatter.string(from: date)
-        })
-        
-        // Y軸の0番目に項目表示を追加
-        uiView.leftAxis.axisMinimum = 0
-        uiView.leftAxis.drawLabelsEnabled = true
-        uiView.leftAxis.drawAxisLineEnabled = true
-        uiView.leftAxis.drawGridLinesEnabled = true
-        uiView.leftAxis.labelPosition = .outsideChart
-        
+           uiView.xAxis.axisMinimum = 0
+           uiView.xAxis.axisMaximum = 6
+
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "E"
+           dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+           uiView.xAxis.valueFormatter = IndexAxisValueFormatter(values: (0...6).map { (value) -> String in
+               let date = calendar.date(byAdding: .day, value: value, to: monday)!
+               return dateFormatter.string(from: date)
+           })
+        } else if selectedPeriod == .month {
+            let calendar = Calendar.current
+            let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedWeek ?? Date()))!
+            let range = calendar.range(of: .day, in: .month, for: startOfMonth)!
+            let numDays = range.count
+
+            print("Number of days in the month: \(numDays)")
+
+            uiView.xAxis.axisMinimum = 0
+            let numDaysInMonth = range.count
+            uiView.xAxis.axisMaximum = Double(numDays - 1)
+            uiView.xAxis.labelCount = 7
+
+            print("Axis minimum: \(uiView.xAxis.axisMinimum), Axis maximum: \(uiView.xAxis.axisMaximum)")
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "M/d"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            uiView.xAxis.valueFormatter = IndexAxisValueFormatter(values: (1...numDays).map { (value) -> String in
+                let date = calendar.date(byAdding: .day, value: value - 1, to: startOfMonth)!
+                let dateString = dateFormatter.string(from: date)
+                print("Mapping value \(value) to date: \(dateString)")
+                return dateString
+            })
+        }
+
         let chartData = LineChartData(dataSets: dataSets)
         uiView.data = chartData
         uiView.notifyDataSetChanged()
     }
 }
-
 extension UIColor {
     static func random() -> UIColor {
         return UIColor(red: .random(in: 0...1),
@@ -301,6 +406,7 @@ extension UIColor {
                        alpha: 1.0)
     }
 }
+
 
 struct WorkoutChartView_Previews: PreviewProvider {
     static var previews: some View {
