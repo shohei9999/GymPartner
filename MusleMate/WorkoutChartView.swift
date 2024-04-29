@@ -8,7 +8,8 @@ import SwiftUI
 import DGCharts
 
 enum Period: String, CaseIterable { // 追加
-    case day, week, month, year
+//    case day, week, month, year
+    case week, month
 }
 
 struct WorkoutChartView: View {
